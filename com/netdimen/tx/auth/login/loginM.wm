@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Enterprise Knowledge Platform by NetDimensions</title>
+
+    <link rel="stylesheet" href="/$info.getContextPrefix()/nd/fresco/styles/ekp_mobile.css" type="text/css"/>
+
+    <script language="JavaScript" type="text/javascript">
+        <!--
+        var errormessage = 1;
+        var erroption = window.location.search;
+        i = erroption.indexOf('ERR');
+        errormessage = erroption.substring(i + 4, i + 5);
+        var errorbasictext = "";
+
+        if (errormessage == 3) {
+            alert(errorbasictext + 'The password you entered is incorrect. Remember, passwords are case sensitive.');
+        } else if (errormessage == 2) {
+            alert(errorbasictext + 'You have exceeded the number of login attempts and your account is suspended or'
+             + ' your account is closed.Please contract your administrator by clicking on the Lost  Password button above.');
+        } else if (errormessage == 1) {
+            alert(errorbasictext + 'The User ID you have entered is invalid.');
+        }
+        -->
+    </script>
+    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+</head>
+<body>
+
+<div id="login-page">
+    <div id="branding-box">
+        <img id="logo" src="/$info.getContextPrefix()/nd/fresco/images/ekp_logo.png"/>
+    </div>
+    <div id="login-container">
+
+        <div id="errMsg"></div>
+        <div id="login_box">
+        <form method="post" action="/$info.getContextPrefix()/servlet/ekp/verify" name="form">
+            <input name="TX" value="VERIFY" type="hidden"/>
+            
+            #if ($target != "")
+                <input type="hidden" name="target" value="$target"/>
+            #end
+            <input name="mobileClient" value="true" type="hidden"/>
+
+
+                <fieldset>
+                    <dl>
+                        <dt>User ID:</dt>
+                        <dd><input autocomplete="off" name="UID"/></dd>
+                        <dt>Password:</dt>
+                        <dd><input autocomplete="off" name="PWD" onkeypress="return submitenter(this,event);" type="password"/>
+                        </dd>
+                        <dt></dt>
+                        <dd><input id="login_button" value="Login" type="submit"/>
+                        </dd>
+                    </dl>
+                </fieldset>
+
+        </form>
+          </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision: 1.0.0.0 $
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+	<transactions>
+		<transaction>
+			<tx-code>LIVSSHOMETX</tx-code>
+			<feature>MyRecordsMenu</feature>
+			<access-level>ReadAccess</access-level>
+			<class>com.netdimen.custom.livss.tx.LivssHomeTx</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>LIVSSREQUESTTX</tx-code>
+			<feature>MyRecordsMenu</feature>
+			<access-level>ReadAccess</access-level>
+			<class>com.netdimen.custom.livss.tx.LivssRequestTx</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>LIVSSSUBMITTX</tx-code>
+			<feature>MyRecordsMenu</feature>
+			<access-level>READAccess</access-level>
+			<class>com.netdimen.custom.livss.tx.LivssSubmitTx</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>LIVSSRESPONSETX</tx-code>
+			<feature>MyRecordsMenu</feature>
+			<access-level>READAccess</access-level>
+			<class>com.netdimen.custom.livss.tx.ResponseListTx</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>LIVSSSUBMITRESPONSETX</tx-code>
+			<feature>MyRecordsMenu</feature>
+			<access-level>READAccess</access-level>
+			<class>com.netdimen.custom.livss.tx.ResponseSubmitTx</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>LIVSSREVIEWTX</tx-code>
+			<feature>MyRecordsMenu</feature>
+			<access-level>READAccess</access-level>
+			<class>com.netdimen.custom.livss.tx.LivssReviewTx</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>LIVSSMENULEFT</tx-code>
+			<tx-type>MENU</tx-type>
+			<feature>System</feature>
+			<access-level>READAccess</access-level>
+			<class>com.netdimen.custom.livss.LivssMenuLeft</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+	</transactions>
+</components>

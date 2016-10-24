@@ -1,0 +1,10 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML><HEAD>
+	<TITLE>Enterprise Knowledge Platform by NetDimensions</TITLE>
+	<link media='screen' rel='stylesheet' href='/$info.getContextPrefix()/nd/fresco/styles/base.css' type='text/css'></HEAD>
+	<link media='screen' rel='stylesheet' href='$css_path' type='text/css'></HEAD>
+<BODY id="footer">
+	<A HREF='http://www.netdimensions.com/index.php' TARGET='fresco_main'>home</A>&nbsp;&nbsp;|&nbsp;&nbsp;
+	<A HREF='http://blog.netdimensions.com:8080/blojsom/blog/default/' TARGET='fresco_main'>blog</A>&nbsp;&nbsp;|&nbsp;&nbsp;
+	<A HREF='http://www.netdimensions.com/support/index.php' TARGET='fresco_main'>support</A>
+</BODY></HTML>

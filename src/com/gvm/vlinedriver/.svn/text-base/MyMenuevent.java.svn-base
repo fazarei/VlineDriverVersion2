@@ -1,0 +1,785 @@
+package com.gvm.vlinedriver;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import com.gvm.vlinedriver.R;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.os.Environment;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MyMenuevent {
+	
+	private View layout;
+
+	public MyMenuevent(String item,Context context)
+	{
+		TestAdapter mDbHelper = new TestAdapter(context);  
+		mDbHelper.open();
+		if(item.equalsIgnoreCase("Back to main page"))
+		{		
+			mDbHelper.open();
+		     //Check user is login or not
+		     Cursor cuserexist =mDbHelper.userexist();
+		     if(cuserexist.getCount()>0)
+		     {
+		    	Intent intent = new Intent(context,Stagelist.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);		
+				context.startActivity(intent);
+		     }
+		     else
+		     {
+		    	 Toast.makeText(context,R.string.dologin, Toast.LENGTH_SHORT).show();
+		     }
+		}
+		if(item.equalsIgnoreCase("About US"))
+		{
+			Intent intent = new Intent(context,About.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);		
+			context.startActivity(intent);
+		}
+		if(item.equalsIgnoreCase("Sync"))
+		{	
+			 /*To create CSV
+			 Uploadfile uploadfile=new Uploadfile();
+			uploadfile.csvupload(context);*/
+					
+			
+			//Upload all data to php admin site
+			senddatatophpadmin(context,"subject");
+			senddatatophpadmin(context,"assessment");
+			senddatatophpadmin(context,"checklist");
+			senddatatophpadmin(context,"assessmentdetail");
+			senddatatophpadmin(context,"timelost");
+			senddatatophpadmin(context,"checklisttask");
+			
+			senddatatophpadmin(context,"competency");
+			senddatatophpadmin(context,"competencytask");
+			senddatatophpadmin(context,"competencytaskdesc");
+	
+			//Update stage title
+			updatestagetitle(context);
+			
+			//Update assessment title
+			updateassessmenttitle(context);
+			
+			//First we insert sync in auditlog then we do Sync for audit table
+			TestAdapter MDBHelper = new TestAdapter(context);
+			MDBHelper.insertauditlog("Sync", "All table", "Select * from table where trainee<>''");
+			senddatatophpadmin(context,"auditlog");
+			
+			//Every time after sync we need to empty auditlog
+			MDBHelper.deletetauditlog();
+			
+			//We get all trainer and assessor each time in sync
+			trainerassessor(context);
+			
+			//Upload all CSV data to php admin site
+		/*	sendcsvtophpadmin(context,"subject","subject.csv");
+			sendcsvtophpadmin(context,"assessment","assessment.csv");
+			sendcsvtophpadmin(context,"checklist","checklist.csv");
+			sendcsvtophpadmin(context,"assessmentdetail","assessmentdetail.csv");
+			sendcsvtophpadmin(context,"timelost","timelost.csv");
+			sendcsvtophpadmin(context,"task","task.csv");
+			sendcsvtophpadmin(context,"taskcoridordesc","taskcoridordesc.csv");
+			sendcsvtophpadmin(context,"competency","competency.csv");
+			sendcsvtophpadmin(context,"checklisttask","checklisttask.csv"); */
+			
+			//After Sync we need to come to login page because each Sync remove all trainers and assessors from user table and insert them from the first
+			Intent intent = new Intent(context,Loginact.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);		
+			context.startActivity(intent);
+			Toast.makeText(context, R.string.syncmessage, Toast.LENGTH_SHORT).show();		
+		}
+		
+		if(item.equalsIgnoreCase("Log Out"))
+		{
+			logout(context);
+		}
+		Cursor cassessor=mDbHelper.assessoruserid();
+		
+		if(item.equalsIgnoreCase("Reset To Factory"))
+		{
+			createDialogreset(context);			
+		}
+		
+		if(item.equalsIgnoreCase("Exit"))
+		{
+			createDialogexit(context);
+		}
+		
+		if(item.equalsIgnoreCase("Backup"))
+		{
+			backup();
+		}	
+		
+		if(item.equalsIgnoreCase("Server Setting"))
+		{
+			createDialogServersetting(context);
+		}
+	}
+public void logout(Context context)
+{
+	TestAdapter MDBHelper = new TestAdapter(context);
+	MDBHelper.loginfalse();
+	Intent intent = new Intent(context,Loginact.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);		
+	context.startActivity(intent);
+}
+public void backup()
+{
+	try {
+        File f1 = new File("/data/data/com.gvm.vlinedriver/databases/vlinedatabase");
+        if (f1.exists()) {
+            File f2 = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+ "/vlinedatabase");
+            f2.createNewFile();
+            InputStream in = new FileInputStream(f1);
+            OutputStream out = new FileOutputStream(f2);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+            	
+                out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+        }
+    } catch (FileNotFoundException ex) {
+        System.out.println(ex.getMessage() + " in the specified directory.");
+        System.exit(0);
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.out.println(e.getMessage());
+    }
+}
+
+public void updatestagetitle(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    //Get URL from config table
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "stages"));
+		
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(!dataString.equalsIgnoreCase(""))
+		{
+			//Update stage title
+			String[] stageinfo = dataString.split("\r\n");
+			 for (int i = 0, n = stageinfo.length; i < n; i++)
+			 {
+				 String[] stagearrayinfo=stageinfo[i].split(",");
+				// Log.d("LEE",stagearrayinfo[1]);
+				 MDBHelper.updatestage(stagearrayinfo[0], stagearrayinfo[1].replace("\"", ""),stagearrayinfo[2].replace("\"", ""));
+				 //MDBHelper.insertuser(trainerassessorinfo[0], trainerassessorinfo[2], trainerassessorinfo[3], "", trainerassessorinfo[1]);	 
+			 }
+		}
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+public void updateassessmenttitle(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    //Get URL from config table
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {		
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "asesslistindex"));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(!dataString.equalsIgnoreCase(""))
+		{
+			//Update stage title
+			String[] assessinfo = dataString.split("\r\n");
+			 for (int i = 0, n = assessinfo.length; i < n; i++)
+			 {
+				 String[] assessarrayinfo=assessinfo[i].split(",");
+				 MDBHelper.updateassessmenttitle(assessarrayinfo[0], assessarrayinfo[1],assessarrayinfo[2].replace("\"", ""));	 
+			 }
+		}
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+public void trainerassessor(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    //Get URL from config table
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "trainerassessor"));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase(""))
+		{
+			Toast.makeText(context, "Trainer and assessor data not available.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			//delete all trainer and assessor
+			MDBHelper.deletetrainerassessor();
+			
+			//Insert all trainer and assessor
+			String[] userinfo = dataString.split("\r\n");
+			 for (int i = 0, n = userinfo.length; i < n; i++)
+			 {
+				 String[] trainerassessorinfo=userinfo[i].split(",");
+				 MDBHelper.insertuser(trainerassessorinfo[0], trainerassessorinfo[2], trainerassessorinfo[3], "", trainerassessorinfo[1]);	 
+			 }
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+public void senddatatophpadmin_old(Context context,String tablename)
+{
+	final HttpClient httpclient = new DefaultHttpClient();
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+	 Cursor cconfig = MDBHelper.getconfig();
+	    if(cconfig.getCount()>0)
+	    {
+	    	cconfig.moveToFirst();
+	    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+	    }
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	StringBuffer data = new StringBuffer();
+	String aDataRow="";
+	//To read from CSV
+	try {
+		
+		TestAdapter myDatabase = new TestAdapter(context);    		
+        myDatabase.open();		
+        Cursor curCSV = myDatabase.getTestData(tablename);
+
+        int colmnnum=curCSV.getColumnCount();
+        
+        if(curCSV.moveToFirst())
+        {
+        do {
+        	aDataRow="";
+        	for(int i=0;i<colmnnum;i++) {
+        		
+        		aDataRow +=curCSV.getString(i).replace(';', ',')+";";
+        		// Log.d("LEE",curCSV.getPosition()+"::"+curCSV.getString(i)+";");
+        		 //aDataRow.append(curCSV.getPosition()+"::"+curCSV.getString(i)+";");
+        	}
+        	//Log.d("LEE","row:"+aDataRow.toString());
+        	data.append(aDataRow.substring(0,aDataRow.length()-1));
+        }
+        while(curCSV.moveToNext());
+        }
+
+       /* for(int i=0; i<200; i++)
+        {
+        	aDataRow="";
+        	for (int j=0; j<30; j++)
+        	{
+        		aDataRow +=j+"";
+        	}
+        	data += aDataRow+ "\n";
+        } */
+        
+        /*if(curCSV.moveToFirst())
+        {
+        	
+        	do
+        	{
+        		aDataRow="";
+            	for(int i=0; i<colmnnum; i++)
+            	{
+            		aDataRow +=curCSV.getString(i)+";";
+            		aDataRow +=i+";";
+            	}
+        		int j=0;
+        		while(j<30)
+        		{
+        			aDataRow +=j+";";
+        			j++;
+        		}
+
+        		//Log.d("LEE",curCSV.toString());
+            	//data += aDataRow.substring(0,aDataRow.length()-1) + "\n";
+        		i++;
+        		
+        	}
+        	while(curCSV.moveToNext());;
+        }*/
+	} catch (Exception e) {
+		Toast.makeText(context, e.getMessage(),
+				Toast.LENGTH_SHORT).show();
+	}
+	//To send to admin site
+	try {
+		Log.d("LEE",data.toString());
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("tblname", tablename));
+		nameValuePairs.add(new BasicNameValuePair("data", data.toString()));
+		nameValuePairs.add(new BasicNameValuePair("mode", "upload"));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		//Log.d("LEE",dataString);
+		
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		} 
+		catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		}
+}
+public void senddatatophpadmin(Context context,String tablename)
+{
+	final HttpClient httpclient = new DefaultHttpClient();
+	
+	String data = "";
+	String aDataRow="";
+	String Serverurl="";
+	TestAdapter myDatabase = new TestAdapter(context);    		
+    myDatabase.open();		
+    //Get URL from config table
+    Cursor cconfig = myDatabase.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+    final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+    //We don't care about trainee name in audit table 
+    /* Cursor curCSV=null;
+    if(tablename.equalsIgnoreCase("audilog"))
+    {
+    	curCSV = myDatabase.sendtabletoekp(tablename);
+    }
+    else
+    {
+    	curCSV = myDatabase.getTestData(tablename);
+    }*/
+    Cursor curCSV = myDatabase.getTestData(tablename);
+    int colmnnum=curCSV.getColumnCount();
+    if(curCSV.getCount()>0)
+    {
+	try {
+
+        if(curCSV.moveToFirst())
+        {
+        for(int j=0;j<curCSV.getCount();j++){
+        	//data="";
+        	aDataRow="";
+        	for(int i=0;i<colmnnum;i++) {       		
+        		aDataRow +=curCSV.getString(i)+"|";
+        	}
+        	data+=aDataRow.substring(0,aDataRow.length()-1)+"\n";
+        	
+        	curCSV.moveToNext();
+        }
+        
+        }
+        
+	} catch (Exception e) {
+		Toast.makeText(context, e.getMessage(),
+				Toast.LENGTH_SHORT).show();
+	}
+	try {
+		
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		//get trainee username
+				Cursor ctraineeusername=myDatabase.traineexist();				
+				if(ctraineeusername.getCount()>0)
+				{
+					ctraineeusername.moveToFirst();
+					nameValuePairs.add(new BasicNameValuePair("trainee", ctraineeusername.getString(ctraineeusername.getColumnIndex("username"))));
+					nameValuePairs.add(new BasicNameValuePair("tblname", tablename));
+					nameValuePairs.add(new BasicNameValuePair("data", data.toString()));
+					nameValuePairs.add(new BasicNameValuePair("mode", "upload"));
+
+				}
+		
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		Log.d("LEE",dataString);
+		
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		} 
+		catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		}
+}
+}
+
+public void sendcsvtophpadmin(Context context,String tablename,String filename)
+{
+	final HttpClient httpclient = new DefaultHttpClient();
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+	 Cursor cconfig = MDBHelper.getconfig();
+	    if(cconfig.getCount()>0)
+	    {
+	    	cconfig.moveToFirst();
+	    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+	    }
+	
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	String aBuffer = "";
+	//To read from CSV
+	try {
+		File myFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/"+filename);
+		FileInputStream fIn = new FileInputStream(myFile);
+		BufferedReader myReader = new BufferedReader(new InputStreamReader(fIn));
+		String aDataRow = "";
+		aBuffer = "";
+		while ((aDataRow = myReader.readLine()) != null) 
+		{
+			aBuffer += aDataRow + "\n";
+		}
+		myReader.close();
+		
+	} catch (Exception e) {
+		Toast.makeText(context, e.getMessage(),
+				Toast.LENGTH_SHORT).show();
+	}
+	//To send to admin site
+	try {		
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("tblname", tablename));
+		nameValuePairs.add(new BasicNameValuePair("Bufferreader", aBuffer));
+		nameValuePairs.add(new BasicNameValuePair("mode", "upload"));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		Log.d("LEE",dataString);
+		
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, "CPE response " + e.toString(), Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, "IOE response " + e.toString(), Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void trainee(Context context,String username,String password)
+{
+	TestAdapter MDBHelper = new TestAdapter(context);
+	final HttpClient httpclient = new DefaultHttpClient();
+	String Serverurl="";
+	
+	MDBHelper.open();
+	 Cursor cconfig = MDBHelper.getconfig();
+	    if(cconfig.getCount()>0)
+	    {
+	    	cconfig.moveToFirst();
+	    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+	    }
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	//This is the data to send					
+	try {
+		// Add your data
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("username", username));
+		nameValuePairs.add(new BasicNameValuePair("pass", password));
+		nameValuePairs.add(new BasicNameValuePair("mode", "trainee"));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		// Execute HTTP Post Request
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		//This is the response from a php application
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "Username and password incorrect.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			MDBHelper.resetdatabase();       
+			MDBHelper.open();
+			String[] userinfo = dataString.split(",");
+			MDBHelper.insertuser(userinfo[0], userinfo[2], "trainee", userinfo[3], userinfo[1]);
+			Toast.makeText(context, "System reset.", Toast.LENGTH_LONG).show();
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+private void createDialogreset(final Context context) {
+
+    AlertDialog.Builder alertDlg = new AlertDialog.Builder(context);
+
+    alertDlg.setMessage("This will REMOVE ALL existing data from the system. This is NOT reversible. Do you wish to proceed?  ");
+
+    alertDlg.setCancelable(false); 
+
+    alertDlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {    
+
+      public void onClick(DialogInterface dialog, int id) {
+
+    	  		createDialogreset2(context);
+           }     
+    }
+    );
+     alertDlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+    public void onClick(DialogInterface dialog, int which) {
+      // We do nothing
+    }
+
+    });
+     alertDlg.create().show();
+}
+
+private void createDialogreset2(final Context context) {
+	
+	final String [] items=new String []{"NO","NO","NO","NO","NO","NO","NO","NO","NO","NO","NO","YES","NO","NO","NO"};
+    AlertDialog.Builder alertDlg = new AlertDialog.Builder(context);
+    //alertDlg.setTitle("Title");
+
+    alertDlg.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			items[0]=items[which];
+		}
+	});
+
+    alertDlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {    
+
+      public void onClick(DialogInterface dialog, int id) {
+    	  		if(items[0].equalsIgnoreCase("YES"))
+    	  		{
+    	  			//We do sync before replace database for more safety
+    	  			/*senddatatophpadmin(context,"subject");
+    				senddatatophpadmin(context,"assessment");
+    				senddatatophpadmin(context,"checklist");
+    				senddatatophpadmin(context,"assessmentdetail");
+    				senddatatophpadmin(context,"timelost");
+    				senddatatophpadmin(context,"checklisttask");*/
+    				/*senddatatophpadmin(context,"competency");
+    				senddatatophpadmin(context,"competencytask");
+    				senddatatophpadmin(context,"competencytaskdesc");*/
+    				//Do reset now
+    	  			TestAdapter MDBHelper = new TestAdapter(context);
+        	  		MDBHelper.resetdatabase();    
+        	  		MDBHelper.close();
+        	  		Toast.makeText(context, "System reset to factory settings.", Toast.LENGTH_LONG).show();
+        	  		logout(context);
+    	  		}
+           }     
+    }
+    );
+    alertDlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+    public void onClick(DialogInterface dialog, int which) {
+
+    }
+
+    });
+     
+     alertDlg.setView(layout);
+     AlertDialog alertDialog = alertDlg.create();
+     alertDialog.show();
+     alertDialog.getWindow().setLayout(400,500);
+     
+     ((Button)alertDialog.findViewById(android.R.id.button2)).setBackgroundResource(R.drawable.sel_button);
+     ((Button)alertDialog.findViewById(android.R.id.button1)).setBackgroundResource(R.drawable.sel_button);
+     ((Button)alertDialog.findViewById(android.R.id.button1)).setTextColor(Color.WHITE);
+     ((Button)alertDialog.findViewById(android.R.id.button2)).setTextColor(Color.WHITE);
+}
+
+protected void startActivity(Intent intentpopup) {
+	// TODO Auto-generated method stub
+	
+}
+
+private void createDialogexit(final Context context) {
+	
+	final TestAdapter mDbHelper = new TestAdapter(context);  
+    AlertDialog.Builder alertDlg = new AlertDialog.Builder(context);
+
+    alertDlg.setMessage("Are you sure you want to exit?");
+
+    alertDlg.setCancelable(false); 
+
+    alertDlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {    
+
+      public void onClick(DialogInterface dialog, int id) {
+    	  	mDbHelper.loginfalse();
+    	  	System.exit(0);
+           }     
+    }
+
+     );
+     alertDlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+    public void onClick(DialogInterface dialog, int which) {
+
+    }
+
+    });
+     alertDlg.create().show();
+
+}
+
+private void createDialogServersetting(final Context context)
+{
+	AlertDialog.Builder AlertDlg=new AlertDialog.Builder(context);
+	//I need to create more than one item in my dialog so I should add them to layout and assign layout to Dialog.
+	LinearLayout layout = new LinearLayout(context);
+	layout.setOrientation(LinearLayout.VERTICAL);
+	
+	final TextView tvdesc=new TextView(context);
+	final EditText etservername=new EditText(context);
+	
+	final TestAdapter mdbHelper=new TestAdapter(context);
+	mdbHelper.open();
+	//Load data
+	Cursor cconfig=mdbHelper.getconfig();
+	if(cconfig.getCount()>0)
+	{
+		cconfig.moveToFirst();
+		etservername.setText(cconfig.getString(cconfig.getColumnIndex("serverurl")));
+	}
+	etservername.setBackgroundResource(R.drawable.shape_edittext);
+	etservername.setHeight(50);
+	tvdesc.setText(R.string.serversettingdesc);
+	tvdesc.setTextColor(Color.parseColor("#14568B"));
+	tvdesc.setTextSize(16);
+	tvdesc.setPadding(10, 10, 10, 10);
+	
+	layout.addView(tvdesc);
+	layout.addView(etservername);
+	AlertDlg.setTitle(R.string.serversettingtitle);
+	AlertDlg.setView(layout);
+	
+	AlertDlg.setPositiveButton("Save",new DialogInterface.OnClickListener() {
+		
+		public void onClick(DialogInterface dialog, int which) {
+			//Save data here
+			mdbHelper.updateconfig(context,"serverurl",etservername.getText().toString());
+		}
+	});
+	
+	AlertDlg.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		
+		public void onClick(DialogInterface dialog, int which) {
+			
+		}
+	});
+	Button btncancel=new Button(context, null, AlertDialog.BUTTON_NEGATIVE);
+	btncancel.setBackgroundResource(R.drawable.sel_button);
+	btncancel.setTextColor(Color.parseColor("#FFFFFF"));
+
+	AlertDlg.show();
+}
+}
+

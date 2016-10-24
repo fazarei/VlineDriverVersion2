@@ -1,0 +1,573 @@
+package com.gvm.vlinedriver;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import com.gvm.vlinedriver.R;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.database.Cursor;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
+
+public class CompetencyInstructed extends Activity {
+
+	private String competencyid;
+	private String trainee="";
+	private String assessor="";
+	private String assessorfullname="";
+	private String corridor="";
+	private String competencyiddesc="";
+	private String tablenumber="";
+	final Calendar myCalendar = Calendar.getInstance();
+	
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.act_competencyinstructed);
+		
+		final TestAdapter mdbHelper=new TestAdapter(this);
+		mdbHelper.open();
+		
+		competencyid=getIntent().getStringExtra("competencyid");
+		
+		//Table 1
+		final TableLayout tbl1=(TableLayout) findViewById(R.id.table1);
+		final TextView tvassessor1=(TextView) findViewById(R.id.textView4);
+		final EditText etdate1=(EditText) findViewById(R.id.editText1);
+		final EditText etask1=(EditText) findViewById(R.id.editText2);
+		final Spinner spmotive1=(Spinner) findViewById(R.id.spmotive1);
+		final EditText ettd1=(EditText) findViewById(R.id.editText4);
+		final ImageView img1=(ImageView) findViewById(R.id.imageView1);
+		//Table 2
+		final TableLayout tbl2=(TableLayout) findViewById(R.id.table2);
+		final TextView tvassessor2=(TextView) findViewById(R.id.textView10);
+		final EditText etdate2=(EditText) findViewById(R.id.editText5);
+		final EditText etask2=(EditText) findViewById(R.id.editText6);
+		final Spinner spmotive2=(Spinner) findViewById(R.id.spmotive2);
+		final EditText ettd2=(EditText) findViewById(R.id.editText8);
+		final ImageView img2=(ImageView) findViewById(R.id.imageView2);
+		//Table 3
+		final TableLayout tbl3=(TableLayout) findViewById(R.id.table3);
+		final TextView tvassessor3=(TextView) findViewById(R.id.textView16);
+		final EditText etdate3=(EditText) findViewById(R.id.editText9);
+		final EditText etask3=(EditText) findViewById(R.id.editText10);
+		final Spinner spmotive3=(Spinner) findViewById(R.id.spmotive3);
+		final EditText ettd3=(EditText) findViewById(R.id.editText12);
+		final ImageView img3=(ImageView) findViewById(R.id.imageView3);
+		//Table 4
+		final TableLayout tbl4=(TableLayout) findViewById(R.id.table4);
+		final TextView tvassessor4=(TextView) findViewById(R.id.textView22);
+		final EditText etdate4=(EditText) findViewById(R.id.editText13);
+		final EditText etask4=(EditText) findViewById(R.id.editText14);
+		final Spinner spmotive4=(Spinner) findViewById(R.id.spmotive4);
+		final EditText ettd4=(EditText) findViewById(R.id.editText16);
+		final ImageView img4=(ImageView) findViewById(R.id.imageView4);
+		//Table 5
+		final TableLayout tbl5=(TableLayout) findViewById(R.id.table5);
+		final TextView tvassessor5=(TextView) findViewById(R.id.textView27);
+		final EditText etdate5=(EditText) findViewById(R.id.editText17);
+		final EditText etask5=(EditText) findViewById(R.id.editText18);
+		final Spinner spmotive5=(Spinner) findViewById(R.id.spmotive5);
+		final EditText ettd5=(EditText) findViewById(R.id.editText20);
+		final ImageView img5=(ImageView) findViewById(R.id.imageView5);
+		//Table 6
+		final TableLayout tbl6=(TableLayout) findViewById(R.id.table6);
+		final EditText etdate6=(EditText) findViewById(R.id.editText21);
+		final Spinner spmpu6=(Spinner) findViewById(R.id.spmpu6);
+		final Spinner spday6=(Spinner) findViewById(R.id.spday6);
+		final EditText ettdno6=(EditText) findViewById(R.id.editText24);
+		final Spinner sporigin6=(Spinner) findViewById(R.id.sporigin6);	
+		final Spinner spdestination6=(Spinner) findViewById(R.id.spdestination6);
+		final ImageView img6=(ImageView) findViewById(R.id.imageView6);
+		//Table 7
+		final TableLayout tbl7=(TableLayout) findViewById(R.id.table7);
+		final EditText etdate7=(EditText) findViewById(R.id.editText26);
+		final Spinner spmpu7=(Spinner) findViewById(R.id.spmpu7);
+		final Spinner spday7=(Spinner) findViewById(R.id.spday7);
+		final EditText ettdno7=(EditText) findViewById(R.id.editText29);
+		final Spinner sporigin7=(Spinner) findViewById(R.id.sporigin7);	
+		final Spinner spdestination7=(Spinner) findViewById(R.id.spdestination7);
+		final ImageView img7=(ImageView) findViewById(R.id.imageView7);
+		
+		final Button bsave=(Button) findViewById(R.id.button1);
+		//get trainee username
+		Cursor ctraineeusername=mdbHelper.traineexist();
+		
+		if(ctraineeusername.getCount()>0)
+		{
+			ctraineeusername.moveToFirst();
+			trainee=ctraineeusername.getString(ctraineeusername.getColumnIndex("username"));
+		}
+		//Get assessor username
+		Cursor cassessorusername=mdbHelper.assessoruserid();
+		if(cassessorusername.getCount()>0)
+		{
+			cassessorusername.moveToFirst();
+			assessor=cassessorusername.getString(cassessorusername.getColumnIndex("username"));
+			assessorfullname=cassessorusername.getString(cassessorusername.getColumnIndex("fullname"));
+		}		
+		//Get role of user
+		Cursor crole=mdbHelper.userexist();
+		if(crole.getCount()>0)
+		{
+			crole.moveToFirst();
+			if(!crole.getString(crole.getColumnIndex("role")).equalsIgnoreCase("assessor"))
+			{
+				bsave.setVisibility(View.INVISIBLE);
+				etask1.setFocusable(false);
+				etask2.setFocusable(false);
+				etask3.setFocusable(false);
+				etask4.setFocusable(false);
+				etask5.setFocusable(false);				
+				
+				spmotive1.setClickable(false);
+				spmotive2.setClickable(false);
+				spmotive3.setClickable(false);
+				spmotive4.setClickable(false);
+				spmotive5.setClickable(false);		
+				
+				ettd1.setFocusable(false);
+				ettd2.setFocusable(false);
+				ettd3.setFocusable(false);
+				ettd4.setFocusable(false);
+				ettd5.setFocusable(false);			
+				
+				ettdno6.setFocusable(false);
+				spmpu6.setFocusable(false);
+				spday6.setClickable(false);
+				sporigin6.setClickable(false);
+				spdestination6.setClickable(false);			
+				
+				ettdno7.setFocusable(false);				
+				spmpu7.setFocusable(false);
+				spday7.setClickable(false);
+				sporigin7.setClickable(false);
+				spdestination7.setClickable(false);
+				
+				img1.setVisibility(View.INVISIBLE);
+				img2.setVisibility(View.INVISIBLE);
+				img3.setVisibility(View.INVISIBLE);
+				img4.setVisibility(View.INVISIBLE);
+				img5.setVisibility(View.INVISIBLE);
+				img6.setVisibility(View.INVISIBLE);
+				img7.setVisibility(View.INVISIBLE);
+			}
+		}
+		//Load data
+		Cursor ccompetencydesc=mdbHelper.getcompetencytaskdesk(competencyid);
+		Cursor ccompetency=mdbHelper.getcompetencyid(competencyid);
+		if(ccompetency.getCount()>0)
+		{
+			ccompetency.moveToFirst();
+			corridor=ccompetency.getString(ccompetency.getColumnIndex("corridor"));			
+			//Doesn't Include Corridor
+			if(corridor.isEmpty())
+			{
+				tbl1.setVisibility(View.VISIBLE);
+				tbl2.setVisibility(View.VISIBLE);
+				tbl3.setVisibility(View.VISIBLE);
+				tbl4.setVisibility(View.VISIBLE);
+				tbl5.setVisibility(View.VISIBLE);
+				tbl6.setVisibility(View.GONE);
+				tbl7.setVisibility(View.GONE);
+				//If we have data, we will load them otherwise we will insert data 
+				if(ccompetencydesc.getCount()>0)
+				{
+					ccompetencydesc.moveToFirst();
+					do
+					{
+						competencyiddesc=ccompetencydesc.getString(ccompetencydesc.getColumnIndex("competencyId"));
+						tablenumber=ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tablenumber"));
+						if(competencyiddesc.equalsIgnoreCase(competencyid) && tablenumber.equalsIgnoreCase("1"))
+						{
+							tvassessor1.setText(assessorfullname);
+							etdate1.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("date")));
+							etask1.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("task")));
+							loadspiner("5",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("motivepower")),spmotive1);
+							ettd1.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tdno")));
+						}
+						if(competencyiddesc.equalsIgnoreCase(competencyid) && tablenumber.equalsIgnoreCase("2"))
+						{
+							tvassessor2.setText(assessorfullname);
+							etdate2.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("date")));
+							etask2.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("task")));
+							loadspiner("5",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("motivepower")),spmotive2);
+							ettd2.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tdno")));
+						}
+						if(competencyiddesc.equalsIgnoreCase(competencyid) && tablenumber.equalsIgnoreCase("3"))
+						{
+							tvassessor3.setText(assessorfullname);
+							etdate3.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("date")));
+							etask3.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("task")));
+							loadspiner("5",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("motivepower")),spmotive3);
+							ettd3.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tdno")));
+						}
+						if(competencyiddesc.equalsIgnoreCase(competencyid) && tablenumber.equalsIgnoreCase("4"))
+						{
+							tvassessor4.setText(assessorfullname);
+							etdate4.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("date")));
+							etask4.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("task")));
+							loadspiner("5",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("motivepower")),spmotive4);
+							ettd4.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tdno")));
+						}
+						if(competencyiddesc.equalsIgnoreCase(competencyid) && tablenumber.equalsIgnoreCase("5"))
+						{
+							tvassessor5.setText(assessorfullname);
+							etdate5.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("date")));
+							etask5.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("task")));
+							loadspiner("5",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("motivepower")),spmotive5);
+							ettd5.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tdno")));
+						}
+					}
+					while(ccompetencydesc.moveToNext());
+				}
+				else
+				{
+					mdbHelper.insertcompetencytaskdesc(competencyid, "1");
+					mdbHelper.insertcompetencytaskdesc(competencyid, "2");
+					mdbHelper.insertcompetencytaskdesc(competencyid, "3");
+					mdbHelper.insertcompetencytaskdesc(competencyid, "4");
+					mdbHelper.insertcompetencytaskdesc(competencyid, "5");
+				}
+			}
+			//Include Corridor
+			else
+			{
+				tbl1.setVisibility(View.GONE);
+				tbl2.setVisibility(View.GONE);
+				tbl3.setVisibility(View.GONE);
+				tbl4.setVisibility(View.GONE);
+				tbl5.setVisibility(View.GONE);
+				tbl6.setVisibility(View.VISIBLE);
+				tbl7.setVisibility(View.VISIBLE);
+				if(ccompetencydesc.getCount()>0)
+				{
+						ccompetencydesc.moveToFirst();
+						do
+						{
+							competencyiddesc=ccompetencydesc.getString(ccompetencydesc.getColumnIndex("competencyId"));
+							tablenumber=ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tablenumber"));
+							if(competencyiddesc.equalsIgnoreCase(competencyid) && tablenumber.equalsIgnoreCase("1"))
+							{
+								etdate6.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("date")));
+								loadspiner("5",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("mpu")),spmpu6);
+								loadspiner("2",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("dayornight")),spday6);
+								ettdno6.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tdno")));
+								loadspiner("1",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("origin")),sporigin6);
+								loadspinerfilter("1",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("destination")),spdestination6,sporigin6.getSelectedItem().toString());
+								//loadspiner("1",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("destination")),spdestination6);
+							}
+							if(competencyiddesc.equalsIgnoreCase(competencyid) && tablenumber.equalsIgnoreCase("2"))
+							{
+								etdate7.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("date")));
+								loadspiner("5",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("mpu")),spmpu7);
+								loadspiner("2",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("dayornight")),spday7);
+								ettdno7.setText(ccompetencydesc.getString(ccompetencydesc.getColumnIndex("tdno")));
+								loadspiner("1",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("origin")),sporigin7);
+								loadspinerfilter("1",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("destination")),spdestination7,sporigin7.getSelectedItem().toString());
+								//loadspiner("1",ccompetencydesc.getString(ccompetencydesc.getColumnIndex("destination")),spdestination7);
+							}
+						}while(ccompetencydesc.moveToNext());
+				}
+				else
+				{
+					mdbHelper.insertcompetencytaskdesc(competencyid, "1");
+					mdbHelper.insertcompetencytaskdesc(competencyid, "2");
+				}
+			}
+		}
+		//Save data
+		bsave.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				if(corridor.isEmpty())
+				{
+					mdbHelper.updatecompetencytaskdesc(CompetencyInstructed.this,spmotive1.getSelectedItem().toString(),etask1.getText().toString()
+							, etdate1.getText().toString(), "", "",ettd1.getText().toString(), "", "", assessor, 
+							trainee,competencyid, "1");
+					mdbHelper.updatecompetencytaskdesc(CompetencyInstructed.this,spmotive2.getSelectedItem().toString(),etask2.getText().toString()
+							, etdate2.getText().toString(), "", "",ettd2.getText().toString(), "", "", assessor, 
+							trainee,competencyid, "2");
+					mdbHelper.updatecompetencytaskdesc(CompetencyInstructed.this,spmotive3.getSelectedItem().toString(),etask3.getText().toString()
+							, etdate3.getText().toString(), "", "",ettd3.getText().toString(), "", "", assessor, 
+							trainee,competencyid, "3");
+					mdbHelper.updatecompetencytaskdesc(CompetencyInstructed.this,spmotive4.getSelectedItem().toString(),etask4.getText().toString()
+							, etdate4.getText().toString(), "", "",ettd4.getText().toString(), "", "", assessor, 
+							trainee,competencyid, "4");
+					mdbHelper.updatecompetencytaskdesc(CompetencyInstructed.this,spmotive5.getSelectedItem().toString(),etask5.getText().toString()
+							, etdate5.getText().toString(), "", "",ettd5.getText().toString(), "", "", assessor, 
+							trainee,competencyid, "5");
+				}
+				else
+				{
+					mdbHelper.updatecompetencytaskdesc(CompetencyInstructed.this,"","", etdate6.getText().toString()
+							, spmpu6.getSelectedItem().toString(), spday6.getSelectedItem().toString(),ettdno6.getText().toString()
+							, sporigin6.getSelectedItem().toString(), spdestination6.getSelectedItem().toString(), assessor, trainee,
+							competencyid, "1");
+					mdbHelper.updatecompetencytaskdesc(CompetencyInstructed.this,"","", etdate7.getText().toString()
+							, spmpu7.getSelectedItem().toString(), spday7.getSelectedItem().toString(),ettdno7.getText().toString()
+							, sporigin7.getSelectedItem().toString(), spdestination7.getSelectedItem().toString(), assessor, trainee,
+							competencyid, "2");
+				}
+			}
+		});
+		//When we change corridor up, we need to upload corridor down, from and to
+				sporigin6.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					public void onItemSelected(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						loadspinerfilter("1",spdestination6.getSelectedItem().toString(),spdestination6,sporigin6.getSelectedItem().toString());
+					}
+
+					public void onNothingSelected(AdapterView<?> arg0) {
+						return;
+					}
+				});
+				
+				sporigin7.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					public void onItemSelected(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						loadspinerfilter("1",spdestination7.getSelectedItem().toString(),spdestination7,sporigin7.getSelectedItem().toString());
+					}
+
+					public void onNothingSelected(AdapterView<?> arg0) {
+						return;
+					}
+				});
+		//Calendar1
+		final DatePickerDialog.OnDateSetListener date1=new DatePickerDialog.OnDateSetListener() {
+			
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate1);
+			}
+		};	
+		
+		img1.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(CompetencyInstructed.this, date1, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+		//Calendar2
+		final DatePickerDialog.OnDateSetListener date2=new DatePickerDialog.OnDateSetListener() {
+			
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate2);
+			}
+		};	
+		
+		img2.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(CompetencyInstructed.this, date2, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+		//Calendar3
+		final DatePickerDialog.OnDateSetListener date3=new DatePickerDialog.OnDateSetListener() {
+			
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate3);
+			}
+		};	
+		
+		img3.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(CompetencyInstructed.this, date3, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+		//Calendar4
+		final DatePickerDialog.OnDateSetListener date4=new DatePickerDialog.OnDateSetListener() {
+			
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate4);
+			}
+		};	
+		
+		img4.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(CompetencyInstructed.this, date4, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+		//Calendar5
+		final DatePickerDialog.OnDateSetListener date5=new DatePickerDialog.OnDateSetListener() {
+			
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate5);
+			}
+		};	
+		
+		img5.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(CompetencyInstructed.this, date5, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+		//Calendar6
+		final DatePickerDialog.OnDateSetListener date6=new DatePickerDialog.OnDateSetListener() {
+			
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate6);
+			}
+		};	
+		
+		img6.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(CompetencyInstructed.this, date6, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+		//Calendar7
+		final DatePickerDialog.OnDateSetListener date7=new DatePickerDialog.OnDateSetListener() {
+			
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate7);
+			}
+		};	
+		
+		img7.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(CompetencyInstructed.this, date7, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+	}
+
+	private void updateLabel(EditText et) {
+
+	    String myFormat = "dd/MM/yyyy"; //In which you need put here
+	    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+	    
+	    et.setText(sdf.format(myCalendar.getTime()));
+	    }
+	public void loadspiner(String Id,String currentvalue,Spinner spid)
+	{
+		TestAdapter mdbHelper=new TestAdapter(this);
+		mdbHelper.open();
+		
+		List<String> listdesc=new ArrayList<String>();
+		int position=0;
+		int countspinnerselection=0;
+		
+		Cursor curspinner=mdbHelper.getspinnervalue(Id);
+		listdesc.add("");
+		if(curspinner.getCount()>0)
+		{
+			
+			curspinner.moveToFirst();
+			do
+			{
+				countspinnerselection++;
+				listdesc.add(curspinner.getString(curspinner.getColumnIndex("itemdesc")));
+				if((currentvalue!=null) && (curspinner.getString(curspinner.getColumnIndex("itemdesc")).equalsIgnoreCase(currentvalue)))
+				{
+					position=countspinnerselection;
+				}
+				
+			}
+			while(curspinner.moveToNext());	
+		}
+		
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listdesc);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spid.setAdapter(dataAdapter);
+		spid.setSelection(position);
+	}
+	public void loadspinerfilter(String Id,String currentvalue,Spinner spid,String itemdesc)
+	{
+		TestAdapter mdbHelper=new TestAdapter(this);
+		mdbHelper.open();
+		
+		List<String> listdesc=new ArrayList<String>();
+		int position=0;
+		int countspinnerselection=0;
+		
+		Cursor curspinner=mdbHelper.getspinnervaluefilter(Id,itemdesc);
+		listdesc.add("");
+		if(curspinner.getCount()>0)
+		{
+			String[] filteritem = curspinner.getString(curspinner.getColumnIndex("filter")).split(",");
+			curspinner.moveToFirst();
+			for (int i = 0; i < filteritem.length; i ++)
+			{
+				countspinnerselection++;
+				listdesc.add(filteritem[i]);
+				if((currentvalue!=null) && (filteritem[i].equalsIgnoreCase(currentvalue)))
+				{
+					position=countspinnerselection;
+				}
+			}
+		}
+		
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listdesc);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spid.setAdapter(dataAdapter);
+		spid.setSelection(position);
+	}
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.act_competencyinstructed, menu);
+		return true;
+	}
+
+}

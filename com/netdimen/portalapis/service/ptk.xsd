@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="Root">
+        <xs:complexType>
+            <xs:all>
+            	<xs:element ref="UserInfo" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="Courses" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="CourseSessions" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="CourseDescription" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="NewsArticles" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="NewsArticle" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="EnrolledModules" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="TrainingHistory" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="Surveys" minOccurs="0" maxOccurs="1" />
+                <xs:element name="Success" type="xs:string" minOccurs="1" maxOccurs="1" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UserInfo">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="UserId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="GivenName" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="FamilyName" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="NeedtoChangePassword" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	<xs:element name="Survey">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="TestId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="AutoScore" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="TakeLimit" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Reviewable" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="AllowHints" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="RequiredPoints" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="MaxPoints" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ReviewQuestion" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="MarkType" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ReviewType" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="MaxTimePerQuestion" type="xs:string" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Surveys">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Survey" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="TrainingHistory">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="TrainingRecords" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="ExternalTrainingRecords" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	<xs:element name="TrainingRecords">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="TrainingRecord" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	<xs:element name="ExternalTrainingRecords">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="TrainingRecord" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	<xs:element name="TrainingRecord">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="LearningId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningType" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="TranscriptId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="SessionId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="StandaloneModule" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="CreditTranscriptLink" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="AssessmentScore" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="CurriculumTranscriptLink" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="HighestScore" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="AllowReopen" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Score" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="DateRange" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="TimeZone" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Hours" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ExtRecordId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ExtRecordLearningProgramModule" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ExtRecordStartDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ExtRecordTrainingHours" type="xs:string" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="EnrolledModule">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="CourseId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Date" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="TranscriptId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningType" type="xs:string" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="EnrolledModules">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="EnrolledModule" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="NewsArticles">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="NewsArticle" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="NewsArticle">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="ArticleId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="DateEntered" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Teaser" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Status" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ExpireDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="DisplayOrder" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="FromUserId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="AllowEdit" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="ArticleDisplay" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="NewsCatId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="PictureUrl" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="FileAttachmentUrl" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="TestId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="AutoDelete" type="xs:string" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Courses">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Course" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	<xs:element name="Course">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="LearningId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningType" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element ref="Catalogs" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Catalogs">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Catalog" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CourseSessions">
+        <xs:complexType>
+        	<xs:sequence>
+                <xs:element ref="CourseSession" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	<xs:element name="CourseSession">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="LearningId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="StartDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="EndDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="SeatsLimit" type="xs:integer" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="NumberOfRegisteredUsers" type="xs:integer" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="CourseEventId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningType" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningTypeCode" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Location" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="EnrollStartDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="EnrollEndDate" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="CatalogId" type="xs:string" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="CourseDescription">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="LearningId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningType" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Subject" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Language" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="AdditionalInfo" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element ref="Objectives" minOccurs="1" maxOccurs="1" />
+            	<xs:element ref="ModuleSessions" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Objectives">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Objective" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ModuleSessions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ModuleSession" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+	<xs:element name="ModuleSession">
+		<xs:complexType>
+        	<xs:sequence>
+            	<xs:element name="Title" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="SessionId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="LearningType" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="SessionDateTime" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="GeographicRegion" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Instructor" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="Venue" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="EnrollmentPeriod" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="RemainingSeats" type="xs:string" minOccurs="1" maxOccurs="1" />
+            	<xs:element name="SessionStatus" type="xs:string" minOccurs="1" maxOccurs="1" />
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

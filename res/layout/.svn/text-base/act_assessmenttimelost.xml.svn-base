@@ -1,0 +1,525 @@
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/shape_background">
+    <TableLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:background="@drawable/shape_background">
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/txtviewtitlehedear"
+        android:layout_marginTop="20dp"
+        android:text="@string/timelost" />
+
+    <TableLayout
+        style="@style/gridtable"
+        android:layout_height="432dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            style="@style/tableheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/gridtxthedearsmall"
+                android:text="@string/tripno"
+                 />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/gridtxthedearsmall"
+                android:text="@string/minlost" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/gridtxthedearsmall"
+                android:text="@string/signal"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/gridtxthedearsmall"
+                android:layout_width="120dp"
+                android:text="@string/passenger" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/gridtxthedearsmall"
+                android:text="@string/permanent" />
+
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/gridtxthedearsmall"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="@string/trackwork"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView15"
+                style="@style/gridtxthedearsmall"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:text="@string/trainfault"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView16"
+                style="@style/gridtxthedearsmall"
+                android:layout_width="150dp"
+                android:text="@string/other" />
+
+            <TextView
+                android:id="@+id/textView22"
+                style="@style/gridtxthedearsmall"
+                android:text="@string/explain" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            style="@style/tablerowodd"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp" 
+            >
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText1"
+                style="@style/smalledittext"
+                android:layout_height="40dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/shape_edittext"
+                android:ems="10"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText2"
+                style="@style/bigedittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"   />
+
+            <EditText
+                android:id="@+id/editText3"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText4"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText5"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText6"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText7"
+                style="@style/smalledittext" 
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText45"
+                style="@style/bigedittext" 
+                android:background="@drawable/shape_edittext" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/tablerowodd" >
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText8"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText9"
+                style="@style/bigedittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText10"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText11"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"   />
+
+            <EditText
+                android:id="@+id/editText12"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"  
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText13"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                 android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText14"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText46"
+                style="@style/bigedittext" 
+                android:background="@drawable/shape_edittext"
+                 />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             style="@style/tablerowodd" >
+
+            <TextView
+                android:id="@+id/textView9"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText15"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText16"
+                style="@style/bigedittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+            <EditText
+                android:id="@+id/editText17"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText18"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText19"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText20"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText21"
+                style="@style/smalledittext" 
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText47"
+                 style="@style/bigedittext" 
+                android:background="@drawable/shape_edittext" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+             style="@style/tablerowodd">
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/txtviewtable"
+                />
+
+                        <EditText
+                android:id="@+id/editText22"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText23"
+                style="@style/bigedittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+            <EditText
+                android:id="@+id/editText24"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText25"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText26"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText27"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText28"
+                style="@style/smalledittext" 
+                android:background="@drawable/shape_edittext"  
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText48"
+                 style="@style/bigedittext" 
+                android:background="@drawable/shape_edittext"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            style="@style/tablerowodd">
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText29"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+            <EditText
+                android:id="@+id/editText30"
+                style="@style/bigedittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText31"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText32"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText33"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText34"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+            
+            <EditText
+                android:id="@+id/editText35"
+                style="@style/smalledittext" 
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText49"
+                 style="@style/bigedittext" 
+                android:background="@drawable/shape_edittext"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            style="@style/tablerowodd">
+
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText36"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"
+                android:inputType="number"  />
+            <EditText
+                android:id="@+id/editText37"
+                style="@style/bigedittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText38"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText39"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText40"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editText41"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number" />
+            
+            <EditText
+                android:id="@+id/editText42"
+                style="@style/smalledittext" 
+                android:background="@drawable/shape_edittext" 
+                android:inputType="number"  />
+
+            <EditText
+                android:id="@+id/editText50"
+                 style="@style/bigedittext" 
+                android:background="@drawable/shape_edittext" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/tablefooter" >
+            
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/gridtxthedearsmall"
+                android:text="@string/total" />
+
+            <TextView
+                android:id="@+id/textView20"
+                style="@style/gridtxthedearsmall" />
+
+            <TextView
+                android:id="@+id/textView17"
+                style="@style/gridtxthedearsmall"
+                android:layout_width="100dp"
+                android:text="@string/timeoverschedule" />
+
+            <EditText
+                android:id="@+id/editText43"
+                style="@style/smalledittext"
+                android:layout_width="80dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_edittext"
+                android:height="40dp"
+                android:focusable="false"/>
+
+            <TextView
+                android:id="@+id/textView18"
+                style="@style/gridtxthedearsmall"
+                android:layout_width="15dp"
+                android:text="@string/totaltimelost" />
+
+            <EditText
+                android:id="@+id/editText44"
+                style="@style/smalledittext"
+                android:layout_width="80dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_edittext"
+                android:height="40dp"
+                android:focusable="false"/>
+
+            <TextView
+                android:id="@+id/textView19"
+                style="@style/gridtxthedearsmall"
+                android:layout_span="2"
+                android:text="@string/traineedriver" />
+
+            <TextView
+                android:id="@+id/textView21"
+                style="@style/gridtxthedearsmall" />
+            
+        </TableRow>
+        
+    </TableLayout>
+
+    <TableRow
+        android:id="@+id/tableRow9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+        android:id="@+id/button1"
+        style="@style/button"
+        android:layout_width="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/sel_button"
+        android:text="@string/save" />
+    </TableRow>
+
+   </TableLayout>
+</HorizontalScrollView>

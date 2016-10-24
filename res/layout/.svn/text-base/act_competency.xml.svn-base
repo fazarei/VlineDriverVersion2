@@ -1,0 +1,225 @@
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/shape_background">
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        >
+      
+        <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+        
+<TableLayout>
+    
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp" >
+
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/txtviewtitle"
+                android:layout_gravity="left"
+                android:layout_span="2" />
+
+            <TextView
+                android:id="@+id/textView19"
+                style="@style/txtviewtitle"
+                android:layout_gravity="center"
+                android:layout_span="3"
+                android:text="@string/overallcompetencyreport" />
+
+        	</TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                style="@style/tablerowodd"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="15dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/trainee" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="300dp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/corporate" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="200dp" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/date" />
+
+                <EditText
+                    android:id="@+id/editText2"
+                    style="@style/edittextdate"
+                    android:background="@drawable/shape_edittext"   
+					>
+                </EditText>
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingRight="60dp"
+                    android:src="@drawable/calendar"
+                    android:contentDescription="@string/calendar" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                style="@style/tablerowodd"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/assessor:" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="300dp" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/corporate" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="200dp" />
+
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/tableRow7"
+                style="@style/tablerowodd"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/objective" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    style="@style/txtviewtablesmall"
+                    android:layout_span="6"
+                    android:textStyle="normal" />
+
+            </TableRow>
+</TableLayout>
+
+<TableRow
+    android:id="@+id/tableRow8"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone" >
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textView18"
+        style="@style/gridtxthedear"
+        android:layout_span="2"
+        android:paddingLeft="100dp"
+        android:text="@string/proficiencylevel" />
+
+</TableRow>
+
+<TableRow
+    android:id="@+id/tableRow4"
+    android:layout_marginLeft="500dp"
+    android:layout_marginTop="10dp" >
+
+</TableRow>
+                  
+        <TableRow
+            android:id="@+id/tableRow3"
+            style="@style/gridheader"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="3dp" >
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/taskactivity"
+                android:width="700dp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/gridtxthedear"
+                android:layout_width="200dp"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/competent" />
+
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="20dp"
+                android:text="@string/notcompetent"
+                android:width="200dp" />
+
+        </TableRow>
+
+        <GridView
+            android:id="@+id/gridView1"
+            style="@style/gridstyle"
+            android:layout_height="250dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp" >
+
+        </GridView>
+<TableLayout>
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/button"
+                android:layout_width="200dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/sel_button"
+                android:text="@string/save" />
+
+        </TableRow>
+</TableLayout>
+    </TableLayout>
+   </TableLayout>
+</HorizontalScrollView>

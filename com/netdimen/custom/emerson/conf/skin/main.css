@@ -1,0 +1,337 @@
+BODY {
+	background-image:# url(images/background/bodybg.jpg) repeat-y; 
+	background-attachment:fixed;
+	background-repeat:repeat-x;
+	background-position:top left;
+	background-color:white;
+	font-family:arial;
+	font-size:11px;
+	background-color:#FFFFFF;
+	padding:0px 15px 0px 15px;
+	width:100%;
+}
+
+hr {border:1px dash #00a5e4; size:1px;}
+
+/*REGULAR TEXTS*/
+ul, th, td, p, select, input {
+	font-family:arial;
+	font-size:11px;
+	color:#000;
+}
+
+TD.ekpwarning	{font-size:13px; color:#3d2f6c;} 
+P.ekpwarning 	 {font-size:13px; color:#3d2f6c;} 
+.ekpwarning       {font-size:13px; color:#3d2f6c;}
+
+/* TABLE */
+.table_border {border:1px solid #999999;}
+
+/* COMMUNICATION TOOLS & KNOWLEDGE TOOLS*/
+TD.HOMETOPIMAGE {
+	vertical-align:inherit;
+ 	background-color:#f7941d;
+	color:#FFFFFF;
+	font-size:11px;
+	line-width:10px;
+	font-family:arial;
+	font-style:bold;
+	text-align:center;
+	}
+TD.HOMEBORDER {background-color:#94d4e9;}
+
+/* HEADERS */
+h1, h2.maintitle,.text_tit {font-size:18px;}
+h2 {font-size:16px;}
+h3 {font-size:14px;}
+h4 {font-size:10pt;}
+
+h1, h2,h3, h4, h2.maintitle,.text_tit {font-family:arial; color:#0099cc;}
+
+h4 {margin-bottom:3px;}
+
+h2 {/* Need to keep this centered to avoid disturbing older skins - not anymore... */  
+	font-family:arial;
+	font-size:18px;
+	font-weight:bold;
+  	text-align:left;
+  	padding-top:4px;
+	margin:0px;
+  	color:#0696cb;
+	background:#fff;
+  	line-height:1.2em;
+	width:100%;
+}
+
+h3.emerson{
+	padding:4px;
+	margin-top:0px;
+	background-color:#f7941d;
+	color:#fff;
+	font-size:14px;
+	font-weight:bold;
+}
+
+
+em {
+	font-weight:bold;
+	color:#cc0000;
+  }
+
+/*new 3.0*/
+.table_h1 {font-family:arial; font-size:11px; color:#FFFFFF; background-color:#192C70; font-weight:bold;} 
+.table_h2 {font-family:arial; font-size:11px; color:#000000; background-color:#DBDDDC; font-weight:bold;} 
+.table_h3 {font-family:arial; font-size:11px; color:#000000; background-color:#999999; font-weight:bold;} /*new 3.0 end*/
+
+.row1 {background-color:#f4fafb;} /*new 3.0*/
+.row2 {background-color:#f4fafb;} /*new 3.0*/
+
+.col1 {font:Normal arial 11px; vertial-align:Inherit; background-color:#f4fafb;}
+.col2 {font:Normal arial 11px; vertial-align:Inherit; background-color:#f4fafb;}
+.col3 {font:Normal arial 11px; vertial-align:Inherit; background-color:#eeeeee;}
+
+.tabheader {
+	border:2px solid #94d4e9;
+	background:#fff;
+	padding:0px;
+	margin-left:10px;
+	}
+
+.headers, .head1, .head2, .head3, .head4, .head5, .viewHeader, .viewHeader a, th {
+	background-color:#94d4e9;
+	font-family:arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#FFF;
+	border:0px solid #fff;
+	font-weight:bold;
+	text-align:left;
+	padding:3px;
+}
+
+/* repeat from base.css to overwrite::viewHeader and vH:hover */
+.viewHeader {
+  font-family:arial, Helvetica, sans-serif;
+  font-size:11px;
+  color:#FFF;
+  font-weight:bold;
+  text-align:left;
+}
+
+.viewHeader-hover {
+  background-color:#94d4e9;
+  font-family:arial, Helvetica, sans-serif;
+  font-size:14px;
+  color:#FFF;
+  font-weight:bold;
+}
+
+.colHeader {font-family:arial; font-size:11px; color:#000; background-color:#fff0a1; font-weight:bold;}
+
+
+/* DIVIDERS */
+.divider{
+	background-image:url(images/decorate/divider.gif); 
+	background-repeat:repeat-x;
+}
+.line 		  {background-color:#3d2f6c;}
+
+/* HYPER LINKS*/
+h4 a {
+	font-family:arial, Helvetica, sans-serif;
+	font-size:13px; 
+	color:#2e3192; 
+	font-weight:bold; 
+	}
+	
+h4 a:hover {
+	font-family:arial, Helvetica, sans-serif;
+	font-size:13px;
+	color:#2e3192; 
+	font-weight:bold; 
+	}
+
+h4 a:hover .news {
+	color:#2e3192; 
+}
+	
+big {font-size:13px;}
+
+a.big   {
+	font-size:11px;  
+	color:#2e3192; 
+	font-weight:bold;}
+
+a, .link, .sublink 	 {
+	font-size:11px;  
+	color:#2e3192; 
+	font-weight:bold;
+	text-decoration:underline;
+}
+
+a:hover, a.big:hover {
+	color:#f7941d;
+	font-size:11px;
+	text-decoration:underline;
+}
+
+/* BUTTONS */
+.parmselect {background-color:#eaeaea;}
+
+input[type="submit"], input[type="reset"], input[type="button"]
+{
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:11px;
+		font-weight:bold;
+		color:white;
+		background-color:#161691;
+		padding:1px 5px 1px 5px;
+}
+
+.button, .abutton, .buttonfixed, .topbuttonfixed, .newskinbutton, .topbutton, .leftbutton, .mainbutton
+{
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:11px;
+		font-weight:bold;
+		color:white;
+		background-color:#161691;
+		padding:1px 5px 1px 5px;
+}
+
+/* TABS */
+.tablink 		{BACKGROUND-COLOR:#f4fafb; COLOR:#000000;} /* ON */
+.tablinkx 		{BACKGROUND-COLOR:#0172b6; COLOR:#FFFFFF;} /* OFF */
+.tablink_ds 	{BACKGROUND-COLOR:#0172b6; COLOR:#FFFFFF;}
+.newtablinkx	{BACKGROUND-COLOR:#0172b6; COLOR:#FFFFFF;} /* NAME ON THE TABS */
+a:hover.newtablinkx	{BACKGROUND-COLOR:#0172b6; COLOR:#FFFFFF;} /* NAME ON THE TABS */
+
+.text_h { font-family:arial; font-size:11px; color:#004F4F;}
+.tableFooter {background-color:#ffffff; }
+
+/* KNOWLEDGE CENTER */
+.lstable1 {background-color:#94d4e9; color:#FFF; font-weight:bold; height:18px; vertical-align:inherit;} 
+.lstable2 {background-color:#94d4e9; color:#FFF; font-weight:bold; height:18px; vertical-align:inherit;} 
+.lstable3 {background-color:#94d4e9; color:#FFF; font-weight:bold; height:18px; vertical-align:inherit;} 
+.lstable1 td, .lstable3 td, .lstable2 td {font-weight:normal;}
+.lsshadow {background-color:#999999; color:white; height:18px;} 
+.lsshadow1 {background-color:#FFFFFF; color:BLACK;}  /* ALTERNATING COLORS */
+.lsshadow2 {background-color:#E7E7E7; color:BLACK;} /* ALTERNATING COLORS */
+
+.lsbutton {background-color:#80A7A7; font-family:arial; color:#FFFFFF; font-size:11px}
+.lstitle {font-family:arial; color:#FFFFFF; font-size:18px;}
+.lsdefault {font-family:arial; font-size:11px; margin:0px; }
+.lstext {font-family:arial; font-size:11px;}
+
+/* CALENDAR */
+.calclass  {background-color:#E6E1D2; color:#000000; font-weight:normal;}
+.calonline {background-color:#A2C1CD; color:#000000; font-weight:normal;}
+.calcolor1 {background-color:#FFF; font-weight:normal;}
+.calcolor2 {background-color:#94d4e9; color:#FFFFFF; font-weight:normal;}
+.caltoday {color:#f7941d; font-weight:bold;}
+
+/*USER BIOGRAPHY*/
+.ekptext{color:#000;}
+.ekplabel{color:#000;}
+
+/* UNKNOWN CLASSES!!!!!!!!!!!!!!!! */
+.maintable {background-color:#ffffff;} /*used by TeachReview, CreateUser, HTMLWidgets, Tabs, BatchDeletePolicyView*/
+.mainindex {background-color:#014f51; text-decoration:none; text-align:center; font-size:9px;} /*used by HTMLWidgets*/
+.menulink {color:white;} /*used by HTMLWidgets*/
+.tback2 {padding:2px;} /*Display, ListOther*/
+
+#ekpwarningid{font-family:arial,sans-serif; font-size:11px; color:black;} 
+
+/* USED BY REPORT */
+.tablebg{background-color:#eeeeee;}
+
+.colBtn, .grpBtn, .sBtn, .descBtn, .Btn
+{
+	width:100px;
+}
+
+.highlight {color:#3d2f6c;} /* seems to be being on Report Column Administration */
+.rowbg{}
+.rowhead {background-color:#fff;}
+.rowHeader{}
+
+/* EKP 45 TABS */
+.tabs a {
+  font-size:11px;
+  font-family:verdana;
+  font-weight:normal;
+  color:#FFF;
+  background:#bbbbbb url(images/decorate/left-tab.gif) left top no-repeat;
+  text-decoration:none;
+  padding-left:10px;
+  border-bottom:0px dotted #c00;
+}
+
+.tabs a:hover,.tabs a.selected:hover {
+	font-size:11px;
+	font-family:verdana;
+	text-decoration:underline;
+}
+	
+.tabs a span {
+  background:url(images/decorate/right-tab.gif) right top no-repeat;
+  padding-right:11px;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+.tabs a.selected {
+  color:#FFF;
+  background:#161691 url(images/decorate/left-tab-hover.gif) left top no-repeat;
+  text-decoration:none;
+  padding-left:10px;
+}
+
+.tabs a.selected span {
+  background:url(images/decorate/right-tab-hover.gif) right top no-repeat;
+  padding-right:10px;
+}
+
+.tab-bottom {
+  height:5px;
+  padding:0;
+  background-color:#161691;
+}
+ /** to do:080306 nn > define tabheader searchbox >> fontsize and arial??? properties**/
+ 
+ /* Sortable tables */
+table.sortable th a {
+  font:bold 11px arial;
+  text-decoration:none;
+  display:block;
+  border:0px;
+  color:#FFF;
+}
+
+table.sortable th a:hover{
+  font:bold 11px arial;
+  text-decoration:underline;
+  display:block;
+  border-bottom:0px;
+  color:#FFF;
+}
+
+.sortarrow img {
+	padding:0px 5px 0px 0px;
+	vertical-align:middle;
+}
+
+.col1, .col2 {
+	font:normal 11px arial;
+}
+
+.icon {
+	padding-right:4px;
+	vertical-align:absbottom;
+}
+
+div.enrolled-learning-modules-calendar{
+	margin-right:30px;
+}
+
+body.lsdefault table{
+	width: 99%;
+}

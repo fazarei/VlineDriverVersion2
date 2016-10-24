@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<title>Welcome to the NetDimensions Enterprise Knowledge Platform</title>
+
+<style type="text/css">
+
+body{
+	margin:0px;
+	padding:0px;
+}
+
+a img{
+	border:0px;
+}
+
+#loginBox{
+	width:400px;
+	padding:20px;
+	margin:0 auto;
+	border:2px double #ddd;
+	font:bold 12px Arial, Helvetica, sans-serif;
+	line-height:22px;
+	color:#333;
+}
+
+#instructions{
+	width:400px;
+	margin:0 auto;
+	font:bold 14px Arial, Helvetica, sans-serif;
+
+	color:#333;
+}
+
+#content{
+	position:relative;
+	margin:100px auto;
+	width:960px;
+}
+
+</style>
+
+<script language="JavaScript" type="text/javascript">
+
+var errormessage=1;
+var erroption=window.location.search;
+i = erroption.indexOf('ERR');
+errormessage = erroption.substring(i+4,i+5);
+var errorbasictext="";
+
+if (errormessage==3)
+	alert(errorbasictext + 'The password you entered is incorrect. Remember, passwords are case sensitive.');
+else if (errormessage==2)
+	alert(errorbasictext + 'You have exceeded the number of login attempts and your account is suspended or your account is closed.  Please contract your administrator by clicking on the Lost Password button above.');
+else if (errormessage==1)
+	alert(errorbasictext + 'The User ID you have entered is invalid.');
+
+var win= null;
+function NewWindow(mypage,myname,w,h,scroll){
+  var winl = (screen.width-w)/2;
+  var wint = (screen.height-h)/2;
+  var settings  ='height='+h+',';
+      settings +='width='+w+',';
+      settings +='top='+wint+',';
+      settings +='left='+winl+',';
+      settings +='scrollbars='+scroll+',';
+      settings +='resizable=yes';
+  win=window.open(mypage,myname,settings);
+  if(parseInt(navigator.appVersion) >= 4){win.window.focus();}
+}
+  
+</script>
+</head>
+
+<body>
+<div id="content">
+    <div id="instructions">Login (You must login to proceed to checkout...)</div>
+	<div id="loginBox">
+		<form method="post" action="/$info.getContextPrefix()/servlet/ekp/VERIFY" name="loginform" target=_top>
+	    	<input type="hidden" name="isECommerce" value="true">
+	    	#if ($target != "")
+  			<input type="hidden" name="target" value="$target">
+  			#end
+  			
+	    	<img src="/$info.getContextPrefix()/images/eCommerce/hd-existing-users.gif" alt="Existing Users" width="206" height="33" align="left" >&nbsp;
+	    	
+	    	#if ($selfRegistrationEnabled)
+	    	<a target=_top href="$selfRegistrationUrl">
+	    		<img src="/$info.getContextPrefix()/images/eCommerce/hd-self-register.gif" alt="Self Register">
+	    	</a>
+	    	#end
+	    	
+	    	<br style="clear:both">
+	        User ID/ Email:<br>
+	        <input type="text" name="UID" style="width:360px;"><br>
+	        Password:<br>
+	        <input name="PWD" type="password" style="width:360px;"><br><br>
+			<input type="submit" value="login &raquo;" style="padding:2px 40px; background-color:#eee; border:1px solid #ddd;"> or 
+			<a href="#" onclick="NewWindow('/$info.getContextPrefix()/lostpass.html','LostPassword','400','150')"> recover your password</a>    
+		</form>
+	</div>
+</div>
+
+</body>
+</html>

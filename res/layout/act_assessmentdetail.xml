@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/shape_background">
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        >
+        
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/txtviewtitlehedear"
+        android:layout_marginTop="20dp"
+        android:text="@string/assessmentdetail" />
+
+    <TableLayout
+        style="@style/gridtable"
+        android:layout_height="392dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            style="@style/tableheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/gridtxthedear"
+                android:text="@string/tripno"
+                 />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/gridtxthedear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/gridtxthedear"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/origin"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/gridtxthedear"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/destination"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/gridtxthedear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tdno"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/gridtxthedear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mputype"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView15"
+                style="@style/gridtxthedear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mpuno"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/textView16"
+                style="@style/gridtxthedear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weather"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            style="@style/tablerowodd"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp" 
+            >
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText1"
+                style="@style/smalledittext"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:height="40dp"
+                android:background="@drawable/shape_edittext"
+                 >
+
+                <requestFocus />
+            </EditText>
+
+            <Spinner
+                android:id="@+id/splocation1"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                />
+
+           <Spinner
+               android:id="@+id/spdestination1"
+               style="@style/spinner"
+                android:layout_marginRight="5dp"
+                />
+           
+            <EditText
+                android:id="@+id/editText4"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <EditText
+                android:id="@+id/editText5"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <Spinner
+               android:id="@+id/spmpuno1"
+               style="@style/spinner"
+                android:layout_marginRight="5dp"
+                android:layout_width="100dp"
+                />
+
+            <Spinner
+                android:id="@+id/spweather1"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/tablerowodd" >
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText8"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <Spinner
+                android:id="@+id/splocation2"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+            <Spinner
+                android:id="@+id/spdestination2"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+            
+            <EditText
+                android:id="@+id/editText11"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"  />
+
+            <EditText
+                android:id="@+id/editText12"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext"  />
+
+            <Spinner
+               android:id="@+id/spmpuno2"
+               style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 android:layout_width="100dp"
+                />
+
+            <Spinner
+                android:id="@+id/spweather2"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             style="@style/tablerowodd" >
+
+            <TextView
+                android:id="@+id/textView9"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText15"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+            <Spinner
+                android:id="@+id/splocation3"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+            <Spinner
+                android:id="@+id/spdestination3"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+            <EditText
+                android:id="@+id/editText18"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <EditText
+                android:id="@+id/editText19"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <Spinner
+               android:id="@+id/spmpuno3"
+               style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 android:layout_width="100dp"
+                />
+            <Spinner
+                android:id="@+id/spweather3"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                  />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+             style="@style/tablerowodd">
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/txtviewtable"
+                />
+
+                        <EditText
+                android:id="@+id/editText22"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+           <Spinner
+                android:id="@+id/splocation4"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+            <Spinner
+                android:id="@+id/spdestination4"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+            <EditText
+                android:id="@+id/editText25"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <EditText
+                android:id="@+id/editText26"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <Spinner
+               android:id="@+id/spmpuno4"
+               style="@style/spinner"
+                android:layout_marginRight="5dp"
+                android:layout_width="100dp"
+                />
+
+            <Spinner
+                android:id="@+id/spweather4"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            style="@style/tablerowodd">
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText29"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+            <Spinner
+                android:id="@+id/splocation5"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                />
+
+           <Spinner
+                android:id="@+id/spdestination5"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+            <EditText
+                android:id="@+id/editText32"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <EditText
+                android:id="@+id/editText33"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <Spinner
+               android:id="@+id/spmpuno5"
+               style="@style/spinner"
+                android:layout_marginRight="5dp"
+                android:layout_width="100dp"
+                />
+
+            <Spinner
+                android:id="@+id/spweather5"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            style="@style/tablerowodd">
+
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/txtviewtable"
+                />
+
+            <EditText
+                android:id="@+id/editText36"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+            <Spinner
+                android:id="@+id/splocation6"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                />
+
+            <Spinner
+                android:id="@+id/spdestination6"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                 />
+
+            <EditText
+                android:id="@+id/editText39"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <EditText
+                android:id="@+id/editText40"
+                style="@style/smalledittext"
+                android:background="@drawable/shape_edittext" />
+
+            <Spinner
+               android:id="@+id/spmpuno6"
+               style="@style/spinner"
+                android:layout_marginRight="5dp"
+                android:layout_width="100dp"
+                />
+
+            <Spinner
+                android:id="@+id/spweather6"
+                style="@style/spinner"
+                android:layout_marginRight="5dp"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/tablefooter" >
+            
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/gridtxthedear"
+                android:text="@string/mputypekey"
+                android:layout_span="3" />
+
+            <TextView
+                android:id="@+id/textView17"
+                style="@style/gridtxthedear"
+                android:text="@string/locomotive"
+                android:layout_span="2" />
+
+            <TextView
+                android:id="@+id/textView18"
+                style="@style/gridtxthedear"
+                android:text="@string/sprinter"
+                android:layout_span="2" />
+
+            <TextView
+                android:id="@+id/textView19"
+                style="@style/gridtxthedear"
+                android:text="@string/vlocity"
+                android:layout_span="2" />
+            
+        </TableRow>
+        
+    </TableLayout>
+
+    <TableRow
+        android:id="@+id/tableRow9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <Button
+        android:id="@+id/button1"
+        style="@style/button"
+        android:layout_width="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/sel_button"
+        android:text="@string/save" />
+
+    </TableRow>
+
+   </TableLayout>
+</HorizontalScrollView>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision: 1.170.2.18 $
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+<reports>
+	<report>
+		<report-name>ReportR108CB</report-name>
+		<report-class>com.netdimen.custom.computerbookshops.newreports.configurators.ConfiguratorR108CB</report-class>
+	</report>
+</reports>
+<transactions>
+	<transaction>
+		<tx-code>MSLAUNCH</tx-code>
+		<tx-type>HOMEPAGE</tx-type>
+		<feature>System</feature>
+		<access-level>WriteAccess</access-level>
+		<class>com.netdimen.custom.computerbookshops.tx.course.MSLaunchTx</class>
+		<requires-authentication>true</requires-authentication>
+		<container-transaction>true</container-transaction>
+	</transaction>
+</transactions>
+</components>

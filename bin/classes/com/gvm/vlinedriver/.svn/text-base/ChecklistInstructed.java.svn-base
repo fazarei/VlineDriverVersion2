@@ -1,0 +1,359 @@
+package com.gvm.vlinedriver;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import com.gvm.vlinedriver.R;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.database.Cursor;
+
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class ChecklistInstructed extends Activity {
+
+	private String checknum;
+	private String trainee="";
+	private String assessor="";	
+	private String trainer="";
+	private String trainerinstruction="";
+	private String trainerheader="";
+	final Calendar myCalendar = Calendar.getInstance();
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.act_checklistinstructed);
+		
+		final TestAdapter mdbHelper=new TestAdapter(this);
+		mdbHelper.open();
+		
+		final TextView tvchecknum=(TextView) findViewById(R.id.textView1);
+		final TextView tvtraineedriver=(TextView) findViewById(R.id.textView16);
+		final TextView tvemployeeno=(TextView) findViewById(R.id.textView9);
+		final TextView tvlessonno=(TextView) findViewById(R.id.textView4);
+		final TextView tvlessontitle=(TextView) findViewById(R.id.textView6);
+		final TextView tvobjective=(TextView) findViewById(R.id.textView23);
+		final Spinner splocomotive=(Spinner) findViewById(R.id.splocomotive);
+		final Spinner spcorridordown=(Spinner) findViewById(R.id.spcorridordown);
+		final Spinner spcorridorup=(Spinner) findViewById(R.id.spcorridorup);
+		
+		final TextView tvconduct=(TextView) findViewById(R.id.tvconduct);		
+		final CheckBox chbsig=(CheckBox) findViewById(R.id.checkBox2);		
+		final EditText etdate=(EditText) findViewById(R.id.editText12);
+		
+		final Spinner sptrainer=(Spinner) findViewById(R.id.sptrainer);	
+		final Spinner spday=(Spinner) findViewById(R.id.spday);
+		final Spinner spweather=(Spinner) findViewById(R.id.spweather);
+		final Spinner spfrom=(Spinner) findViewById(R.id.spfrom);
+		final Spinner spto=(Spinner) findViewById(R.id.spto);
+		final Spinner spmpu=(Spinner) findViewById(R.id.spmpu);
+		final Spinner spnovehicle=(Spinner) findViewById(R.id.spnovehicle);
+		
+		final Button bsave=(Button) findViewById(R.id.button1);
+		final ImageView ivdate=(ImageView) findViewById(R.id.imageView2);
+		
+		checknum=getIntent().getStringExtra("checknum");
+
+	 		//Load data
+			Cursor c=mdbHelper.getchecklisttrainer(checknum);
+			if(c.moveToFirst())
+			{
+				trainerinstruction=c.getString(c.getColumnIndex("trainerinstruction"));
+				trainerheader=c.getString(c.getColumnIndex("trainer"));
+				//Fill Spinner
+				loadspiner("2",c.getString(c.getColumnIndex("insdayornight")),spday);
+				loadspiner("3",c.getString(c.getColumnIndex("insweather")),spweather);
+				loadspiner("1",c.getString(c.getColumnIndex("insfrom")),spfrom);
+				loadspiner("1",c.getString(c.getColumnIndex("insto")),spto);
+				loadspiner("5",c.getString(c.getColumnIndex("insmpu")),spmpu);
+				loadspiner("4",c.getString(c.getColumnIndex("insnovehicle")),spnovehicle);
+				loadspiner("6",c.getString(c.getColumnIndex("locomotivetype")),splocomotive);
+				loadspiner("1",c.getString(c.getColumnIndex("corridorup")),spcorridorup);
+				loadspiner("1",c.getString(c.getColumnIndex("corridordown")),spcorridordown);
+				loadspinertrainer(trainerinstruction,sptrainer);
+				
+				tvchecknum.setText(c.getString(c.getColumnIndex("checknum"))+"   "+c.getString(c.getColumnIndex("name")));
+				tvlessonno.setText(c.getString(c.getColumnIndex("checknum")));
+				tvlessontitle.setText(c.getString(c.getColumnIndex("name")));
+				tvobjective.setText(c.getString(c.getColumnIndex("objective")));				
+				tvconduct.setText(c.getString(c.getColumnIndex("trainerinsfullname")));
+				etdate.setText(c.getString(c.getColumnIndex("insdate")));				
+				String sigtrue=c.getString(c.getColumnIndex("instrainersig"));
+	 			if(sigtrue !=null && sigtrue.equalsIgnoreCase("true"))
+	 			{
+	 				chbsig.setChecked(true);
+	 			}
+			}
+	   //get trainee username
+		Cursor ctraineeusername=mdbHelper.traineexist();
+		
+		if(ctraineeusername.getCount()>0)
+		{
+			ctraineeusername.moveToFirst();
+			trainee=ctraineeusername.getString(ctraineeusername.getColumnIndex("username"));
+			tvtraineedriver.setText(ctraineeusername.getString(ctraineeusername.getColumnIndex("fullname")));
+			tvemployeeno.setText(ctraineeusername.getString(ctraineeusername.getColumnIndex("employeeno")));			
+		}
+		//Get assessor username
+		Cursor cassessorusername=mdbHelper.assessoruserid();
+		if(cassessorusername.getCount()>0)
+		{
+			cassessorusername.moveToFirst();
+			assessor=cassessorusername.getString(cassessorusername.getColumnIndex("username"));
+		}
+		//Get trainer username
+		Cursor ctrainerusername=mdbHelper.traineruserid();
+		if(ctrainerusername.getCount()>0)
+		{
+			ctrainerusername.moveToFirst();
+			trainer=ctrainerusername.getString(ctrainerusername.getColumnIndex("username"));
+		}
+		//Check permission
+		Cursor crole=mdbHelper.userexist();
+		if(crole.getCount()>0)
+			{
+			crole.moveToFirst();
+			//Assessor Have full access, We just invisible name of conduct because we visible spinner for them 
+			if(crole.getString(crole.getColumnIndex("role")).equalsIgnoreCase("assessor"))
+			{
+				tvconduct.setVisibility(View.GONE);
+				bsave.setVisibility(View.VISIBLE);
+				
+				chbsig.setEnabled(true);
+				ivdate.setVisibility(View.VISIBLE);
+				spday.setClickable(true);
+				spweather.setClickable(true);
+				spfrom.setClickable(true);
+				spto.setClickable(true);
+				spnovehicle.setClickable(true);	
+				spmpu.setClickable(true);	
+				splocomotive.setClickable(true);	
+				spcorridordown.setClickable(true);
+				spcorridorup.setClickable(true);	
+			}
+			else
+			{
+				sptrainer.setVisibility(View.GONE);
+			}
+
+			if(crole.getString(crole.getColumnIndex("role")).equalsIgnoreCase("trainer") )
+			{
+				//If nobody worked on the guide part before, trainer has access
+					if((trainerinstruction==null) ||(trainerinstruction.isEmpty()) || (crole.getString(crole.getColumnIndex("username")).equalsIgnoreCase(trainerinstruction)))
+					{
+						chbsig.setEnabled(true);
+						ivdate.setVisibility(View.VISIBLE);
+						spday.setClickable(true);
+						spweather.setClickable(true);
+						spfrom.setClickable(true);
+						spto.setClickable(true);
+						spnovehicle.setClickable(true);	
+						spmpu.setClickable(true);	
+					}
+				
+					//If nobody worked on the header part before, just this person has access				
+					if((trainerheader==null) || (trainerheader.isEmpty()) || (crole.getString(crole.getColumnIndex("username")).equalsIgnoreCase(trainerheader)))
+					{
+						splocomotive.setClickable(true);
+						spcorridordown.setClickable(true);	
+						spcorridorup.setClickable(true);	
+					}
+										
+					bsave.setVisibility(View.VISIBLE);
+			}
+				//Trainee doesn't have access to anything
+				if(crole.getString(crole.getColumnIndex("role")).equalsIgnoreCase("trainee"))
+				{
+					bsave.setVisibility(View.INVISIBLE);
+				}
+			}		
+
+		
+		//Save data
+		bsave.setOnClickListener(new OnClickListener() {
+	
+			public void onClick(View v) {
+				String trainersig="false";
+				if(chbsig.isChecked())
+				{
+					trainersig="true";
+				}
+				
+				//Check role of user
+				Cursor cuserrole=mdbHelper.userexist();
+				if(cuserrole.getCount()>0)
+				{
+					cuserrole.moveToFirst();
+					//Assessor Have full access, We just invisible name of conduct because we visible spinner for them 
+					if(cuserrole.getString(cuserrole.getColumnIndex("role")).equalsIgnoreCase("assessor"))
+					{
+						//Update header part
+						//mdbHelper.updatechecklistheaderassessor(ChecklistInstructed.this,trainee, assessor, etlocomotive.getText().toString(), checknum);
+						
+						//Update instruction part
+						mdbHelper.updatechecklistinstruction(ChecklistInstructed.this,trainee, assessor, sptrainer.getSelectedItem().toString(), trainersig, 
+						etdate.getText().toString(), spday.getSelectedItem().toString(), spweather.getSelectedItem().toString(), 
+						spfrom.getSelectedItem().toString(), spto.getSelectedItem().toString(),
+						spmpu.getSelectedItem().toString(), 
+						spnovehicle.getSelectedItem().toString(), checknum);
+						
+						//Update header part
+						mdbHelper.updatechecklistheaderassessor(ChecklistInstructed.this,trainee, assessor,splocomotive.getSelectedItem().toString(),spcorridordown.getSelectedItem().toString(),spcorridorup.getSelectedItem().toString(), checknum);
+						
+					}
+					//If user is trainer and have access to instruction part
+					if((cuserrole.getString(cuserrole.getColumnIndex("role")).equalsIgnoreCase("trainer")) && ((trainerinstruction==null) || (trainerinstruction.isEmpty()) || (cuserrole.getString(cuserrole.getColumnIndex("username")).equalsIgnoreCase(trainerinstruction))))
+					{
+						//At least one of the items from instruction part should be filled to save data
+						if(!(trainersig.equalsIgnoreCase("false") && etdate.getText().toString().isEmpty() && 
+								spday.getSelectedItem().toString().isEmpty() && spweather.getSelectedItem().toString().isEmpty() && 
+								spfrom.getSelectedItem().toString().isEmpty() && spto.getSelectedItem().toString().isEmpty() && 
+								spnovehicle.getSelectedItem().toString().isEmpty()))
+							{
+							mdbHelper.updatechecklistinstruction(ChecklistInstructed.this,trainee, assessor, trainer, trainersig, 
+									etdate.getText().toString(), spday.getSelectedItem().toString(), spweather.getSelectedItem().toString(), 
+									spfrom.getSelectedItem().toString(), spto.getSelectedItem().toString(),
+									spmpu.getSelectedItem().toString(), 
+									spnovehicle.getSelectedItem().toString(), checknum);
+							}
+					}
+					//If user is trainer and have access to header part
+					if((cuserrole.getString(cuserrole.getColumnIndex("role")).equalsIgnoreCase("trainer")) && ((trainerheader==null) || (trainerheader.isEmpty()) || (cuserrole.getString(cuserrole.getColumnIndex("username")).equalsIgnoreCase(trainerheader))))
+					{
+						//At least one of the items from unguide part should be filled to save data
+						if(!(splocomotive.getSelectedItem().toString().isEmpty() && spcorridordown.getSelectedItem().toString().isEmpty() && spcorridorup.getSelectedItem().toString().isEmpty()) )
+							{
+								//Update header part
+								mdbHelper.updatechecklistheadertrainer(ChecklistInstructed.this,trainee, assessor,trainer,splocomotive.getSelectedItem().toString(),spcorridordown.getSelectedItem().toString(),spcorridorup.getSelectedItem().toString(), checknum);
+							}
+					}
+					
+					}
+						
+			}
+		});
+		
+final DatePickerDialog.OnDateSetListener ungdate=new DatePickerDialog.OnDateSetListener() {
+			
+			EditText etdate=(EditText) findViewById(R.id.editText12);
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+				updateLabel(etdate);
+			}
+		};	
+		
+		ivdate.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				new DatePickerDialog(ChecklistInstructed.this, ungdate, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+			}
+		});
+		
+	}
+	private void updateLabel(EditText et) {
+
+	    String myFormat = "dd/MM/yyyy"; //In which you need put here
+	    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+	    
+	    et.setText(sdf.format(myCalendar.getTime()));
+	    }
+
+	public void loadspiner(String Id,String currentvalue,Spinner spid)
+	{
+		TestAdapter mdbHelper=new TestAdapter(this);
+		mdbHelper.open();
+		
+		List<String> listdesc=new ArrayList<String>();
+		int position=0;
+		int countspinnerselection=0;
+		
+		Cursor curspinner=mdbHelper.getspinnervalue(Id);
+		listdesc.add("");
+		if(curspinner.getCount()>0)
+		{
+			
+			curspinner.moveToFirst();
+			do
+			{
+				countspinnerselection++;
+				listdesc.add(curspinner.getString(curspinner.getColumnIndex("itemdesc")));
+				if((currentvalue!=null) && (curspinner.getString(curspinner.getColumnIndex("itemdesc")).equalsIgnoreCase(currentvalue)))
+				{
+					position=countspinnerselection;
+				}
+				
+			}
+			while(curspinner.moveToNext());	
+		}
+		
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listdesc);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spid.setAdapter(dataAdapter);
+		spid.setSelection(position);
+	}
+	
+	public void loadspinertrainer(String currentvalue,Spinner spid)
+	{
+		TestAdapter mdbHelper=new TestAdapter(this);
+		mdbHelper.open();
+		
+		List<String> listdesc=new ArrayList<String>();
+		int position=0;
+		int countspinnerselection=0;
+		
+		Cursor curspinner=mdbHelper.getalltrainer();
+		listdesc.add("");
+		if(curspinner.getCount()>0)
+		{
+			curspinner.moveToFirst();
+			do
+			{
+				countspinnerselection++;
+				listdesc.add(curspinner.getString(curspinner.getColumnIndex("username")));
+				if((currentvalue!=null) && (curspinner.getString(curspinner.getColumnIndex("username")).equalsIgnoreCase(currentvalue)))
+				{
+					position=countspinnerselection;
+				}
+				
+			}
+			while(curspinner.moveToNext());	
+		}
+		
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listdesc);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spid.setAdapter(dataAdapter);
+		spid.setSelection(position);
+	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.act_checklistinstructed, menu);
+		
+		return true;
+	}
+
+
+}

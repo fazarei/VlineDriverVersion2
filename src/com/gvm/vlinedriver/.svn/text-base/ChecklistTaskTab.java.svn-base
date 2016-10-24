@@ -1,0 +1,87 @@
+package com.gvm.vlinedriver;
+
+import com.gvm.vlinedriver.R;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.app.Activity;
+import android.app.TabActivity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
+
+public class ChecklistTaskTab extends TabActivity {
+	private String checknum;
+	
+	private final int delayTime = 900000;
+	private Handler myHandler = new Handler();
+
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.act_checklisttasktab);
+		
+		checknum=getIntent().getStringExtra("checknum");
+		//checknum="1.14.86.09";
+		TabHost tabHost=getTabHost();
+				
+		TabSpec act_checklistinstruction=tabHost.newTabSpec("INSTRUCTION");
+		act_checklistinstruction.setIndicator("INSTRUCTION");		
+		Intent checklistinstruction1=new Intent(this,ChecklistInstructed.class);
+		checklistinstruction1.putExtra("checknum", checknum);
+		act_checklistinstruction.setContent(checklistinstruction1);
+		
+		TabSpec act_checklistpractice=tabHost.newTabSpec("PRACTICE");
+		act_checklistpractice.setIndicator("PRACTICE");		
+		Intent checklistpractice=new Intent(this,ChecklistPractice.class);
+		checklistpractice.putExtra("checknum", checknum);
+		act_checklistpractice.setContent(checklistpractice);
+		
+		TabSpec act_checklistTask=tabHost.newTabSpec("TASK");
+		act_checklistTask.setIndicator("TASK");		
+		Intent checklisttask=new Intent(this,ChecklistTask.class);
+		checklisttask.putExtra("checknum", checknum);
+		act_checklistTask.setContent(checklisttask);
+		
+		tabHost.addTab(act_checklistinstruction);
+		tabHost.addTab(act_checklistpractice);
+		tabHost.addTab(act_checklistTask);
+		
+		//myHandler.postDelayed(closeControls, delayTime);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu, menu);
+		TestAdapter mdbhelper=new TestAdapter(this);
+		mdbhelper.open();
+		Cursor cassessor=mdbhelper.assessoruserid();
+		if(cassessor.getCount()>0)
+		{
+			menu.getItem(1).getSubMenu().getItem(3).setVisible(true);
+		}
+		return true;
+	}
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		new MyMenuevent(item.toString(),this);
+		return false;
+	}
+	
+	private Runnable closeControls = new Runnable() {
+		
+	    public void run() {
+	    	
+	    	Intent intent = new Intent(ChecklistTaskTab.this, Loginact.class);
+	    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	    	intent.putExtra("EXIT", true);
+	    	startActivity(intent);
+	    	
+	        System.exit(0);
+	    }
+	};
+
+}

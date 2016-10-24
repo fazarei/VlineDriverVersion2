@@ -1,0 +1,40 @@
+/*
+ *
+ * Copyright (c) 1999-2004 NetDimensions Ltd.
+ *
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * NetDimensions Ltd. ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with NetDimensions.
+ */
+package com.netdimen.core.custom.options.homepage;
+
+import java.util.Properties;
+import java.util.ResourceBundle;
+
+import com.netdimen.core.custom.BooleanOption;
+import com.netdimen.tx.system.EditSystemCustomization;
+
+/**
+* @author carfield
+*/
+public final class DisplayKnowledgeToolsOnHomePagexxx extends BooleanOption {
+	public DisplayKnowledgeToolsOnHomePagexxx(Properties p) {
+		super(p);
+	}
+	public void drawWidge(StringBuffer screen, ResourceBundle bundle) {
+		displayBooleanCustomization(screen, bundle.getString("label.Display_Knowledge_Tools_On_Home_Page"));
+	}
+	public int getType() {
+		return EditSystemCustomization.CUST_CATEGORY_HOME_PAGE;
+	}
+	public boolean getDefault() {
+		return true;
+	}
+	public String getPropertiesKey() {
+		return "home.displayKnowledgeToolsOnHomePage";
+	}
+}

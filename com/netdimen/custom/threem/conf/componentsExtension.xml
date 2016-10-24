@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision: 1.0.0.0 $
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+
+	<transactions>
+		<transaction>
+			<tx-code>TMHOMETX</tx-code>
+			<tx-type>HOMEPAGE</tx-type>
+			<feature>MyHome</feature>
+			<access-level>ReadAccess</access-level>
+			<class>com.netdimen.custom.threem.tx.ThreeMHomeTx</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+	</transactions>
+</components>

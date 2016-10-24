@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision$
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+
+	<reports>
+		<report>
+			<report-name>ReportR257</report-name>			
+			<report-class>com.netdimen.custom.huthwaite.newreports.configurators.ConfiguratorR257</report-class>
+		</report>
+	</reports>
+</components>

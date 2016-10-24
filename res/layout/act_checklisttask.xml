@@ -1,0 +1,319 @@
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/shape_background">
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        >
+      
+        <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                style="@style/tablerowodd"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/ireceive"
+                    android:layout_span="3"/>
+
+                <CheckBox
+                    android:id="@+id/checkBox1"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:layout_span="2" 
+                    />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/traineesig"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_span="4"    />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                     android:layout_span="2" />
+
+                <EditText
+                    android:id="@+id/editText1"
+                    style="@style/edittextdate"
+                    android:background="@drawable/shape_edittext"
+                    android:layout_span="4"   
+					android:focusable="false">
+                    <requestFocus />
+                </EditText>
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingRight="20dp"
+                    android:src="@drawable/calendar"
+                    android:visibility="invisible" />
+
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/tableRow2"
+                style="@style/tablerowodd"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp" >
+
+                <TextView
+                    android:id="@+id/textView12"
+                    style="@style/txtviewtablemedium"
+                    android:text="@string/trainingcomplete"
+                    android:layout_span="2"/>
+
+                <TextView
+                    android:id="@+id/textView13"
+                    style="@style/txtviewtablesmall"
+                    />
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false" 
+                     android:layout_span="2"/>
+
+                <TextView
+                    android:id="@+id/textView16"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trainersig"
+                    android:textAppearance="?android:attr/textAppearanceLarge" 
+                    android:layout_span="4"   />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                     android:layout_span="2"
+                    />
+
+                <EditText
+                    android:id="@+id/editText2"
+                    style="@style/edittextdate"
+                    android:background="@drawable/shape_edittext" 
+                     android:layout_span="4"  
+                     android:focusable="false"/>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/calendar"
+                    android:visibility="invisible" />
+
+            </TableRow>
+            
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/textView17"
+                    style="@style/gridtxthedear"
+                    android:paddingLeft="10dp"
+                    android:layout_span="3" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    style="@style/gridtxthedear"
+                    android:layout_span="6"
+                    android:text="@string/guidepractice" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    style="@style/gridtxthedear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_span="7"
+                    android:paddingLeft="4dp"
+                    android:text="@string/unguidepractice" />
+           
+            </TableRow>
+                  
+        <TableRow
+            android:id="@+id/tableRow3"
+            style="@style/gridheaderchecklisttask" 
+            android:layout_marginRight="40dp" 
+        	android:layout_marginLeft="20dp"
+        	android:layout_marginTop="10dp" >
+
+            <CheckBox
+                android:id="@+id/chballinstructed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/gridchbhedear"
+			    android:layout_marginLeft="5dp"
+			    android:enabled="false" 
+			    />
+			    <!-- android:background="@drawable/set_checkbox"-->
+			    
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/gridtxthedear"
+                android:layout_width="270dp"
+                android:text="@string/instructed"
+                android:width="280dp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/gridtxthedear"
+                android:layout_width="285dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/task"
+                 android:textColor="#000000"/>
+
+            <CheckBox
+                android:id="@+id/chballgna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                style="@style/gridchbhedear"
+                 android:enabled="false" 
+			    />
+            
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/gridtxthedear2"
+                android:layout_width="40dp"
+                android:text="@string/na" 
+                android:textColor="#000000"/>
+
+            
+            <CheckBox
+                android:id="@+id/chballgd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/gridchbhedear"
+                android:enabled="false" 
+			    />
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/gridtxthedear2"
+                android:layout_width="35dp"
+                android:text="@string/d" 
+                android:textColor="#000000"/>
+
+            
+            <CheckBox
+                android:id="@+id/chballge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/gridchbhedear"
+                android:enabled="false" 
+			    />
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/gridtxthedear"
+                android:layout_width="105dp"
+                android:text="@string/e" 
+                android:textColor="#000000"/>
+
+            <CheckBox
+                android:id="@+id/chballungna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/gridchbhedear"
+                android:enabled="false"
+			   />
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/gridtxthedear2"
+                android:text="@string/na"
+                android:width="45dp" 
+                android:textColor="#000000"/>
+
+            <CheckBox
+                android:id="@+id/chballungd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/gridchbhedear"
+                android:enabled="false"
+			    />
+            <!-- android:background="@drawable/set_checkbox" -->
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/gridtxthedear2"
+                android:layout_width="40dp"
+                android:text="@string/d" 
+                android:textColor="#000000"/>
+			
+			<CheckBox
+                android:id="@+id/chballunge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/gridchbhedear"
+                android:layout_marginLeft="5dp"
+                android:enabled="false"
+			    />
+            <TextView
+                android:id="@+id/textView9"
+                style="@style/gridtxthedear2"
+                android:layout_width="30dp"
+                android:text="@string/e" 
+                android:textColor="#000000"/>
+
+        </TableRow>
+
+        <GridView
+            android:id="@+id/gridView1"
+            style="@style/gridstyle"
+            android:layout_height="300dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp" >
+
+        </GridView>
+<TableLayout>
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/button"
+                android:layout_width="200dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/sel_button"
+                android:text="@string/save"
+                android:visibility="invisible" />
+
+        </TableRow>
+</TableLayout>
+    </TableLayout>
+   </TableLayout>
+</HorizontalScrollView>

@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+	<link media="screen" rel="stylesheet" href="$info.getContextPrefix()/nd/fresco/styles/base.css" />
+	<link media="screen" rel="stylesheet" href="$csspath" />
+	<title>Enterprise Knowledge Platform by NetDimensions</title>
+  </head>
+  <body id="top">
+  <div id="bg-container">
+	<div class="banner-left"></div>
+	<div class="banner-right">
+	#if ($welcome_user)
+	  <span class="welcome-text">$welcome_user</span>
+	#end
+	</div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,227 @@
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/shape_background">
+    <TableLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="60dp" 
+        	android:layout_marginLeft="50dp"
+        	android:layout_marginTop="5dp" >
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/txtviewtitlehedear"
+                android:layout_span="4" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="60dp" 
+        	android:layout_marginLeft="50dp"
+        	android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/txtviewbold"
+                android:text="@string/traineename"
+                android:width="170dp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/txtview"
+                android:width="450dp" />
+
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/txtviewbold"
+                android:layout_marginLeft="70dp"
+                android:text="@string/employeeno"
+                 />
+
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/txtview"
+                android:layout_span="2"
+                 />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_marginRight="60dp" 
+        	android:layout_marginLeft="50dp"
+        	android:layout_marginTop="7dp" >
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/txtviewbold"
+                android:text="@string/location"
+                 />
+
+            <EditText
+                android:id="@+id/editText1"
+                style="@style/edittext"
+                android:background="@drawable/shape_edittext"
+                android:width="50dp" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/txtviewbold"
+                android:layout_marginLeft="70dp"
+                android:text="@string/date"
+                 />
+
+            <EditText
+                android:id="@+id/editText2"
+                style="@style/edittextdate"
+                android:background="@drawable/shape_edittext" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="50dp"
+                android:src="@drawable/calendar" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="60dp" 
+        	android:layout_marginLeft="50dp"
+        	android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/txtviewbold"
+                android:text="@string/assessorname"
+				/>
+
+            <TextView
+                android:id="@+id/textView16"
+                style="@style/txtview"
+                android:layout_span="3"
+                 />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_marginRight="60dp" 
+        	android:layout_marginLeft="50dp"
+        	android:layout_marginTop="10dp">
+                <TextView
+                android:id="@+id/textView9"
+                style="@style/txtviewtitle"
+                android:layout_span="2"
+                android:text="@string/overallperformance"
+                 />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            style="@style/gridheader" 
+            android:layout_marginRight="50dp" 
+        	android:layout_marginLeft="50dp"
+        	android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/subject"
+                android:width="620dp" 
+                android:layout_span="2"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/total"
+                android:width="120dp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/required"
+                android:width="150dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/achieved"
+                android:width="100dp" />
+        </TableRow>
+
+        <GridView
+            android:id="@+id/gridView1"
+            android:layout_height="200dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp" >
+
+        </GridView>
+
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/gridfooter" 
+            android:layout_marginRight="50dp" 
+        	android:layout_marginLeft="50dp"
+        	 >
+
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="520dp"
+                android:layout_span="2"
+                android:text="@string/total" />
+
+            <TextView
+                android:id="@+id/textView15"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="20dp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp" />
+
+        </TableRow>
+		<TableRow
+            android:id="@+id/tableRow8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+            android:id="@+id/button1"
+            style="@style/button"
+            android:layout_width="200dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/sel_button"
+            android:text="@string/save" />
+
+        </TableRow>
+
+    </TableLayout>
+</HorizontalScrollView>

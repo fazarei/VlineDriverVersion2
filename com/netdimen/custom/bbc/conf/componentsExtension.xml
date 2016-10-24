@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision$
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+    <reports>
+        <report>
+              <report-name>ReportR200BBC</report-name>
+              <report-class>com.netdimen.custom.bbc.newreports.configurators.ConfiguratorR200BBC</report-class>
+        </report>
+    </reports>
+	<transactions>
+		<transaction>
+			<tx-code>CATALOGSELECTOR</tx-code>
+			<feature>System</feature>
+			<access-level>ReadAccess</access-level>
+			<class>com.netdimen.tx.util.CatalogSelector</class>
+			<requires-authentication>false</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>MOBILEFREELANCERS</tx-code>
+			<feature>System</feature>
+			<access-level>ReadAccess</access-level>
+			<class>com.netdimen.custom.bbc.tx.MobileFreelancers</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>BBCFOOTER</tx-code>
+			<tx-type>MENU</tx-type>
+			<feature>System</feature>
+			<access-level>ReadAccess</access-level>
+			<class>com.netdimen.custom.bbc.tx.screen.BbcFooter</class>
+			<requires-authentication>true</requires-authentication>
+			<nonblocking-transaction>true</nonblocking-transaction>
+		</transaction>
+	</transactions>
+</components>

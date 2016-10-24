@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigations xmlns="http://www.netdimensions.com/2010/05/navigations">
+<menu cssClassName="main-menu-container">
+  <item labelKey="menu.Emerson_MyPage" descriptionKey="desc.Menu_Home" externalUrl="ekp?TX=MYHOMEEMERSON" targetLocation="fresco_main" selected="true"/>
+  <item labelKey="menu.Emerson_Course" descriptionKey="label.SearchLearnObj" txCode="FramelessCatalogSearch" targetLocation="fresco_main">
+  <menu cssClassName="submenu">
+    <item labelKey="label.Find_a_Learning_Item" descriptionKey="" txCode="FramelessCatalogSearch" selected="true"/>
+    <item labelKey="menu.Emerson_Course_Overview" descriptionKey="" externalUrl="ekp/COURSEFMMAIN"/>
+    <item labelKey="menu.Emerson_Course_BasicsOfRefrigeration" descriptionKey="" externalUrl="ekp/COURSEFMMAIN?CID=1"/>
+    <item labelKey="menu.Emerson_Course_ComfortAirConditioning" descriptionKey="" externalUrl="ekp/COURSEFMMAIN?CID=2"/>
+    <item labelKey="menu.Emerson_Course_SystemProtection" descriptionKey="" externalUrl="ekp/COURSEFMMAIN?CID=4"/>
+    <item labelKey="menu.Emerson_Course_Refrigeration" descriptionKey="" externalUrl="ekp/COURSEFMMAIN?CID=3"/>
+  </menu>
+  </item>
+  <item labelKey="heading.CareerDevelopment" descriptionKey="heading.Competency_Center" txCode="COMPCENTERINTRO" targetLocation="fresco_main">
+  <menu cssClassName="submenu">
+    <item labelKey="label.Summary" descriptionKey="" txCode="COMPCENTERINTRO" selected="true"/>
+    <item labelKey="heading.Job_Profiles" descriptionKey="" txCode="myJobProfiles"/>
+    <item labelKey="heading.Competencies" descriptionKey="" txCode="myCompetencies"/>
+    <item labelKey="menulabel.Certifications" descriptionKey="" txCode="LISTUSERCERT"/>
+    <item labelKey="heading.TrainingPlan" descriptionKey="" txCode="GETPLAN"/>
+    <item labelKey="heading.Appraisal" descriptionKey="" txCode="APPRAISALINTRO"/>
+    <item labelKey="label.TrainingGapAnalysis" descriptionKey="" txCode="TRAININGGAP"/>
+    <item labelKey="skin.help" descriptionKey="" txCode="COMPCENTERHELP"/>
+  </menu>
+  </item>
+  <item labelKey="heading.Community" descriptionKey="desc.Menu_Community" txCode="LISTMSGS" targetLocation="fresco_main"/>
+  <item labelKey="heading.Personalize" descriptionKey="desc.Menu_Personalize" externalUrl="ekp?TX=TOCPERSONAL" targetLocation="fresco_main"/>
+</menu>
+<menu cssClassName="sec-menu-container">
+  <item labelKey="skin.help" descriptionKey="skin.help" externalUrl="javascript:NewWindow('/ekp/nd/fresco/help/en/WebHelp/EKP.htm',%20'HELPWINDOW');"  targetLocation="fresco_main"/>
+  <item labelKey="heading.Contact_Us" descriptionKey="heading.Contact_Us" externalUrl="javascript:NewWindow('/ekp/servlet/ekp?TX=CONTACTUS',%20'FEEDBACKWINDOW');"  targetLocation="fresco_main"/>
+  <item labelKey="skin.logout" descriptionKey="skin.logout" txCode="LOGOFF" targetLocation="_top"/>
+</menu>
+</navigations>

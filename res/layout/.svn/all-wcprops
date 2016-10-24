@@ -1,0 +1,245 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/!svn/ver/18130/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout
+END
+subjectchecklist_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/subjectchecklist_row.xml
+END
+act_subjectchecklist.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_subjectchecklist.xml
+END
+act_competencytask.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_competencytask.xml
+END
+competencytask_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/competencytask_row.xml
+END
+subjectofassessment_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/subjectofassessment_row.xml
+END
+act_checklistcomment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/17618/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_checklistcomment.xml
+END
+act_checklisttask.xml
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/18658/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_checklisttask.xml
+END
+activity_login.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/activity_login.xml
+END
+act_assessmentofstage.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/17618/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessmentofstage.xml
+END
+act_stagelist.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/17618/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_stagelist.xml
+END
+assessmentsubject_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/assessmentsubject_row.xml
+END
+act_resetpopup.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_resetpopup.xml
+END
+act_assessmenttimelost.xml
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessmenttimelost.xml
+END
+act_login.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_login.xml
+END
+act_assessment10comment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessment10comment.xml
+END
+act_assessmenttab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/17618/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessmenttab.xml
+END
+act_competencytask_tab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_competencytask_tab.xml
+END
+checklistofstage_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/checklistofstage_row.xml
+END
+act_checklistofstage.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/17618/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_checklistofstage.xml
+END
+act_createandbackupdb.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_createandbackupdb.xml
+END
+act_checklisttasktab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_checklisttasktab.xml
+END
+act_competencycomment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_competencycomment.xml
+END
+act_subjectofassessment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_subjectofassessment.xml
+END
+checklisttask_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/!svn/ver/17975/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/checklisttask_row.xml
+END
+assessmentofstage_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/assessmentofstage_row.xml
+END
+stagelist_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/stagelist_row.xml
+END
+act_loginact.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/!svn/ver/18975/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_loginact.xml
+END
+act_checklisttab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_checklisttab.xml
+END
+act_assessmentsubject.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/19164/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessmentsubject.xml
+END
+act_competency.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_competency.xml
+END
+competency_row.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/competency_row.xml
+END
+act_assessmentcomment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/17728/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessmentcomment.xml
+END
+act_assessmentdetail.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/19164/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessmentdetail.xml
+END
+act_about.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/!svn/ver/18279/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_about.xml
+END
+act_competencyinstructed.xml
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_competencyinstructed.xml
+END
+act_assessment10_tab.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/!svn/ver/18131/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_assessment10_tab.xml
+END
+act_date.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_date.xml
+END
+act_checklistinstructed.xml
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/!svn/ver/19164/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_checklistinstructed.xml
+END
+act_uploadfile.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/!svn/ver/17532/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_uploadfile.xml
+END
+act_checklistpractice.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/!svn/ver/19164/VLine/30163_Driver_assessor_admin/trunk/dev/VlineDriver/res/layout/act_checklistpractice.xml
+END

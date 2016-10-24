@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/gridtable" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            style="@style/gridtablerow" >
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/gridtextview"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/gridtextviewlink"
+                android:width="350dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox1"
+                android:clickable="false"
+                android:width="200dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:clickable="false"
+                android:width="200dp" />
+ 			
+ 			<CheckBox
+                android:id="@+id/chbnotcomplete"
+                android:clickable="false"
+                android:width="200dp" />
+        </TableRow>
+
+    </TableLayout>

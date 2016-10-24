@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"></meta>
+    <title>Welcome to Learning Point</title>
+    
+    <link rel="stylesheet" type="text/css" href="/$info.getContextPrefix()/login/css/reset-fonts-grids.css"></link>
+    <link rel="stylesheet" type="text/css" href="/$info.getContextPrefix()/login/css/login.css"></link>
+  
+    <script type="text/javascript" src="/$info.getContextPrefix()/login/js/yui/utilities/utilities.js"></script>
+    <script type="text/javascript" src="/$info.getContextPrefix()/login/js/yui/event-mouseenter/event-mouseenter-min.js"></script>     
+    <script type="text/javascript" src="/$info.getContextPrefix()/login/js/yui/cookie/cookie-min.js"></script> 
+    <script type="text/javascript" src="/$info.getContextPrefix()/login/js/yui/selector/selector-min.js"></script>
+
+    <script type="text/javascript" src="/$info.getContextPrefix()/login/lang/${language}.js"></script>
+    <script type="text/javascript" src="/$info.getContextPrefix()/login/js/mmlogin.js"></script>
+
+    <script type="text/javascript">
+    <!--
+    YAHOO.MOTTMAC.login.context = '/$info.getContextPrefix()';
+        
+    var win= null;
+    function NewWindow(mypage,myname,w,h,scroll){
+      var winl = (screen.width-w)/2;
+      var wint = (screen.height-h)/2;
+      var settings  ='height='+h+',';
+          settings +='width='+w+',';
+          settings +='top='+wint+',';
+          settings +='left='+winl+',';
+          settings +='scrollbars='+scroll+',';
+          settings +='resizable=yes';
+      win=window.open(mypage,myname,settings);
+      if(parseInt(navigator.appVersion) >= 4){win.window.focus();}
+    }
+    
+    //-->
+    </script>
+
+  <script language="Javascript" src="/$info.getContextPrefix()/login/js/jquery/jquery.js"></script>
+  <script language="Javascript" src="/$info.getContextPrefix()/login/js/jquery/jquery.newsticker.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() 
+	{
+      $("#news").newsticker();
+    });
+  </script>
+  <style type="text/css">
+  	/***********************
+	/* DETECTOR PAGE
+	/***********************/
+	#detectorTable tr td a {
+		color: rgb(164, 0, 71);
+	}
+	/***********************
+	/* NEWS BOX
+	/***********************/
+	.newsticker {
+		list-style-type: none;
+		padding: 3px;
+		margin: 0;
+	}
+	</style>
+
+</head>
+<body>
+	
+	<OBJECT id="myApplet" WIDTH = "1" HEIGHT = "1" border="0" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93">
+        <PARAM NAME=codebase value="/$info.getContextPrefix()/login/classes">
+        <PARAM NAME=CODE VALUE="DetectPluginApplet.class" >
+        <PARAM NAME="scriptable" VALUE="true" >
+        <PARAM NAME="mayscript" VALUE="true" >
+    </object>   
+    
+	<div id="custom-doc" style="background-color:#a30046">
+	   <div id="hd">  
+	       <h1>Learning Point</h1>      
+	       <img src="/$info.getContextPrefix()/login/images/learningpoint.png" style="position: relative; left: 25px;"/> 
+        </div>
+        <div id="bd">
+            <noscript>
+                <h2>Learning Point</h2>                
+                <p>This web site requires JavaScript to be enabled within your browser.</p>                            
+            </noscript> 
+            <form method="post" action="/$info.getContextPrefix()/servlet/ekp/verify" name="form" id="loginForm">
+                #if ($target != "")
+                    <input type="hidden" name="target" value="$target" />
+                #end
+                
+                <input type=HIDDEN name=TX value=VERIFY />
+                
+                <div style="display: none;">$language_selector></div>
+      
+                <div id="languagePage" class="pseudoPage">
+
+                    <h2 id="chooseLanguage">Select a language</h2>
+                                                
+                    <table id="languageTable">
+                        <tr>
+                            <td>
+                                <p id="bulgarian">Bulgarian</p>
+                                <img id="44" class="langImg" src="/$info.getContextPrefix()/login/images/lang/bulgarian.png"/>
+                            </td>
+                            <td>
+                                <p id="englishCA">Canadian English</p>
+                                <img id="24" class="langImg" src="/$info.getContextPrefix()/login/images/lang/englishCA.png"/>
+                            </td>
+                            <td>
+                                <p id="chinese">Chinese (Simplified)</p>
+                                <img id="2" class="langImg" src="/$info.getContextPrefix()/login/images/lang/chinese.png"/>
+                            </td>
+                            <td>
+                                <p id="czech">Czech</p>
+                                <img id="26" class="langImg" src="/$info.getContextPrefix()/login/images/lang/czech.png"/>
+                            </td>
+                            <td>
+                                <p id="hungarian">Hungarian</p>
+                                <img id="35" class="langImg" src="/$info.getContextPrefix()/login/images/lang/hungarian.png"/>
+                            </td>
+                            <td>
+                                <p id="polish">Polski</p>
+                                <img id="12" class="langImg" src="/$info.getContextPrefix()/login/images/lang/polish.png"/>
+                            </td>
+                        </tr>
+                        
+                        <tr>                            
+                            <td>
+                                <p id="romanian">Romanian</p>
+                                <img id="32" class="langImg" src="/$info.getContextPrefix()/login/images/lang/romanian.png"/>
+                            </td>
+                            <!--INDONESIAN(43, new Locale("id", "ID"))-->
+                            <td>
+                                <p id="indonesian">Indonesian</p>
+                                <img id="43" class="langImg" src="/$info.getContextPrefix()/login/images/lang/indonesia.png"/>
+                            </td>
+                            <!--TRADITIONAL_CHINESE(3, new Locale("zh", "TW"))-->
+                            <td>
+                                <p id="chineseTraditional">Chinese (Traditional)</p>
+                                <img id="3" class="langImg" src="/$info.getContextPrefix()/login/images/lang/taiwan.png"/>
+                            </td>
+                            <!--THAI(21, new Locale("th", "TH"))-->
+                            <td>
+                                <p id="thai">Thai</p>
+                                <img id="21" class="langImg" src="/$info.getContextPrefix()/login/images/lang/thailand.png"/>
+                            </td>
+                            <td>
+                                <p id="englishUK">British English</p>
+                                <img id="23" class="langImg" src="/$info.getContextPrefix()/login/images/lang/englishUK.png"/>
+                            </td>
+                            <td>
+                                <p id="englishUS">US English</p>
+                                <img id="1" class="langImg" src="/$info.getContextPrefix()/login/images/lang/englishUS.png"/>
+                            </td>                            
+                        </tr>
+                    </table>
+                    
+                    <br>
+                    <hr color = "#ffffff">
+
+                </div> <!-- languagePage -->
+                
+                <div id="timezonePage" class="pseudoPage">
+                    <h2 id="tzoneHeading">Select a timezone</h2>
+                    <div id="timezoneSelector">$timezone_selector</div>
+                    <div class="yui-g navigation">
+                        <div class="yui-u first prev">
+                            <p><input id="tzonePrevBtn" type="button" value="&lt;&lt; Previous" /></p>
+                        </div>
+                        <div class="yui-u">
+                            <p><input id="tzoneNextBtn" type="button" value="Next &gt;&gt" /></p>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <hr color = "#ffffff">
+                </div>
+                
+                <div id="detectorPageWait" class="pseudoPage">
+                    <p id="detPageWait">Please wait while attempting to check installed software...</p>
+                </div>
+
+                <div id="detectorPage" class="pseudoPage">
+                    
+                    <h2 id="detHeading">Learning Point Software Requirements Check</h2>
+                    
+                    <p id="detStatement">This page indicates that your PC may not have software installed that is required to run the e-learning courses.</p>
+                        
+                    <table id="detectorTable">
+                        <tr>
+                            <td><img id="browserCheck" src="/$info.getContextPrefix()/login/images/detector/blank.gif" width="25" height="26"/></td>
+                            <td class="checkName"><p id="detBrowserHeading">Browser</p></td>
+                            <td class="check"><p id="browserResultLabel">&nbsp;</p></td>
+                         </tr>
+                        <tr>
+                            <td><img id="screenCheck" src="/$info.getContextPrefix()/login/images/detector/blank.gif" width="25" height="26"/></td>
+                            <td class="checkName"><p id="detScreenHeading">Screen resolution</label></b></p></td>
+                            <td class="check"><p id="screenResultLabel">&nbsp;</p></td>
+                        </tr>
+                        <tr>
+                            <td><img id="flashCheck" src="/$info.getContextPrefix()/login/images/detector/blank.gif" width="25" height="26"/></td>
+                            <td class="checkName"><p id="detFlashHeading">Adobe Flash</p></td>
+                            <td class="check"><p id="flashResultLabel">&nbsp;</p></td>
+                        </tr>
+                        <tr>
+                            <td><img id="javaCheck" src="/$info.getContextPrefix()/login/images/detector/blank.gif" width="25" height="26"/></td>
+                            <td class="checkName"><p id="detJavaHeading">Java Runtime</p></td>
+                            <td class="check"><p id="javaResultLabel">&nbsp;</p></td>
+                        </tr>
+                        <tr>
+                            <td><img id="acrobatCheck" src="/$info.getContextPrefix()/login/images/detector/blank.gif" width="25" height="26"/></td>
+                            <td class="checkName"><p id="detAcrobatHeading">Adobe Acrobat Reader</p></td>
+                            <td class="check"><p id="acrobatResultLabel">&nbsp;</p></td>
+                        </tr>
+                        <tr>
+                            <td><img id="mediaplayerCheck" src="/$info.getContextPrefix()/login/images/detector/blank.gif" width="25" height="26"/></td>
+                            <td class="checkName"><p id="detMediaHeading">Windows Media Player</p></td>
+                            <td class="check"><p id="mediaplayerResultLabel">&nbsp;</p></td>
+                        </tr>
+                    </table>
+                    <p class="navigation"><input id="continueDetectorBtn" type="button" value="Next &gt;&gt;" /></p>                    
+                    
+                    <br>
+                    <hr color = "#ffffff">
+                </div>
+                
+                <div id="loginPage" class="pseudoPage">
+                    
+                    <h2 id="loginHeading">Login</h2>
+ 
+                    <div class="yui-g" >
+                        <div class="yui-u first">
+                            <div id="loginLeft">                            
+                                <p id="loginUserId">Staff number (5 digits) or Username</p>
+                                <p><input id="uid" type="text" name="UID"></input></p>
+                                <p id="loginPassword">Password</p>
+                                <p><input type="password" name="PWD"></input></p>
+                                <p><input id="loginBtn" type="submit" value="Login" name="LOGIN"></input></p>                                
+                            </div>
+                        </div>                            
+
+                        <div id="news_box">
+							<div class="content">
+								<ul id="news">  
+				            #foreach( $news in $news_list )
+					            <li> <h1>$news.getTitle()</h1>
+									<p>$news.getTeaser()</p>
+									<p style="text-align:right; color:#6d81be; cursor: pointer; cursor: hand;"><a onClick="NewWindow('$base_url?TX=GETARTICLE&FROM=LOGIN&AID=$news.getArticleId()', 'News', '400', '400')">&raquo; More Information</a></p>
+								</li>
+            				#end
+								</ul>
+							</div>
+						</div> 
+						                    
+                    </div>                   
+                    <br>
+                   	<hr color = "#ffffff">
+                   	<div id="loginlinks">
+                        <ul>
+                            <li>
+                            	<a id="helpLink" href="#" onclick="NewWindow('/$info.getContextPrefix()/login/help/help_${language}.html','Help','400','400')">Help</a>
+                            	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                        	</li>
+                            <li>
+                            	<a id="passwordLostLink" href="#" onclick="NewWindow('/$info.getContextPrefix()/servlet/ekp?TX=ResetPassword','LostPassword','500','400')">Lost Password</a>
+                            	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                        	</li>
+                            <li>
+                            	<a id="resetLanguageLink" href="#">Change Language / Timezone"></a>
+                            	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                        	</li>
+                            <li>
+                            	<a id="contactLink" href="mailto:support.learningpoint@mottmac.com">Contact Us</a>
+                        	</li>
+                            #if ($selfRegistrationEnabled)
+                                <li>
+                                	&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                                	<a href="/$info.getContextPrefix()/servlet/ekp?TX=SELFREGISTRATION">Self Register</a>
+                            	</li>
+                            #end
+                        </ul>
+                    </div>
+                </div> 
+            
+            </form>
+        </div>
+        
+        <div id="ft" style="background-color:#a40047">
+            <img src="/$info.getContextPrefix()/login/images/logo.png" style="position: relative; right: 30px; bottom: 20px;"/> 
+        </div>
+        
+	</div>
+	  
+</form>
+</body>
+</html>

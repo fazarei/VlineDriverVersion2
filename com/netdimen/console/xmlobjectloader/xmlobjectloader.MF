@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.0
+Main-Class: com.netdimen.console.xmlobjectloader.ConsoleLoader
+Class-Path: activation.jar ojdbc5.jar ekp.jar ecs-1.4.2.jar sqljdbc.jar mail.jar msbase.jar mssqlserver.jar msutil.jar jms_1.0.2a.jar commons-lang-2.6.jar lucene-core-2.1.0.jar commons-io-2.0.1.jar ekpJaxbTypes.jar jaxb-impl.jar jaxb-api.jar log4j-1.2.8.jar
+ 
+Name: xmlobjectloader/
+Specification-Title: XML Object Loader
+Specification-Version: 5.0
+Specification-Vendor: NetDimensions

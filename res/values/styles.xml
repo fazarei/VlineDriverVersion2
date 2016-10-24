@@ -1,0 +1,256 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="gridstyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">550dp</item>
+        <item name="android:scrollbarStyle">insideInset</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:numColumns">1</item>
+    </style>
+
+    <style name="gridtextview" parent="@android:style/TextAppearance">
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="gridtextviewlink" parent="@android:style/TextAppearance">
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#1122CC</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="gridtable">
+        <item name="android:background">#520764</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+    <style name="gridtablerow2">
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+    <style name="gridtablerow">
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="gridheader">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">100dp</item>
+        <item name="android:layout_marginRight">100dp</item>
+        <item name="android:background">@drawable/shape_gridhedear</item>
+    </style>  
+    <style name="gridheaderchecklisttask">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">100dp</item>
+        <item name="android:layout_marginRight">100dp</item>
+        <item name="android:background">@drawable/shape_gridhedeartask</item>
+    </style>    
+    <style name="gridfooter">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">100dp</item>
+        <item name="android:layout_marginRight">100dp</item>
+        <item name="android:background">@drawable/shape_gridfooter</item>
+    </style>
+    
+    <style name="gridtxthedear">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    
+     <style name="gridtxthedear2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    
+    <style name="gridchbhedear">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+    
+    <style name="gridtxthedearsmall" parent="gridtxthedear">
+        	<item name="android:textSize">20sp</item>
+    </style>
+     <style name="tabletxthedear" parent="gridtxthedear">
+         <item name="android:textColor">#000000</item>
+     </style>
+    
+    <style name="edittext">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:height">30dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
+     <style name="edittextdate" parent="edittext">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:height">40dp</item>  
+        <item name="android:focusable">false</item>
+    </style>
+    <style name="smalledittext" parent="edittext">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+    <style name="mediumedittext" parent="edittext">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_height">40dp</item>     
+    </style>
+    <style name="bigedittext" parent="edittext">
+        <item name="android:layout_width">220dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+    
+    <style name="txtview">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>  
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+   
+    <style name="txtviewbold" parent="txtview">
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="txtviewtitlehedear" parent="txtview">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    
+    <style name="txtviewtitle" parent="txtview">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    
+    <style name="button" >
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>  
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/shape_button</item>
+    </style>
+    
+   	<style name="tablerowodd" parent="gridtablerow">
+        <item name="android:layout_height">50dp</item>
+    </style>
+    
+   	<style name="txtviewtable" parent="@android:style/TextAppearance">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+    
+   	<style name="txtviewtable2" parent="@android:style/TextAppearance">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+    
+    <style name="txtviewtablebig" parent="txtviewtable">
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="checkboxview" >
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+    <style name="txtviewtablemedium" parent="txtviewtable">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="txtviewtablesmall" parent="txtviewtable">
+        <item name="android:textSize">16sp</item>
+    </style>
+    
+    <style name="txtviewtablesmall2" parent="txtviewtable2">
+        <item name="android:textSize">16sp</item>
+    </style>
+    
+    <style name="txtviewtablenormal" parent="txtviewtable">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    
+        <style name="tableheader">
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_gridhedear</item>
+    </style>
+    <style name="tablefooter">
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_gridfooter</item>
+    </style>
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="spinner">
+	  <item name="android:layout_height">40dp</item>
+	  <item name="android:layout_width">150dp</item>
+	  <item name="android:background">@drawable/shape_spinner</item>
+	  <item name="android:layout_marginTop">1dp</item>
+	</style>
+</resources>

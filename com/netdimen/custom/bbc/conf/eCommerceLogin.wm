@@ -1,0 +1,245 @@
+#set ($portalBaseUrl = "")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- <base1 href="http://www.bbcacademy.com/academy/" /> -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="description" content="BBC Academy - Broadcast industry training &amp; development." />
+<meta name="keywords" content="BBC Academy, BBC Learning, BBC Courses, British Broadcasting Corporation" />
+<link rel="stylesheet" type="text/css" href="$portalBaseUrl/academy/_media/css/global.css" />
+<link rel="stylesheet" type="text/css" href="$portalBaseUrl/academy/_media/css/home.css" />
+<link rel="stylesheet" type="text/css" href="$portalBaseUrl/academy/_media/css/journalism.css" />
+<link rel="stylesheet" type="text/css" href="$portalBaseUrl/academy/_media/css/production.css" />
+<link rel="stylesheet" type="text/css" href="$portalBaseUrl/academy/_media/css/colorbox.css" />
+<link rel="stylesheet" type="text/css" href="$portalBaseUrl/academy/_media/css/ekp_centric.css" />
+<script type="text/javascript" src="$portalBaseUrl/academy/_media/js/jquery.js"></script>
+<script type="text/javascript" src="$portalBaseUrl/academy/_media/js/colorbox.js"></script>
+<script type="text/javascript" src="$portalBaseUrl/academy/_media/js/slideshow.js"></script>
+
+<script type="text/javascript" src="$portalBaseUrl/academy/_media/js/autoHeight.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="$portalBaseUrl/academy/_media/img/global/favicon.ico" />
+<title>BBC Academy - Home</title>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function showError(){
+	var errormessage=1;
+	var erroption=window.location.search;
+	i = erroption.indexOf('ERR');
+	errormessage = erroption.substring(i+4,i+5);
+	var errorbasictext="";
+	
+	if (errormessage==3)
+		alert(errorbasictext + 'The password you entered is incorrect. Remember, passwords are case sensitive.');
+	else if (errormessage==2)
+		alert(errorbasictext + 'You have exceeded the number of login attempts and your account is suspended or your account is closed.  Please contract your administrator by clicking on the Lost Password button above.');
+	else if (errormessage==1)
+		alert(errorbasictext + 'The User ID you have entered is invalid.  If you have not previously registered on this site please click New User Registration.');
+	else if (i > -1)
+		alert(errorbasictext + 'Login failed, please try again or contact your administrator.');
+		
+}
+function submitForm(enter_button) {
+	window.status='Logging in, please wait...';
+	document.form.submit();
+	enter_button.disabled=true;
+}
+
+var win= null;
+function NewWindow(mypage,myname,w,h,scroll){
+  var winl = (screen.width-w)/2;
+  var wint = (screen.height-h)/2;
+  var settings  ='height='+h+',';
+      settings +='width='+w+',';
+      settings +='top='+wint+',';
+      settings +='left='+winl+',';
+      settings +='scrollbars='+scroll+',';
+      settings +='resizable=yes';
+  win=window.open(mypage,myname,settings);
+  if(parseInt(navigator.appVersion) >= 4){win.window.focus();}
+}
+
+//-->
+</script> 
+#set ($reg_href = "/$info.getContextPrefix()/servlet/selfregistration")
+<script language="JavaScript" type="text/javascript">
+	function selfReg(){
+		reg_href = '$reg_href';
+		#if ($target != "")
+			target = '$target';
+		#else
+			target = '';
+		#end
+		if (target != ''){
+			reg_href = reg_href + '?target=' + encodeURIComponent(target);
+		}
+		window.location = reg_href;
+	}
+	
+	function loadArticle(articleId){
+  		url_link = '$portalBaseUrl/academy/news-article.php?article_xml=' + encodeURIComponent(location.protocol + '//' + location.host + '/$info.getContextPrefix()/api/article?id=' + articleId);
+		window.location = url_link;
+	}
+		function getRomaizedYear(){
+		var d = new Date();
+		return romanize(d.getFullYear());
+	}
+	function romanize (num) {
+		if (!+num)
+			return false;
+		var	digits = String(+num).split(""),
+			key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+		       "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+		       "","I","II","III","IV","V","VI","VII","VIII","IX"],
+			roman = "",
+			i = 3;
+		while (i--)
+			roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+		return Array(+digits.join("") + 1).join("M") + roman;
+	}
+</script>
+</head>
+<body onLoad="javascript: showError();">
+<div id="outer_wrap">
+<div id="inner_wrap">
+<div id="masthead">
+  <h1><a href="$portalBaseUrl/academy/index.php"><span></span>BBC Academy</a></h1>
+</div>
+<div id="column_1">
+  <h3 id="search_heading">Search For Courses</h3>
+
+  <form action="$portalBaseUrl/academy/search.php" id="course_search" method="post">
+    <div>
+      <input name="TX" value="SEARCHLO" type="hidden" />
+      <input id="search_input" name="KEYW" type="text" value="" />
+      <input id="search_submit" name="SEARCH" type="submit" value="Go" />
+    </div>
+  </form>
+  <h3 class="tab_header">Menu</h3>
+
+  <div id="lms_nav_container">
+    <ul id="lms_nav">
+      <li ><a href="$portalBaseUrl/academy/index.php">Home</a></li>
+      <li ><a href="$portalBaseUrl/academy/courses.php">Courses</a></li>
+      <li ><a href="$portalBaseUrl/academy/news.php">News</a></li>
+      <li ><a href="$portalBaseUrl/academy/EditorialStandards/index.php">Editorial Standards</a></li>
+      <li class="current"><a href="/$info.getContextPrefix()/servlet/ekp/login?getnews=Y">Login</a></li>
+      <li ><a href="mailto:bbcacademy@bbc.co.uk">Contact Us</a></li>
+    </ul>
+  </div>
+  <div id="resources_nav_container">
+    <ul id="resources_nav">
+      <li><a href="$portalBaseUrl/academy/training-venues.php">Training Venues</a></li>
+      <li><a href="$portalBaseUrl/academy/training-bespoke.php">Bespoke Training</a></li>
+      <li><a href="$portalBaseUrl/academy/training-subsidised.php">Subsidised Training</a></li>
+	  <li><a href="$portalBaseUrl/academy/booking-terms.php">Booking Terms</a></li>
+	  <li><a href="$portalBaseUrl/academy/payment-options.php">Payment Options</a></li>
+    </ul>
+  </div>
+</div>
+<div id="column_2">
+
+<div id="welcome_panel">
+  <div>
+    <h2>Login</h2>
+    <form method="post" action="/$info.getContextPrefix()/servlet/ekp/verify" name="form" style="margin:15px;">
+
+      <input type=HIDDEN name=TX value=VERIFY />
+	 #if ($target != "")
+	<input type="hidden" name="target" value="$target" />
+	#end
+      <table width="280" border="0" cellspacing="4" cellpadding="4">
+        <tr>
+          <td class="login"><span style="color:#fff; padding-left:5px; font:12px arial;">User ID : </span></td>
+          <td><input type="text" name="UID" style="width:148px;" /></td>
+        </tr>
+        <tr>
+          <td class="login"><span style="color:#fff; padding-left:5px; font:12px arial;">Password : </span></td>
+          <td><input name="PWD" type="password" style="width:148px;"/></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td><input type="image" src="$portalBaseUrl/academy/_media/img/bt-login.jpg" /></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+
+        </tr>
+      </table>
+      <table width="280" border="0" cellpadding="4" cellspacing="4">
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/$info.getContextPrefix()/servlet/resetpassword" style="text-decoration:none;"><span style="font-size:11px; font-family: Verdana, Geneva, sans-serif; color:#fff;">Forgotten your password?</span></a></td>
+        </tr>
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:selfReg();" style="text-decoration:none;"><span style="font-size:11px; font-family: Verdana, Geneva, sans-serif; color:#fff;">New user registration</span></a></a></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#journalism a").colorbox({
+      width: "680px"
+    });
+    $("#production a").colorbox({
+      width: "680px"
+    });
+  });
+  
+</script>
+
+<div id="news_panel">
+	<ul>
+		#foreach( $news in $news_list )
+			<li><a href="javascript: loadArticle('$news.getArticleId()');">
+			#set ($picture = $info.getReferenceFileUrl($news.getArticleData().getPictureUrl()))
+			#if($picture && $picture.trim().length() > 0) <img alt='$news.getTitle()' title='$news.getTitle()' class='news-image' src="$picture" border=0 /> #end
+			#set($picture = "")
+			<span>$news.getTitle()</span></a></li>
+		#end
+	</ul>
+</div>
+<div id="courses_panel">
+  <ul>
+    <li id="production"><a href="$portalBaseUrl/academy/production.php"><img src="$portalBaseUrl/academy/_media/img/home/course_production.jpg" alt="Production Courses" title="Production Courses" width="185" height="170" /><span>Production</span></a></li>
+    <li id="journalism"><a href="$portalBaseUrl/academy/journalism.php"><img alt="Journalism Courses" title="Journalism Courses" src="$portalBaseUrl/academy/_media/img/home/course_journalism.jpg" /><span>Journalism</span></a></li>
+    <li id="technology"><a href="$portalBaseUrl/academy/courses.php?catalog=technology"><img alt="Technology &amp; Engineering Courses" title="Technology &amp; Engineering Courses"src="$portalBaseUrl/academy/_media/img/home/course_Tech_Eng.jpg" /><span>Technology &amp; Engineering</span></a></li>
+
+    <li id="safety"><a href="$portalBaseUrl/academy/courses.php?catalog=safety"><img alt="Safety &amp; Standards Courses" title="Safety &amp; Standards Courses" src="$portalBaseUrl/academy/_media/img/home/course_safety_standards.jpg" /><span>Safety &amp; Standards</span></a></li>
+  </ul>
+</div>
+</div>
+<div id="footer">
+      <div id="foot_col_1">
+        <p id="copyright"><img id="foot_logo" src="$portalBaseUrl/academy/_media/img/global/logofooter.png" alt="BBC Logo" /><span>&copy; <script type="text/javascript">document.write(getRomaizedYear());</script></span></p>
+        <p id="ext_link_notice"><a href="http://www.bbc.co.uk/home/links/">The BBC is not responsible for the content of external internet sites</a></p>
+
+      </div>
+      <div id="foot_col_2">
+        <ul>
+          <li><a href="http://www.bbc.co.uk/info/">About the BBC</a></li>
+          <li><a href="$portalBaseUrl/academy/terms.php">Terms of Use</a></li>
+          <li><a href="$portalBaseUrl/academy/privacy.php">Privacy &amp; Cookies</a></li>
+
+        </ul>
+        <ul>
+          <li><a href="http://www.bbc.co.uk/help/">BBC Help</a></li>
+          <li><a href="http://www.bbc.co.uk/accessibility/">Accessibility Help</a></li>
+          <li><a href="https://jobs.bbc.co.uk/fe/tpl_bbc01.asp">Jobs</a></li>
+        </ul>
+        <ul>
+
+          <li><a href="$portalBaseUrl/academy/about-bbc.php">About BBC Academy</a></li>
+          <li><a href="mailto:bbcacademy@bbc.co.uk">Contact Us</a></li>
+          <li><a href="$portalBaseUrl/academy/media-links.php">Useful Media Links</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

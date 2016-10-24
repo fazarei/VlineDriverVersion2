@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://www.netdimensions.com/2010/05/navigations"
+           xmlns:n="http://www.netdimensions.com/2010/05/navigations">
+
+    <!--navigation is the root element within which all menus are defined. There can only be one navigations element in
+    one navigations.xml file. Navigations can have many menu elements.-->
+    <xs:element name="navigations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="n:menu"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="uniqueTxCode">
+            <xs:selector xpath=".//n:tabitem"/>
+            <xs:field xpath="@txCode"/>
+        </xs:unique>
+    </xs:element>
+
+    <!--each menu element defines a set of links called item. There can be any number of sets. Each menu should specify
+    cssClass attribute referring to the CSS class name that is required to be applied on the menu.-->
+    <xs:element name="menu">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="n:item"/>
+            </xs:sequence>
+            <xs:attribute name="cssClassName" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!--each item defines a link on the page. Item can have more menus with in them indicating submenus.
+    Default selected item can be specified by using the "selected" attribute. There can only be one item with selected
+    attribute in the entire navigations.xml document.-->
+    <xs:element name="item">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="n:menu"/>
+                <xs:element minOccurs="0" ref="n:tabset"/>
+            </xs:sequence>
+            <xs:attribute name="txCode" use="optional" type="n:targetTransaction"/>
+            <xs:attribute name="externalUrl" use="optional" type="xs:string"/>
+            <xs:attribute name="descriptionKey" use="optional" type="xs:string"/>
+            <xs:attribute name="labelKey" use="required" type="xs:string"/>
+            <xs:attribute name="selected" type="xs:boolean" default="false" use="optional"/>
+            <xs:attribute name="targetLocation" use="optional" type="n:targetLocation" default="fresco_main"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!--This specifies the target frame location on the page. -->
+    <xs:simpleType name="targetLocation">
+        <xs:restriction base="xs:string">
+            <!--Open the linked document in main content frame of EKP -->
+            <xs:enumeration value="fresco_main"/>
+            <!--Open the linked document in the full body of the window -->
+            <xs:enumeration value="_top"/>
+            <!--Open the linked document in new browser window-->
+            <xs:enumeration value="_blank"/>
+            <!--Open the linked document in new browser pop-up window-->
+            <xs:enumeration value="_popup"/>
+            <!--Open the linked document in new browser pop-up window with tool bar-->
+            <xs:enumeration value="_popupFull"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--This is the target transaction that will be invoked upon clicking the link representing the item.-->
+    <xs:simpleType name="targetTransaction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="tabnewsandassignments"/>
+            <xs:enumeration value="tabhometx"/>
+            <xs:enumeration value="tabnewshome"/>
+            <xs:enumeration value="PERSONALCAL"/>
+            <xs:enumeration value="TABLISTSESSIONS"/>
+            <xs:enumeration value="TABPENDINGENROLLMENTS"/>
+            <xs:enumeration value="TABLISTTRAN"/>
+            <xs:enumeration value="OTHERRESOURCES"/>
+            <xs:enumeration value="STRUCTUREDCATALOG"/>
+            <xs:enumeration value="FramelessCatalogSearch"/>
+            <xs:enumeration value="SESSIONCAL"/>
+            <xs:enumeration value="BUYTOKENPACKAGES"/>
+            <xs:enumeration value="CONFIRM"/>
+            <xs:enumeration value="VIEWCOURSECOUPON"/>
+            <xs:enumeration value="COUPONENROLLMENT"/>
+            <xs:enumeration value="DASHBOARD"/>
+            <xs:enumeration value="COMPCENTERINTRO"/>
+            <xs:enumeration value="myJobProfiles"/>
+            <xs:enumeration value="myCompetencies"/>
+            <xs:enumeration value="LISTUSERCERT"/>
+            <xs:enumeration value="TABLISTUSERCURRENTCERT"/>
+            <xs:enumeration value="TABLISTUSEREXPIREDCERT"/>
+            <xs:enumeration value="GETPLAN"/>
+            <xs:enumeration value="APPRAISALINTRO"/>
+            <xs:enumeration value="TRAININGGAP"/>
+            <xs:enumeration value="COMPCENTERHELP"/>
+            <xs:enumeration value="LEARNINGPATH"/>
+            <xs:enumeration value="TABLISTAPPROVALS"/>
+            <xs:enumeration value="TABLISTAPPRAISEE"/>
+            <xs:enumeration value="SELORG"/>
+            <xs:enumeration value="LISTSTUDENTS"/>
+            <xs:enumeration value="LISTREPORT"/>
+            <xs:enumeration value="TABLISTEXTTRAINAPPR"/>
+            <xs:enumeration value="SUPERVISORASSESSMENT"/>
+            <xs:enumeration value="ENROLLMENTWIZARD"/>
+            <xs:enumeration value="LISTMSGS"/>
+            <xs:enumeration value="FRAMESFM"/>
+            <xs:enumeration value="LISTROOMS"/>
+            <xs:enumeration value="LISTBLTNS"/>
+            <xs:enumeration value="MASSMAILSENDER"/>
+            <xs:enumeration value="BIOSEARCH"/>
+            <xs:enumeration value="TEACHREVIEW"/>
+            <xs:enumeration value="BSTOC"/>
+            <xs:enumeration value="DISPLAY"/>
+            <xs:enumeration value="TABBIO"/>
+            <xs:enumeration value="TabAddress"/> <!-- This transaction maybe not in use.-->
+            <xs:enumeration value="ADDRESS"/>
+            <xs:enumeration value="CHANGEPW"/>
+            <xs:enumeration value="LISTACCT"/>
+            <xs:enumeration value="USERTXHIST"/>
+            <xs:enumeration value="CONTACTUS"/>
+            <xs:enumeration value="WIKIMENUTX"/>
+            <xs:enumeration value="LOGOFF"/>
+            <xs:enumeration value="WIDGETCONTAINERPAGE"/>
+            <xs:enumeration value="REVIEWERAPPRAISALSEARCH"/>
+            <xs:enumeration value="EDITORGASSOCIATIONS"/>
+            <xs:enumeration value="EKPHELP"/>
+            <xs:enumeration value="EDITBIO"/>
+            <xs:enumeration value="DRILLDOWNORG1"/>
+            <xs:enumeration value="DRILLDOWNSUMMARYORG1"/>
+            <xs:enumeration value="DRILLDOWNDA1"/>
+            <xs:enumeration value="DRILLDOWNGROUP1"/>
+            <xs:enumeration value="APPRAISEECERTSTATUS"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="tabset">
+         <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="n:tabitem"/>
+            </xs:sequence>
+            <xs:attribute name="heading" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <!--each tabItem defines a transaction on the page.-->
+    <xs:element name="tabitem">
+        <xs:complexType>
+            <xs:attribute name="txCode" use="required" type="n:targetTransaction"/>
+            <xs:attribute name="parameters" use="optional" type="xs:string"/>
+            <xs:attribute name="labelKey" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,138 @@
+package com.gvm.vlinedriver;
+
+import java.util.ArrayList;
+
+import com.gvm.vlinedriver.R;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Paint;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.TextView;
+
+public class AssessmentofStage_adapter extends BaseAdapter{
+
+	private ArrayList<String> id;
+	private ArrayList<String> assessment;
+	private Activity activity;
+	public boolean[] chbinprodess;
+	public boolean[] chbcomplete;
+	public boolean[] chbnotcomplete;
+	public String stageId;
+	
+	public AssessmentofStage_adapter(Activity activity,ArrayList<String> id,ArrayList<String> assessment
+			,boolean[] chbinprodess,boolean[] chbcomplete,boolean[] chbnotcomplete,String stageId)
+	{
+		super();
+		this.id=id;
+		this.assessment=assessment;
+		this.activity=activity;
+		this.chbinprodess=chbinprodess;
+		this.chbcomplete=chbcomplete;
+		this.chbnotcomplete=chbnotcomplete;
+		this.stageId=stageId;
+	}
+
+	public int getCount() {
+		return id.size();
+	}
+
+	public Object getItem(int position) {
+		return id.get(position);
+	}
+
+	public long getItemId(int position) {
+		return 0;
+	}
+
+	public static class ViewHolder
+	{
+		public TextView txtId;
+		public TextView txtassessment;
+		public CheckBox chbprocess;
+		public CheckBox chbcomplete;
+		public CheckBox chbnotcomplete;
+	}
+	public View getView(int position, View convertView, ViewGroup parent) 
+	{
+		final ViewHolder view;
+		LayoutInflater inflator=activity.getLayoutInflater();
+		if(convertView==null)
+		{
+			view=new ViewHolder();
+			convertView=inflator.inflate(R.layout.assessmentofstage_row, null);
+			
+			view.txtId=(TextView) convertView.findViewById(R.id.textView1);
+			view.txtassessment=(TextView) convertView.findViewById(R.id.textView2);
+			view.chbprocess=(CheckBox) convertView.findViewById(R.id.checkBox1);
+			view.chbcomplete=(CheckBox) convertView.findViewById(R.id.checkBox2);
+			view.chbnotcomplete=(CheckBox) convertView.findViewById(R.id.chbnotcomplete);
+			
+			view.txtassessment.setPaintFlags(view.txtassessment.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+			convertView.setTag(view);
+		}
+		else
+		{
+			view=(ViewHolder) convertView.getTag();
+		}
+		
+		view.txtId.setText(id.get(position));
+		view.txtassessment.setText(assessment.get(position));
+
+		view.chbcomplete.setOnCheckedChangeListener(null);
+        if(chbcomplete[position])
+        	view.chbcomplete.setChecked(true);
+        else  
+        	view.chbcomplete.setChecked(false);
+        
+        view.chbprocess.setOnCheckedChangeListener(null);
+        if(chbinprodess[position])
+        	view.chbprocess.setChecked(true);
+        else  
+        	view.chbprocess.setChecked(false);
+        
+        view.chbnotcomplete.setOnCheckedChangeListener(null);
+        if(chbnotcomplete[position])
+        	view.chbnotcomplete.setChecked(true);
+        else  
+        	view.chbnotcomplete.setChecked(false);
+		
+		view.txtassessment.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				String assessmentid=view.txtId.getText().toString();
+				Context contex=v.getContext();
+				
+				if(view.txtassessment.getText().toString().equalsIgnoreCase("Assessment Report"))
+				{
+					Intent intentcompetency=new Intent(contex,Assessment10Tab.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					intentcompetency.putExtra("assessmentid", assessmentid);
+					contex.startActivity(intentcompetency);
+				}
+				else
+				{
+					Intent intent=new Intent(contex,AssessmentTab.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					
+					intent.putExtra("assessmentid", assessmentid);
+					contex.startActivity(intent);
+				}
+			}
+		});
+		
+//		if(stageId.equals("10"))
+//		{
+//			view.chbnotcomplete.setVisibility(View.VISIBLE);
+//		}
+//		else
+//			{
+//				view.chbnotcomplete.setVisibility(View.GONE);
+//			}
+		return convertView;
+	}
+	
+}

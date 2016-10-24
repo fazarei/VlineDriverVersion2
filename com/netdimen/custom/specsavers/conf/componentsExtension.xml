@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision: 1.170.2.18 $
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+<reports>
+    <report>
+      <report-name>ReportR250SS</report-name>
+      <report-class>com.netdimen.custom.specsavers.newreports.configurators.ConfiguratorR250SS</report-class>
+    </report>
+</reports>
+<transaction>
+	<tx-code>LISTTRAN</tx-code>
+	<feature>MyTranscript</feature>
+	<access-level>ReadAccess</access-level>
+	<class>com.netdimen.custom.specsavers.tx.transcript.ListTran</class>
+	<requires-authentication>true</requires-authentication>
+</transaction>
+<transaction>
+	<tx-code>TABLISTTRAN</tx-code>
+	<feature>MyTranscript</feature>
+	<access-level>ReadAccess</access-level>
+	<class>com.netdimen.custom.specsavers.tx.transcript.TabListTran</class>
+	<requires-authentication>true</requires-authentication>
+	<nonblocking-transaction>true</nonblocking-transaction>
+</transaction>
+
+</components>

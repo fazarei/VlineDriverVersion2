@@ -1,0 +1,51 @@
+hr{
+	width:100%;
+	line-height:1px;
+	border:0.1px solid #1875d6;
+	padding:0px;
+	border-spacing:1px;
+	margin-top: 1px; margin-bottom: 1px;
+}
+.header-submission {
+	background-image: url("custom/al_tab_submission.jpg");
+	background-repeat: no-repeat;
+	width: 369px; 
+	height: 23px;
+}
+.header-container{
+	display:block;	
+	background-color: rgb(255, 255, 255);
+	width:780px;  
+	text-align: left;
+	font-family: Arial; 
+	font-color:#808080; 
+}
+.header-container h3{
+	color:black;
+}
+.header-container .normal{
+	color: rgb(153, 153, 153);
+}
+.header-container .highlight{
+	color: rgb(204, 0, 0);
+}
+.header-container .heading{
+	color: rgb(24, 117, 214);
+}
+.data-container { 
+	display:block;	
+	background-color:#fffbff;
+	font-family:Arial; 
+	text-align:left;
+	width:600px;
+}
+.data-container .heading{
+	color:grey;
+	font-weight:900; 	
+	font-size:14px; 
+}
+.data-container .normal{
+	font-weight:normal; 	
+	font-size:14px; 
+}
+ 

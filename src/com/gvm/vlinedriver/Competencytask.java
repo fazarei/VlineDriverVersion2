@@ -1,0 +1,165 @@
+package com.gvm.vlinedriver;
+
+import java.util.ArrayList;
+
+import com.gvm.vlinedriver.R;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.database.Cursor;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
+
+public class Competencytask extends Activity {
+	private Competencytask_adapter madapter;
+	private ArrayList<String> id;
+	private ArrayList<String> number;
+	private ArrayList<String> task;	
+	public boolean[] chbd;
+	public boolean[] chbe;
+	public boolean[] chbnyc;
+	
+	public String editable="true";
+	private String trainee="";
+	private String assessor="";
+	private String trainer="";
+	public Activity activity;
+	private String competencyid="";
+	
+	private GridView gridview;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+			
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.act_competencytask);
+		final TestAdapter mDbHelper = new TestAdapter(this); 
+		mDbHelper.open();
+		competencyid=getIntent().getStringExtra("competencyid");
+		
+		//Fill data in top of the page
+		TextView tvcompetency=(TextView) findViewById(R.id.textView1);
+		TextView tvobjective=(TextView) findViewById(R.id.textView3);
+		TextView tvcorridor=(TextView) findViewById(R.id.textView10);
+		final Button bsave=(Button) findViewById(R.id.button1);
+		
+		//get trainee username
+		Cursor ctraineeusername=mDbHelper.traineexist();
+		
+		if(ctraineeusername.getCount()>0)
+		{
+			ctraineeusername.moveToFirst();
+			trainee=ctraineeusername.getString(ctraineeusername.getColumnIndex("username"));
+		}
+		
+		//Get assessor username
+		Cursor cassessorusername=mDbHelper.assessoruserid();
+		if(cassessorusername.getCount()>0)
+		{
+			cassessorusername.moveToFirst();
+			assessor=cassessorusername.getString(cassessorusername.getColumnIndex("username"));
+		}
+		//Get role of user
+		Cursor crole=mDbHelper.userexist();
+		if(crole.getCount()>0)
+		{
+			crole.moveToFirst();
+			if(!crole.getString(crole.getColumnIndex("role")).equalsIgnoreCase("assessor"))
+			{
+				bsave.setVisibility(View.INVISIBLE);
+				editable="false";
+			}
+		}		
+		//Get assessment Record
+
+		Cursor ccompetency=mDbHelper.getcompetencyid(competencyid);
+		if(ccompetency.getCount()>0)
+		{
+			ccompetency.moveToFirst();	
+			tvcorridor.setText(ccompetency.getString(ccompetency.getColumnIndex("corridor")));
+			tvcompetency.setText(ccompetency.getString(ccompetency.getColumnIndex("taskactivity")));
+			tvobjective.setText(ccompetency.getString(ccompetency.getColumnIndex("objective")));
+			
+			//Fill competency desc table
+			String corridor=ccompetency.getString(ccompetency.getColumnIndex("corridor"));		
+			Cursor ccompetencydesc=mDbHelper.getcompetencytaskdesk(competencyid);
+			if(ccompetencydesc.getCount()>0)
+			{
+			}
+			else
+			{
+				if(corridor.isEmpty())
+				{
+					mDbHelper.insertcompetencytaskdesc(competencyid, "1");
+					mDbHelper.insertcompetencytaskdesc(competencyid, "2");
+					mDbHelper.insertcompetencytaskdesc(competencyid, "3");
+					mDbHelper.insertcompetencytaskdesc(competencyid, "4");
+					mDbHelper.insertcompetencytaskdesc(competencyid, "5");
+				}
+				else
+				{
+					mDbHelper.insertcompetencytaskdesc(competencyid, "1");
+					mDbHelper.insertcompetencytaskdesc(competencyid, "2");
+				}
+			}
+		}
+
+		//Fill gridview
+				paperList();
+
+				madapter=new Competencytask_adapter(this, id, number, task, chbd, chbe,chbnyc,editable,trainee,assessor,trainer);
+				gridview=(GridView) findViewById(R.id.gridView1);			
+				gridview.setAdapter(madapter);
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.act_competency, menu);
+		return true;
+	}
+	
+	public void paperList()
+	{
+		TestAdapter mdbHelper=new TestAdapter(this);
+		mdbHelper.open();
+		id=new ArrayList<String>();
+		number=new ArrayList<String>();
+		task=new ArrayList<String>();
+		
+		Cursor c=mdbHelper.getcompetencytask(competencyid);
+		int arraysize=c.getCount();		
+		chbd=new boolean[arraysize];
+		chbe=new boolean[arraysize];
+		chbnyc=new boolean[arraysize];
+
+		//we need row number because we need to know which cell of array is true or false and each cell is for one row
+		int rownumber=0;
+		if(c.getCount()>0)
+		{
+			c.moveToFirst();
+			do
+			{
+				id.add(c.getString(c.getColumnIndex("Id")));
+
+				number.add(c.getString(c.getColumnIndex("no")));
+
+				task.add(c.getString(c.getColumnIndex("name")));
+
+				if(c.getString(c.getColumnIndex("demonstrated"))!=null && c.getString(c.getColumnIndex("demonstrated")).equalsIgnoreCase("true"))
+					{chbd[rownumber]=true; }
+				if(c.getString(c.getColumnIndex("explained"))!=null && c.getString(c.getColumnIndex("explained")).equalsIgnoreCase("true"))
+					{chbe[rownumber]=true; }
+				if(c.getString(c.getColumnIndex("nyc"))!=null && c.getString(c.getColumnIndex("nyc")).equalsIgnoreCase("true"))
+					{chbnyc[rownumber]=true;}
+				
+				rownumber=rownumber+1;
+			}
+			while(c.moveToNext());
+		}
+	}
+
+}

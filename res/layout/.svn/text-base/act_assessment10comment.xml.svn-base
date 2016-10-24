@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/shape_background" >
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableLayout
+            style="@style/gridtable"
+            android:layout_height="53dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="20dp" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                style="@style/tablerowodd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@style/txtviewtablebig"
+                    android:layout_width="500dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overallcompetency" />
+
+			<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal">
+
+				<RadioButton
+				    android:id="@+id/rbcmp"
+				    style="@style/checkboxview"
+				    android:text="@string/competent" />
+
+				<RadioButton
+				    android:id="@+id/rbnotcmp"
+				    style="@style/checkboxview"
+				    android:layout_marginLeft="50dp"
+				    android:text="@string/notyetcompetent" />
+
+                </RadioGroup>
+
+            </TableRow>
+
+        </TableLayout>
+	    <TableLayout
+            style="@style/gridtable"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="30dp" >
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                style="@style/tablerowodd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:visibility="invisible" />
+
+                <CheckBox
+                    android:id="@+id/checkBox3"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/txtviewtablemedium"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/assessorsig"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/txtviewtablemedium"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <EditText
+                    android:id="@+id/editText2"
+                    style="@style/edittextdate"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/shape_edittext" />
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/calendar" 
+                    android:contentDescription="@string/calendar"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow5"
+                style="@style/tablerowodd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/txtviewtablemedium"
+                    android:layout_width="370dp"
+                    android:text="@string/iagree" />
+
+                <CheckBox
+                    android:id="@+id/checkBox4"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/txtviewtablemedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/traineesig"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            style="@style/gridtable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="30dp" >
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                style="@style/tableheader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/gridtxthedear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/generalcomment"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                style="@style/tablerowodd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/editText5"
+                    style="@style/bigedittext"
+                    android:layout_width="1000dp"
+                    android:layout_height="220dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_edittext"
+                    android:gravity="top"
+                    android:inputType="textMultiLine" />
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/button"
+            android:layout_width="200dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="850dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/sel_button"
+            android:text="@string/save" />
+
+    </TableLayout>
+
+</HorizontalScrollView>

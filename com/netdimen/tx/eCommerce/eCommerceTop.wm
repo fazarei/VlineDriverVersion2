@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<title>Welcome to the NetDimensions Enterprise Knowledge Platform</title>
+
+<style type="text/css">
+body{
+	margin:0px;
+	padding:0px;
+}
+
+#shoppingContainer{
+	position:relative;
+	background:white url(/$info.getContextPrefix()/images/eCommerce/ecommerce-header.jpg) top left no-repeat;
+	margin:0 auto;
+	height:110px;
+}
+
+#ecommerceMenu{
+	position:absolute;
+	top:52px;
+	left:630px;
+}
+
+#ecommerceMenu ul, #ecommerceMenu li{
+	list-style:none;
+	padding:0px;
+	margin:0px;
+	display:inline;
+}
+
+#ecommerceMenu li{
+	padding:3px 18px;
+}
+
+#ecommerceMenu li a{
+	font:bold 11px Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+	text-decoration:none;
+	line-height:43px;
+	padding-left:13px;
+}
+
+#ecommerceMenu #login{
+	background:transparent url(/$info.getContextPrefix()/images/eCommerce/icn-login.gif) top left no-repeat;
+}
+
+#ecommerceMenu #catalog{
+	background:transparent url(/$info.getContextPrefix()/images/eCommerce/icn-catalog.gif) top left no-repeat;
+}
+
+#ecommerceMenu #cart{
+	background:transparent url(/$info.getContextPrefix()/images/eCommerce/icn-shopping-cart.gif) top left no-repeat;
+}
+
+#searchBox{
+	position:absolute;
+	top:10px;
+	left:630px;
+}
+
+#searchBox dt {
+	float:left;
+}
+#searchBox dd {
+	float:right;
+}
+
+#searchBox input[type=submit]{
+	background-color:#f8b922;
+	color:white;
+	font:bold 11px Verdana, Arial, Helvetica, sans-serif;
+	padding:2px 6px;
+}
+
+#searchBox input[type=text]{
+	border:1px solid black;
+	width:250px;
+}
+
+</style>
+
+</head>
+
+<body>
+<div id="shoppingContainer">
+  <div id="searchBox">
+    <form method="post" action="/$info.getContextPrefix()/servlet/ekp/FRAMELESSCATALOGSEARCH" name="form" target='fresco_main'>
+    <input type="hidden" name="INIT" value="N"/>
+      <table>
+        <tr>
+          <td><input type="text" name=KEYW id=TTKEYW></td>
+          <td><input type="submit" value="Search"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div id="ecommerceMenu">
+    <ul>
+      <li id="login"><a href=/$info.getContextPrefix()/servlet/ekp/ECOMMERCELOGIN target='fresco_main'>Login</a></li>
+      <li id="catalog"><a href=/$info.getContextPrefix()/servlet/ekp/STRUCTUREDCATALOG target='fresco_main'>Catalog</a></li>
+      <li id="cart"><a href=/$info.getContextPrefix()/servlet/ekp/EDITSHOPPINGCART target='fresco_main'>Shopping Cart</a></li>
+    </ul>
+  </div>
+  <br clear="both" />
+</div>
+</body>
+</html>

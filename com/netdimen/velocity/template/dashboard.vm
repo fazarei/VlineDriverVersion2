@@ -1,0 +1,184 @@
+// Create the DASHBOARD namespace
+var DASHBOARD = function() {
+
+	// Private variables
+	var tabView;
+	var addTabDialog;
+
+	// Private functions
+	
+	var my_url_encode = function(str) {
+	    var c, i, out;
+	    if(navigator.appName != "Microsoft Internet Explorer")
+			return str.replace(/[^A-Za-z0-9_.]/g, function(s) {
+			    c = s.charCodeAt(0);
+			    return c < 256 ? "%" + my_hex(c, 2) : "%u" + my_hex(c, 4);
+			});
+	    out = "";
+	    for(i = 0; i < str.length; i++) {
+			c = str.charAt(i);
+			if(c.match(/[^A-Za-z0-9_.]/)) {
+			    c = str.charCodeAt(i);
+			    out += c < 256 ? "%" + my_hex(c, 2) : "%u" + my_hex(c, 4);
+			} else {
+			    out += c;
+		    }
+		}
+	    return out;
+	}
+
+	var showAddTabDialog = function() {
+		addTabDialog.show();
+	}
+	
+	var removeTab = function() {
+	
+		if (tabView.get('activeIndex') <= 2) {
+			alert('$stringhelper.localizedEscapedMsg("msg.CannotRemoveTab")');
+			return;
+		}
+		if (confirm("$stringhelper.localizedEscapedMsg("msg.TabRemoveConfirmation")")){
+			sendRemoveRequest();
+		}
+	};
+	
+	
+	var handleAddSuccess = function(o){
+		var addResult = [];
+		try {
+			addResult = YAHOO.lang.JSON.parse(o.responseText);
+		} catch(e) {
+			handleAddFailure(o);
+			return;
+		}
+	
+		if (!addResult || !addResult.tab) {
+			handleAddFailure(o);
+			return;
+		}
+		var tabId = addResult.tab.id;
+		var tabTitle = addResult.tab.title;
+		var tab = buildTab(tabTitle, tabId);
+		YAHOO.plugin.Dispatcher.delegate(tab, tabView);
+		tabView.set('activeIndex', tabView.getTabIndex(tab));
+	
+	}
+	
+	var handleAddFailure = function(o){
+		alert('$stringhelper.localizedEscapedMsg("msg.DashboardServerError")');
+	}
+	
+	var handleRemoveSuccess = function(o){
+		var tabIndex = tabView.get('activeIndex');
+		tabView.removeTab(tabView.getTab(tabIndex));
+		tabView.set('activeIndex', --tabIndex);
+	}
+	
+	var handleRemoveFailure = function(o){
+		alert('$stringhelper.localizedEscapedMsg("msg.DashboardServerError")');
+	}
+	
+	var removeTabCallback =
+	{
+			success: handleRemoveSuccess,
+			failure: handleRemoveFailure
+	};
+	
+	var addTabCallback =
+	{
+			success:handleAddSuccess,
+			failure: handleAddFailure
+	};
+	
+	var sendAddRequest = function(labelText) {
+		// Deal with non-ascii characters
+		var tabTitle = "title=" + my_url_encode(utf16to8(labelText));
+		var sUrl = "addDashboardTab";
+		var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, addTabCallback, tabTitle);
+	}
+	
+	var sendRemoveRequest = function(){
+	
+		var tabId = tabView.get('activeTab').tabId;
+		var sUrl = "removeDashboardTab";
+		var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, removeTabCallback, 'Page='+tabId); 
+	}
+	
+	var buildTab = function(tabLabel, tabId) {
+        var baseurl = document.getElementById('baseurl').value;
+
+		var screenWidth = document.getElementById('container').offsetWidth;
+		var screenHeight = screen.height;
+		var tab = new YAHOO.widget.Tab({
+			label: tabLabel,
+			content: '$stringhelper.localizedEscapedMsg("msg.DashboardTabLoading")',
+			dataSrc: baseurl + '?TX=DashboardContainer&SW=' + screenWidth + '&SH=' + screenHeight + '&Page=' + tabId
+		});
+		
+		tab.tabId = tabId;
+		
+		return tab;
+	}
+	
+	var setupButtons = function() {
+		var buttonsDiv = document.createElement('div');
+		buttonsDiv.id="dashboard-buttons";
+	
+		var removeButton = document.createElement('button');
+		removeButton.innerHTML = '$stringhelper.localizedEscapedMsg("label.DashboardRemoveTab")';
+		YAHOO.util.Event.on(removeButton, 'click', removeTab);
+		buttonsDiv.appendChild(removeButton);
+	
+		var addButton = document.createElement('button');
+		addButton.innerHTML = '$stringhelper.localizedEscapedMsg("label.DashboardAddTab")';
+		YAHOO.util.Event.on(addButton, 'click', showAddTabDialog);
+		buttonsDiv.appendChild(addButton);
+	
+		tabView.appendChild(buttonsDiv);			
+	}
+	
+	// Public functions
+	return {
+		setupTabs : function(tab_details){
+		
+			tabView = new YAHOO.widget.TabView();
+			
+			setupButtons();
+			
+			var activePage = -1;
+			var tab;
+
+			for (page=0; page<tab_details.length; page++){
+			
+				tab = buildTab(tab_details[page][0], tab_details[page][1]);
+					
+				YAHOO.plugin.Dispatcher.delegate(tab, tabView);
+				// When using the dispatcher, tabView's activeIndex property does not seem to set properly, so we
+				// manage it ourselves
+				if (tab_details[page][2] == 'true') {
+					activePage = page;
+				}
+			}
+			
+			if (activePage < 0) {
+				activePage = 0;
+			}
+			
+			tabView.set('activeIndex', activePage);
+			
+			tabView.appendTo('container');
+			
+		},
+		addTab : function(tabTitle) {
+			if (tabTitle!=null && tabTitle!='') {
+				sendAddRequest(tabTitle);
+			}
+			addTabDialog.hide();
+		},
+		setAddTabDialog : function(dialog) {
+			addTabDialog = dialog;
+		}
+	};
+}();
+
+

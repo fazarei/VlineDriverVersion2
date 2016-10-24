@@ -1,0 +1,1458 @@
+package com.gvm.vlinedriver;
+
+import java.io.IOException; 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.gvm.vlinedriver.R;
+
+import android.content.Context; 
+import android.database.Cursor;
+import android.database.SQLException; 
+import android.database.sqlite.SQLiteDatabase; 
+import android.util.Log; 
+import android.view.Gravity;
+import android.widget.Toast;
+
+public class TestAdapter {
+	
+	protected static final String TAG = "DataAdapter"; 
+	 
+    private final Context mContext; 
+    private SQLiteDatabase mDb; 
+    private DataBaseHelper mDbHelper; 
+ 
+    public TestAdapter(Context context)  
+    { 
+        this.mContext = context; 
+        mDbHelper = new DataBaseHelper(mContext); 
+    } 
+ 
+    public TestAdapter createDatabase() throws SQLException  
+    { 
+        try  
+        { 
+            mDbHelper.createDataBase(); 
+        }  
+        catch (IOException mIOException)  
+        { 
+            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase"); 
+            throw new Error("UnableToCreateDatabase"); 
+        } 
+        return this; 
+    } 
+//Here we check role of user again 
+    public String checkrole() 
+    { 
+    	try
+        {
+            String sql ="select * from user where login='true'";
+            mDb = mDbHelper.getWritableDatabase();
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if(mCur.getCount()>0)
+            {
+            	mCur.moveToFirst();
+            	return mCur.getString(mCur.getColumnIndex("role"));
+            }           
+            else
+            {
+            	return "logout";
+            }
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    } 
+    public TestAdapter resetdatabase() throws SQLException  
+    { 
+    	Log.d("LEE","hi1");
+        try  
+        { 
+        	Log.d("LEE","hi2");
+            mDbHelper.Resetdatabase(); 
+            Log.d("LEE","hi3");
+        }  
+        catch (IOException mIOException)  
+        { 
+            Log.e(TAG, mIOException.toString() + "  UnableToResetDatabase"); 
+            throw new Error("UnableToReaetDatabase"); 
+        } 
+        return this; 
+    } 
+ 
+    public TestAdapter open() throws SQLException  
+    { 
+        try  
+        { 
+            mDbHelper.openDataBase(); 
+            mDbHelper.close(); 
+            mDb = mDbHelper.getReadableDatabase(); 
+        }  
+        catch (SQLException mSQLException)  
+        { 
+            Log.e(TAG, "open >>"+ mSQLException.toString()); 
+            throw mSQLException; 
+        } 
+        return this; 
+    } 
+    
+    public TestAdapter createDatabase2(String a,String id) throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	mDb.execSQL("update subject set name='"+a+"' where Id='"+id+"';");
+        return this; 
+    } 
+    
+    public TestAdapter subjectachive(String achive,String id,String assessor,String trainee) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update subject set  achieved='"+achive+"',assessor='"+assessor+"',trainee='"+trainee+"' where Id='"+id+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "subject", sql);
+    	}
+    	
+    	return this; 
+    } 
+
+    public TestAdapter checkchange(Context context,String tbl,String setfeild,String checkvalue,String wherefeild,String id
+    			,String trainee,String assessor,String trainer) throws SQLException  
+    {
+    	
+    	mDb = mDbHelper.getWritableDatabase();
+    	if(checkrole().equalsIgnoreCase("assessor"))
+		{
+    	String sql="update "+tbl+" set  "+setfeild+"='"+checkvalue+"',trainee='"+trainee+"',assessor='"+assessor+"' " +
+    			",trainer='"+trainer+"' where "+wherefeild+"='"+id+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update",tbl, sql);
+		}
+    	else
+    	{
+    		Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	}
+    	return this; 
+    }
+
+    public TestAdapter checkchangeassessor(Context context,String tbl,String setfeild,String checkvalue,String wherefeild,String id
+			,String trainee,String assessor) throws SQLException  
+		{
+    	
+			mDb = mDbHelper.getWritableDatabase();
+			if(checkrole().equalsIgnoreCase("assessor"))
+			{
+				String sql="update "+tbl+" set  "+setfeild+"='"+checkvalue+"',trainee='"+trainee+"',assessor='"+assessor+"' " +
+						" where "+wherefeild+"='"+id+"';";
+				mDb.execSQL(sql);
+	    		insertauditlog("Update", tbl, sql);
+			}
+			else
+	    	{
+	    		Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+	    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+	    		toast.show();
+	    	}
+			return this; 
+		}
+
+    public TestAdapter checklisttask(Context context,String checknum,String setfeild,String checkvalue,String id
+			,String trainee,String assessor,String trainer,String trainerfeild) throws SQLException  
+	{
+		mDb = mDbHelper.getWritableDatabase();
+		if(checkrole().equalsIgnoreCase("assessor") || checkrole().equalsIgnoreCase("trainer"))
+		{
+			if(trainer!="")
+			{
+			String sql1="update checklist set "+trainerfeild+"='"+trainer+"' where checknum='"+checknum+"'";
+			mDb.execSQL(sql1);
+			insertauditlog("Update", "checklist", sql1);
+			}
+			
+			if(assessor!="")
+			{
+			String sql1="update checklist set assessor='"+assessor+"' where checknum='"+checknum+"'";
+			mDb.execSQL(sql1);
+			insertauditlog("Update", "checklist", sql1);
+			}
+			
+			String sql2="update checklisttask set  "+setfeild+"='"+checkvalue+"',trainee='"+trainee+"',assessor='"+assessor+"' " +
+					" where Id='"+id+"';";
+			mDb.execSQL(sql2);		
+			insertauditlog("Update", "checklisttask", sql2);
+		}
+		else
+    	{
+    		Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	}
+		return this; 
+	}
+    
+    public TestAdapter checkchangetest(String tbl,String setfeild,String checkvalue,String wherefeild,String id
+			,String trainee,String assessor,String trainer) throws SQLException  
+		{
+			
+		    if(checkrole().equalsIgnoreCase("assessor"))
+			{
+			mDb = mDbHelper.getWritableDatabase();
+			mDb.execSQL("update "+tbl+" set  "+setfeild+"='"+checkvalue+"',trainee='"+trainee+"',assessor='"+assessor+"' " +
+					",trainer='"+trainer+"' where "+wherefeild+"='"+id+"';");		
+			}
+			return this; 
+		} 
+    
+    public TestAdapter checkchangecompetency(Context context,String tbl,String setfeild,String checkvalue,String wherefeild,String id
+			,String trainee,String assessor,String trainer) throws SQLException  
+	{
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+		mDb = mDbHelper.getWritableDatabase();
+		String sql="update "+tbl+" set  "+setfeild+"='"+checkvalue+"',trainee='"+trainee+"',assessor='"+assessor+"' " +
+				",trainer='"+trainer+"' where "+wherefeild+"='"+id+"';";
+		mDb.execSQL(sql);
+		insertauditlog("Update", tbl, sql);
+    	}
+		
+		return this; 
+	} 
+    
+    public TestAdapter checklistapprove(Context context,String traineesig,String traineedate,String trainersig,String trainerdate,String checknum,String trainee,String trainerunguide,String assessor) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor") || checkrole().equalsIgnoreCase("trainer"))
+    	{
+	    	mDb = mDbHelper.getWritableDatabase();
+	    	String sql="";
+	    	if(assessor.equalsIgnoreCase(""))
+	    	{
+	    		sql="update checklist set trainee='"+trainee+"',tasktraineesig='"+traineesig+"',tasktraineedate='"+traineedate+"',tasktrainersig='"+trainersig+"',tasktrainerdate='"+trainerdate+"',trainerunguide='"+trainerunguide+"' where checknum='"+checknum+"';";
+	    		mDb.execSQL(sql);	    		
+	    	}
+	    	else
+	    	{
+	    		sql="update checklist set trainee='"+trainee+"',assessor='"+assessor+"',tasktraineesig='"+traineesig+"',tasktraineedate='"+traineedate+"',tasktrainersig='"+trainersig+"',tasktrainerdate='"+trainerdate+"' where checknum='"+checknum+"';";
+	    		mDb.execSQL(sql);
+	    	}
+	    	insertauditlog("Update", "checklist", sql);
+	    	Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		}
+		else
+		{
+		    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		}  
+    	return this; 
+    } 
+
+    public TestAdapter subjectcomment(Context context,String comment,String id,String trainee,String assessor) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update subject set comment='"+comment+"',trainee='"+trainee+"',assessor='"+assessor+"' where Id='"+id+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "subject", sql);
+	    	Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+    	}
+    	else
+    	{
+    	    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	}  
+    	return this; 
+    } 
+    public TestAdapter assessmentcomment(Context context,String comment,String result,String assessorsig,String traineesig,String assessordate,String traineedate,String assessorname,String trainee,String id) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update  assessment set comment='"+comment+"',result='"+result+"',assessorsig='"+assessorsig+"',traineesig='"+traineesig+"'" +
+    			",assessordate='"+assessordate+"',traineedate='"+traineedate+"',assessor='"+assessorname+"',trainee='"+trainee+"' where Id='"+id+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "assessment", sql);
+    	Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+		toast.show();
+    	}
+    	else
+    	{
+    	    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	}  
+    	return this; 
+    } 
+    public TestAdapter timelost(Context context,String assessmentid,String tripno,String minutelost,String signals
+    		,String passengerdelay,String permanentway,String trackwork,String trainfault
+    		,String other,String explanation,String assessor,String trainee) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update timelost set minutelost='"+minutelost+"',signals='"+signals+"',passengerdelay='"+passengerdelay+"'," +
+    			"permanentway='"+permanentway+"',trackwork='"+trackwork+"',trainfault='"+trainfault+"',other='"+other+"'," +
+				"explanation='"+explanation+"',assessor='"+assessor+"',trainee='"+trainee+"' where tripno='"+tripno+"' and  assessmentId='"+assessmentid+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "timelost", sql);
+    	}
+    	else
+    	{
+    	    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	}  
+    	return this; 
+    } 
+    
+    public TestAdapter assessmenttime(Context context,String id,String timeoverschedule,String timelost) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update assessment set timeoverschedule='"+timeoverschedule+"',timelost='"+timelost+"' where Id='"+id+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "assessment", sql);
+    	}
+    	else
+    	{
+    	    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	}    	
+    	return this; 
+    } 
+    
+    public TestAdapter assessmentdetail(Context context,String assessmentId,String tripno,String time,String location,String destination
+    		,String tdNo,String mputype,String mpuno,String weather,String assessor,String trainee) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update assessmentdetail set time='"+time+"',location='"+location+"',destination='"+destination+"'," +
+    			"tdNo='"+tdNo+"',mputype='"+mputype+"',mpuno='"+mpuno+"',weather='"+weather+"',assessor='"+assessor+"',trainee='"+trainee+"'" +
+				" where assessmentId='"+assessmentId+"' and tripno='"+tripno+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "assessmentdetail", sql);
+    	}
+    	else
+    	{
+    	    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	}    	
+        return this; 
+    } 
+    
+    public TestAdapter insertuser(String username,String password,String role,String employeeno,String fullname) throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="insert into user (username,password,role,employeeno,fullname) values ('"+username+"','"+password+"','"+role+"','"+employeeno+"'" +
+    			",'"+fullname+"');";
+    	mDb.execSQL(sql);
+    	insertauditlog2("","Insert", "user", sql);
+        return this; 
+    }
+    public TestAdapter loginfalse() throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update user set login='false';";    
+    	insertauditlog("Logout", "user", sql);
+    	mDb.execSQL(sql);    	
+        return this; 
+    }
+    public TestAdapter logintrue(String username,String password) throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update user set login='true' where username='"+username+"' and password='"+password+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Login", "user", sql);
+        return this; 
+    }
+    public TestAdapter deletetrainerassessor() throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="delete from user where role='trainer' or role='assessor';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Delete", "user", sql);
+        return this; 
+    }
+    public Cursor getTestData(String tablename)
+    {
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="";
+    	try
+        {
+    		if(tablename.equalsIgnoreCase("auditlog"))
+    		{
+    			sql ="select * from "+ tablename +"";	
+    		}
+    		else
+    		{
+    			sql ="select * from "+ tablename +" where trainee<>''";	
+    		} 
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor getchackname(String checknum)
+    {
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="";
+    	try
+        {
+    		sql ="select * from checklist where checknum='"+checknum+"'";	
+    		
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor sendtabletoekp(String tablename)
+    {
+    	mDb = mDbHelper.getWritableDatabase();
+    	try
+        {
+            String sql ="select * from "+ tablename +"";
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor userexist()
+    {
+        try
+        {
+            String sql ="select * from user where login='true'";
+            mDb = mDbHelper.getWritableDatabase();
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    
+    public Cursor getuser(String username, String password)
+    {
+        try
+        {
+        	mDb = mDbHelper.getWritableDatabase();
+            String sql ="select * from user where username='"+username+"' and password='"+password+"'";
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+   
+    public Cursor traineexist()
+    {
+        try
+        {
+        	mDb = mDbHelper.getWritableDatabase();
+            String sql ="select * from user where role='trainee'";
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor assessoruserid()
+    {
+        try
+        {
+        	 mDb = mDbHelper.getWritableDatabase();
+            String sql ="select * from user where role='assessor' and login='true'";
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    
+    public Cursor traineruserid()
+    {
+        try
+        {
+        	 mDb = mDbHelper.getWritableDatabase();
+            String sql ="select * from user where role='trainer' and login='true'";
+
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor getalltrainer()
+    {
+        try
+        {
+            String sql ="select * from user where role='trainer'";
+            mDb = mDbHelper.getWritableDatabase();
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor getassessment(String Id)
+    {
+        try
+        {
+            String sql ="select assessment.*,stage.name as stagename,user.fullname,user.employeeno as assessoremployeeno from assessment join stage on assessment.stageId=stage.Id left join user on assessment.assessor=user.username where assessment.Id='"+Id+"'";
+            mDb = mDbHelper.getWritableDatabase();
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor getchecklisttrainer(String checknum)
+    {
+        try
+        {
+            String sql ="SELECT user.fullname as trainerfullname,userg.fullname as guidetrainerfullname," +
+            		"userung.fullname as unguidetrainerfullname,userins.fullname as trainerinsfullname," +
+            		"checklist.* FROM  checklist " +
+            		"left join user on checklist.trainer=user.username " +
+            		"left join user as userg on checklist.trainerguide=userg.username " +
+            		"left join user as userung on checklist.trainerunguide=userung.username " +
+            		"left join user as userins on checklist.trainerinstruction=userins.username  " +
+            		"where checknum ='"+checknum+"'";
+            mDb = mDbHelper.getWritableDatabase();
+            Cursor mCur = mDb.rawQuery(sql, null);
+            if (mCur!=null)
+            {
+               mCur.moveToNext();
+            }
+            return mCur;
+        }
+        catch (SQLException mSQLException) 
+        {
+            Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+            throw mSQLException;
+        }
+    }
+    public Cursor checklisttemplate(String checknum)
+    {
+    	try
+    	{
+    		mDb = mDbHelper.getWritableDatabase();
+    		String sql="select * from checklisttemplate where Checknum='"+checknum+"'";
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor depotvalue(String checknum,String heading,String subheading)
+    {
+    	try
+    	{
+    		String sql="select checklisttemplate.value,checklist.nameofdepot  from checklisttemplate left join checklist on checklisttemplate.Checknum=checklist.checknum where checklisttemplate.Checknum='"+checknum+"' and heading='"+heading+"' and subheading='"+subheading+"'";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor stagelist()
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM stage";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+
+    //To get all assessment completed for each stage
+    public Cursor getassessmentcmp(String stageid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM assessment where stageId='"+stageid+"' and result='true'";
+    		mDb = mDbHelper.getWritableDatabase();  		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    //To get all assessment for each stage
+    public Cursor getallsessment(String stageid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM assessment where stageId='"+stageid+"'";
+    		mDb = mDbHelper.getWritableDatabase();    		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    //To get all checklist for each stage from checklistindex
+    public Cursor getallchecklistindex(String stageid)
+    {
+    	try
+    	{
+    		String sql="select checklist.Id,checklist.checknum,checklist.name,checklist.rpl from checklistindex inner join checklist on checklistindex.checknum=checklist.checknum where checklistindex.stageid='"+stageid+"' and real='TRUE' GROUP BY checklistindex.checknum";
+    		mDb = mDbHelper.getWritableDatabase();    		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+  //To get all checklist task for each checklist 
+    public Cursor getallchecklisttask(String checknum)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM checklisttask where checknum='"+checknum+"'";
+    		mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+  //To get all checklist task completed for each checklist 
+    public Cursor getchecklisttaskcmp(String checknum)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM checklisttask where checknum='"+checknum+"' and (unna='true' or und='true' or une='true')";
+    		mDb = mDbHelper.getWritableDatabase();    		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+  //To get all subject for each assessment 
+    public Cursor getallsubject(String assessmentid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM subject where assessmentId='"+assessmentid+"'";
+    		 mDb = mDbHelper.getWritableDatabase();   		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+  //To get all checklist for each subject 
+    public Cursor getallsubjectchecklist(String subjectid)
+    {
+    	try
+    	{
+    		String sql="SELECT checklist.*,subjectchecklist.subjectId FROM subjectchecklist join checklist on checklist.checknum=subjectchecklist.checknum where subjectId='"+subjectid+"'group by subjectchecklist.checknum";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    //To get all checklist required for each subject 
+    public Cursor getallchecklistrequired(String subjectid)
+    {
+    	try
+    	{
+    		String sql="SELECT subjectchecklist.id FROM subjectchecklist join  checklist on  subjectchecklist.checknum=checklist.checknum where subjectId='"+subjectid+"' and critical='C' GROUP BY subjectchecklist.id";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor getassessmentdetail(String assessmentid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM assessmentdetail where assessmentId='"+assessmentid+"' order by tripno";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor getassessmenttimelost(String assessmentid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM timelost where assessmentId='"+assessmentid+"' order by tripno";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor countassessmenttimelost(String assessmentid)
+    {
+    	try
+    	{
+    		String sql="SELECT sum(minutelost) as minlost,sum(signals) as signal,sum(passengerdelay) as passengerdelay,sum(permanentway) as permanent,sum(trackwork) as trackwork,sum(trainfault) as trainfault,sum(other) as other FROM timelost where assessmentId='"+assessmentid+"'";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor getassessmentcomment(String assessmentid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM assessment where Id='"+assessmentid+"'";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor getsubject(String subjectid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM subject where Id='"+subjectid+"'";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public TestAdapter assessment(Context context,String id,String location,String date,String trainee,String assessor) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+	    	mDb = mDbHelper.getWritableDatabase();
+	    	String sql="update  assessment set location='"+location+"',date='"+date+"',trainee='"+trainee+"',assessor='"+assessor+"' where Id='"+id+"';";
+	    	mDb.execSQL(sql);
+	    	insertauditlog("Update", "assessment", sql);
+	    	//Show message
+	    	Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+	    	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+	    	toast.show();
+    	}
+    	else
+    	{
+	    	Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+	    	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+	    	toast.show();
+    	}
+    	return this; 
+    } 
+    
+    public TestAdapter assessmenttimelostinsert(String assessmentid,String tripno) throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="insert into timelost (assessmentId,tripno) values ('"+assessmentid+"','"+tripno+"');";
+    	mDb.execSQL(sql);
+    	insertauditlog("Insert", "timelost", sql);
+    	return this; 
+    } 
+    
+    public TestAdapter assessmentdetailinsert(String assessmentid,String tripno) throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="insert into assessmentdetail (assessmentId,tripno) values ('"+assessmentid+"','"+tripno+"');";
+    	mDb.execSQL(sql);
+    	insertauditlog("Insert", "assessmentdetail", sql);
+        return this; 
+    } 
+    
+    public Cursor getconfig()
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM config";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    //Do we have any checklist in process
+    public Cursor getchecklistinprocess(String checknum)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM checklistindex join checklist on checklistindex.checknum=checklist.checknum where checklistindex.checknum='"+checknum+"' and (trainee<>'' OR checklist.assessor<>'')";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    
+    public TestAdapter updateconfig(Context context,String feildname,String feildvalue) throws SQLException  
+    { 
+    	
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update config set "+feildname+" ='"+feildvalue+"'";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "config", sql);
+    	Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+		toast.show();
+    	
+        return this; 
+    } 
+    
+    public Cursor getcompetencytask(String competencyid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM competencytask where competencyId='"+competencyid+"'";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+   
+    public Cursor getcompetencyid(String competencyid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM competency where Id='"+competencyid+"'";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    //Get all competency
+    public Cursor getcompetency()
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM competency";
+    		 mDb = mDbHelper.getWritableDatabase();   		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public Cursor getuserrole()
+    {
+    	try
+    	{
+    		String sql="select * from user where login='true'";
+    		 mDb = mDbHelper.getWritableDatabase();   		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    //Get competency task desc
+    public Cursor getcompetencytaskdesk(String competencyid)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM competencytaskdesc where competencyId='"+competencyid+"'";
+    		 mDb = mDbHelper.getWritableDatabase();    		
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public TestAdapter insertcompetencytaskdesc(String competencyid,String tablenumber) throws SQLException  
+    { 
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="Insert into competencytaskdesc (competencyId,tablenumber) Values('"+competencyid+"','"+tablenumber+"');";
+    	mDb.execSQL(sql);
+    	insertauditlog("Insert", "competencytaskdesc", sql);
+        return this; 
+    }
+    
+    public TestAdapter updatecompetencytaskdesc(Context context,String motivepower,String task,String date,String mpu,
+    		String dayornight,String tdno,String origin,String destination
+    		,String assessor,String trainee,String competencyid,String tablenumber) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="Update competencytaskdesc set motivepower='"+motivepower+"',task='"+task+"'," +
+    			"date='"+date+"',mpu='"+mpu+"',dayornight='"+dayornight+"'," +
+				"tdno='"+tdno+"',origin='"+origin+"',destination='"+destination+"',assessor='"+assessor+"'" +
+						",trainee='"+trainee+"' " +
+						"where competencyid='"+competencyid+"' and tablenumber='"+tablenumber+"'";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "competencytaskdesc", sql);
+    	//Show message
+    	Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+    	toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    	toast.show();
+    	}
+    	else
+    	 {
+    		Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+    		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    		toast.show();
+    	 }
+        return this; 
+    }
+    
+    public TestAdapter assessment10date(Context context,String assessmentId,String date) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    	mDb = mDbHelper.getWritableDatabase();
+    	String sql="update assessment set date='"+date+"' where Id='"+assessmentId+"';";
+    	mDb.execSQL(sql);
+    	insertauditlog("Update", "assessment", sql);
+    	//Show message
+		Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+		toast.show();
+    	}
+    	else
+    	{
+    		Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+    	}
+        return this; 
+    }
+    
+    public TestAdapter updatecompetencycomment(Context context,String competencyid,String result,String comment,String assessorsig,
+    		String traineesig,String trainee,String assessor,String nyc,String c) throws SQLException  
+    { 
+    	if(checkrole().equalsIgnoreCase("assessor"))
+    	{
+    		mDb = mDbHelper.getWritableDatabase();
+    		String sql="update competency set result='"+result+"',comment='"+comment+"'" +
+	    			",assessorsig='"+assessorsig+"',traineesig='"+traineesig+"',trainee='"+trainee+"'," +
+					"assessor='"+assessor+"',c='"+c+"',nyc='"+nyc+"' where Id='"+competencyid+"';";
+    		mDb.execSQL(sql);
+    		insertauditlog("Update", "competency", sql);
+	    	//Show message
+			Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+    	}
+    	else
+    	{
+    		Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+    	}
+	        return this; 
+    }
+     
+    public Cursor getspinnervalue(String Id)
+    {
+    	try
+    	{
+    		String sql="SELECT * FROM dropdownvalue where Id='"+Id+"'";
+    		 mDb = mDbHelper.getWritableDatabase();
+    		Cursor mCur=mDb.rawQuery(sql, null);
+    		if(mCur!=null)
+    		{
+    			mCur.moveToNext();
+    		}
+    		return mCur;
+    	}
+    	catch(SQLException mSQLException)
+    	{
+    		Log.e(TAG, "getTestData >>"+ mSQLException.toString());
+    		throw mSQLException;
+    	}
+    }
+    public TestAdapter updatechecklistguide(Context context,String trainee,String assessor,String trainerguide,String gtrainersig,String gdate,
+    		String gdayornight,String gweather,String gfrom,String gto,
+    		String gmpu,String gnovehicle,String checknum) throws SQLException  
+		{
+			
+		    if(checkrole().equalsIgnoreCase("assessor") || checkrole().equalsIgnoreCase("trainer"))
+			{
+		    	
+			mDb = mDbHelper.getWritableDatabase();
+			String sql="update checklist set trainee='"+trainee+"',assessor='"+assessor+"' " +
+					",trainerguide='"+trainerguide+"',gtrainersig='"+gtrainersig+"',gdate='"+gdate+"'" +
+					",gdayornight='"+gdayornight+"',gweather='"+gweather+"'" +
+							",gfrom='"+gfrom+"',gto='"+gto+"'" +
+									",gmpu='"+gmpu+"',gnovehicle='"+gnovehicle+"' where checknum='"+checknum+"';";
+			mDb.execSQL(sql);
+			insertauditlog("Update", "checklist", sql);
+			//Show message
+			Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+			}
+		    else
+		    {
+		    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		    }
+			return this; 
+		} 
+    public TestAdapter updatechecklistunguide(Context context,String trainee,String assessor,String trainerunguide,String ungtrainersig,String ungdate,
+    		String ungdayornight,String ungweather,String ungfrom,String ungto,
+    		String ungmpu,String ungnovehicle,String ungperform,String checknum) throws SQLException  
+		{
+			
+		    if(checkrole().equalsIgnoreCase("assessor") || checkrole().equalsIgnoreCase("trainer"))
+			{
+			mDb = mDbHelper.getWritableDatabase();
+			String sql="update checklist set trainee='"+trainee+"',assessor='"+assessor+"' " +
+					",trainerunguide='"+trainerunguide+"',ungtrainersig='"+ungtrainersig+"',ungdate='"+ungdate+"'" +
+					",ungdayornight='"+ungdayornight+"',ungweather='"+ungweather+"'" +
+							",ungfrom='"+ungfrom+"',ungto='"+ungto+"'" +
+									",ungmpu='"+ungmpu+"',ungnovehicle='"+ungnovehicle+"',ungperform='"+ungperform+"' where checknum='"+checknum+"';";
+			mDb.execSQL(sql);	
+			insertauditlog("Update", "checklist", sql);
+			//Show message
+			Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+			}
+		    else
+		    {
+		    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		    }
+			return this; 
+		} 
+    public TestAdapter updatechecklistinstruction(Context context,String trainee,String assessor,String trainerinstruction,String instrainersig,String insdate,
+    		String insdayornight,String insweather,String insfrom,String insto,
+    		String insmpu,String insnovehicle,String checknum) throws SQLException  
+		{
+			
+		    if(checkrole().equalsIgnoreCase("assessor") || checkrole().equalsIgnoreCase("trainer"))
+			{
+		    
+			mDb = mDbHelper.getWritableDatabase();
+			String sql="update checklist set trainee='"+trainee+"',assessor='"+assessor+"' " +
+					",trainerinstruction='"+trainerinstruction+"',instrainersig='"+instrainersig+"',insdate='"+insdate+"'" +
+					",insdayornight='"+insdayornight+"',insweather='"+insweather+"'," +
+							"insfrom='"+insfrom+"',insto='"+insto+"'," +
+									"insnovehicle='"+insnovehicle+"',insmpu='"+insmpu+"' where checknum='"+checknum+"';";
+			Log.d("LEE",sql);
+			mDb.execSQL(sql);	
+			insertauditlog("Update", "checklist", sql);
+			//Show message
+			Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+			}
+		    else
+		    {
+		    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		    }
+			return this; 
+		} 
+    public TestAdapter updatechecklistheaderassessor(Context context,String trainee,String assessor,
+    		String locomotiveclass,String checknum) throws SQLException  
+		{
+			
+		    if(checkrole().equalsIgnoreCase("assessor") )
+			{
+		    
+			mDb = mDbHelper.getWritableDatabase();
+			String sql="update checklist set trainee='"+trainee+"',assessor='"+assessor+"' " +
+					",locomotiveclass='"+locomotiveclass+"'" +
+					" where checknum='"+checknum+"';";
+			mDb.execSQL(sql);	
+			insertauditlog("Update", "checklist", sql);
+			//Show message
+			Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+			}
+		    else
+		    {
+		    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		    }
+			return this; 
+		} 
+    public TestAdapter updatechecklistheadertrainer(Context context,String trainee,String assessor,String trainer,
+    		String locomotivetype,String corridordown,String corridorup,String checknum) throws SQLException  
+		{
+			
+		    if(checkrole().equalsIgnoreCase("assessor") || checkrole().equalsIgnoreCase("trainer"))
+			{
+		    
+			mDb = mDbHelper.getWritableDatabase();
+			String sql="update checklist set trainee='"+trainee+"',assessor='"+assessor+"' " +
+					",trainer='"+trainer+"',locomotivetype='"+locomotivetype+"',corridordown='"+corridordown+"',corridorup='"+corridorup+"'" +
+					" where checknum='"+checknum+"';";
+			mDb.execSQL(sql);
+			insertauditlog("Update", "checklist", sql);
+			//Show message
+			Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+			}
+		    else
+		    {
+		    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		    }
+			return this; 
+		} 
+    public TestAdapter updatechecklistheaderassessor(Context context,String trainee,String assessor,
+    		String locomotivetype,String corridordown,String corridorup,String checknum) throws SQLException  
+		{
+			
+		    if(checkrole().equalsIgnoreCase("assessor") || checkrole().equalsIgnoreCase("trainer"))
+			{
+		    
+			mDb = mDbHelper.getWritableDatabase();
+			String sql="update checklist set trainee='"+trainee+"',assessor='"+assessor+"' " +
+					",locomotivetype='"+locomotivetype+"',corridordown='"+corridordown+"',corridorup='"+corridorup+"'" +
+					" where checknum='"+checknum+"';";
+			mDb.execSQL(sql);
+			insertauditlog("Update", "checklist", sql);
+			//Show message
+			Toast toast=Toast.makeText(context, R.string.savemessage, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+			}
+		    else
+		    {
+		    Toast toast=Toast.makeText(context, R.string.dologin, Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		    }
+			return this; 
+		} 
+    public TestAdapter updatestage(String id,String name,String desc) throws SQLException  
+		{		    
+			mDb = mDbHelper.getWritableDatabase();
+			String sql="update stage set name='"+name+"',desc='"+desc+"' where Id='"+id+"';";
+			mDb.execSQL(sql);	
+			insertauditlog("Update", "stage", sql);
+
+			return this; 
+		}
+    public TestAdapter updateassessmenttitle(String id,String stageid,String name) throws SQLException  
+	{		    
+		mDb = mDbHelper.getWritableDatabase();
+		String sql="update assessment set name='"+name+"' where Id='"+id+"' and stageId='"+stageid+"';";
+		Log.d("LEE",sql);
+		//mDb.execSQL(sql);	
+		//insertauditlog("Update", "assessment", sql);
+
+		return this; 
+	}
+    public void insertauditlog(String action,String tablename,String query)   
+		{	
+    	     mDb = mDbHelper.getWritableDatabase();
+	    	 String sql ="select * from user where login='true'";
+	         Cursor mCur = mDb.rawQuery(sql, null);
+	         if(mCur.getCount()>0)
+	         {
+	        	 mCur.moveToFirst();
+	        	 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	        	 String querymodify= query.replace("\'", "\"");
+	        	 mDb = mDbHelper.getWritableDatabase();
+	        	 String username=mCur.getString(mCur.getColumnIndex("username"));
+	        	 mDb.execSQL("insert into auditlog (userid,datetime,action,tablename,query) VALUES ('"+username+"','"+sdf.format(new Date())+"','"+action+"','"+tablename+"','"+querymodify+"');");	        	 
+	         }
+	         
+		} 
+    //Login is not import
+    public void insertauditlog2(String username,String action,String tablename,String query)   
+	{	
+	     mDb = mDbHelper.getWritableDatabase();
+    	
+        	 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        	 String querymodify= query.replace("\'", "\"");
+        	 mDb = mDbHelper.getWritableDatabase();
+        	 mDb.execSQL("insert into auditlog (userid,datetime,action,tablename,query) VALUES ('"+username+"','"+sdf.format(new Date())+"','"+action+"','"+tablename+"','"+querymodify+"');");	        	     
+	} 
+    public void deletetauditlog()   
+	{	
+	     mDb = mDbHelper.getWritableDatabase();
+    	 String sql ="select * from user where login='true'";
+         Cursor mCur = mDb.rawQuery(sql, null);
+         if(mCur.getCount()>0)
+         {
+        	 mCur.moveToFirst();
+        	 mDb.execSQL("delete from auditlog");	        	 
+         }        
+	} 
+ 
+    public void close()  
+    { 
+        mDbHelper.close(); 
+    } 
+     
+}

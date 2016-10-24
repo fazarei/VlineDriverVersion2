@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/item2" android:title="@string/menu_settings" android:showAsAction="never">
+        <menu>
+            <item android:id="@+id/item1" android:title="@string/menu_serversetting" android:showAsAction="never"/>
+            <item android:id="@+id/item4" android:title="@string/submenu_backup" android:showAsAction="never"/>   
+        </menu>
+    </item>
+</menu>

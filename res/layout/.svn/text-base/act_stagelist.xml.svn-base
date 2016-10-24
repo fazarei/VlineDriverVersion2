@@ -1,0 +1,53 @@
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/shape_background">
+    <TableLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            style="@style/gridheader"
+            android:layout_marginLeft="200dp"
+            android:layout_marginRight="210dp"
+            android:layout_marginTop="50dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/stage"
+                android:width="160dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/gridtxthedear"
+                android:text="@string/stagedesc"
+                android:width="300dp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/gridtxthedear"
+                android:text="@string/checklist"
+                android:width="220dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/gridtxthedear"
+                android:text="@string/assessment"
+                android:width="150dp" />
+        </TableRow>
+
+        <GridView
+            android:id="@+id/gridView1"
+            style="@style/gridstyle"
+            android:layout_height="450dp"
+            android:layout_marginLeft="200dp"
+            android:layout_marginRight="200dp" >
+
+        </GridView>
+
+    </TableLayout>
+</HorizontalScrollView>

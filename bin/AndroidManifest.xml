@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gvm.vlinedriver"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo2"
+        android:label="@string/title"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.gvm.vlinedriver.SubjectofAssessment"
+            android:label="@string/app_name" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.CreateandBackupDB" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.Stagelist" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.AssessmentofStage" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistofStage" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.AssessmentSubject" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.Date" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.SubjectChecklist" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.AssessmentTab" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistTab" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.AssessmentDetail" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.AssessmentTimeLost" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.AssessmentComment" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistComment" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistInstruction" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistPractice" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistTask" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistTaskTab" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.ChecklistInstructed" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Login"
+            android:windowSoftInputMode="adjustResize|stateVisible" android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="com.gvm.vlinedriver.Loginact" android:screenOrientation="landscape"  >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Uploadfile"
+            android:label="@string/title_activity_uploadfile" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Resetpopup"
+            android:label="@string/title_activity_resetpopup" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Competency"
+            android:label="@string/title_activity_competency" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Assessment10comment"
+            android:label="@string/title_activity_assessment10comment" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Assessment10Tab" android:screenOrientation="landscape" 
+            >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Competencytask"
+            android:label="@string/title_activity_competencytask" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Competencytask_tab" android:screenOrientation="landscape" 
+            >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.Competencycomment"
+            android:label="@string/title_activity_competencycomment" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.CompetencyInstructed"
+            android:label="@string/title_activity_competency_instructed" android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.gvm.vlinedriver.About"
+            android:label="@string/title_activity_about" android:screenOrientation="landscape" >
+        </activity>
+    </application>
+
+</manifest>

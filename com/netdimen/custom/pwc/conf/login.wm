@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Welcome to DEPA e-Learning Site</title>
+<style type="text/css">
+body {
+	margin:0px;
+	padding:20px;
+	position:relative;
+	font:normal 11px arial;
+	background-color:#494949;
+}
+#container {
+	position:relative;
+	background:#c8e3f1 url(/$info.getContextPrefix()/images-pwc/bodybg.jpg) top left no-repeat;
+	margin:0 auto;
+	border:0px solid black;
+	width:900px;
+	height:600px;
+}
+a:hover{
+	text-decoration:underline;
+}
+/***********************
+/* LOGIN BOX
+/***********************/
+#login_box {
+	position:absolute;
+	top:290px;
+	left:180px;
+	border:0px solid black;
+	width:268px;
+	height:168px;
+}
+#login_box .content {
+	padding:10px 0px 0px 30px;
+}
+#login_box fieldset {
+	border:0px;
+	margin:0px;
+	padding:0px;
+}
+#login_box fieldset input[type="text"], #login_box fieldset input[type="password"] {
+	width:200px;
+}
+#login_box fieldset dt {
+	margin:3px 0px;
+	color:#aeadad;
+	font:normal 11px arial;
+}
+#login_box fieldset dd {
+	margin:0px;
+}
+/***********************
+/* NEWS BOX
+/***********************/
+#news_box {
+	position:absolute;
+	border:0px solid black;
+	top:293px;
+	left:450px;
+	width:300px;
+	line-height:16px;
+	color:#aeadad;
+}
+#news_box .content {
+	padding:10px 30px 0px 30px;
+}
+#news_box .content a {
+	font:normal 11px arial;
+	color:#FFF;
+	text-decoration:none;
+}
+.newsticker {
+	list-style-type: none;
+	padding: 3px;
+	margin: 0;
+}
+/***********************
+/* MENU
+/***********************/
+#sub_menu {
+	position:absolute;
+	width:268px;
+	top:500px;
+	left:320px;
+	text-align:center;
+	color:#74cbfd;
+}
+#sub_menu ul, #sub_menu li {
+	display:inline;
+	margin:0px;
+	padding:0px;
+	font:normal 11px arial;
+}
+#sub_menu li a {
+	text-decoration:none;
+	color:#74cbfd;
+}
+#sub_menu li a:hover {
+	color:#FFF;
+}
+
+</style>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+var errormessage=1;
+var erroption=window.location.search;
+i = erroption.indexOf('ERR');
+errormessage = erroption.substring(i+4,i+5);
+var errorbasictext="";
+
+if (errormessage==3)
+	alert(errorbasictext + 'The password you entered is incorrect. Remember, passwords are case sensitive.');
+else if (errormessage==2)
+	alert(errorbasictext + 'You have exceeded the number of login attempts and your account is suspended or your account is closed.  Please contract your administrator by clicking on the Lost Password button above.');
+else if (errormessage==1)
+	alert(errorbasictext + 'The User ID you have entered is invalid.');
+	  
+function submitForm(enter_button) {
+	window.status='Logging in, please wait...';
+	document.form.submit();
+	enter_button.disabled=true;
+}
+
+var win= null;
+function NewWindow(mypage,myname,w,h,scroll){
+  var winl = (screen.width-w)/2;
+  var wint = (screen.height-h)/2;
+  var settings  ='height='+h+',';
+      settings +='width='+w+',';
+      settings +='top='+wint+',';
+      settings +='left='+winl+',';
+      settings +='scrollbars='+scroll+',';
+      settings +='resizable=yes';
+  win=window.open(mypage,myname,settings);
+  if(parseInt(navigator.appVersion) >= 4){win.window.focus();}
+}
+
+//-->
+</script>
+<script language="Javascript" src="/$info.getContextPrefix()/images-pwc/jquery.js"></script>
+<script language="Javascript" src="/$info.getContextPrefix()/images-pwc/jquery.newsticker.pack.js"></script>
+<script type="text/javascript"> 
+$(document).ready(
+	function()
+	{
+		$("#news").newsTicker();
+		parseSamples();
+	}
+);
+</script> 
+</head>
+<body>
+<form method="post" action="/$info.getContextPrefix()/servlet/ekp/verify" name="form">
+  <input type=HIDDEN name=TX value=VERIFY />
+	#if ($target != "")
+  	<input type="hidden" name="target" value="$target" />
+  #end
+  <div id="container">
+    <div id="login_box">
+      <div class="content">
+        <fieldset>
+        <dl>
+          <dt>User ID or Email</dt>
+          <dd>
+            <input type="text" name="UID" />
+          </dd>
+          <dt>Password</dt>
+          <dd>
+            <input name="PWD" type="password" />
+          </dd>
+          <dt><input name="REMEMBER_ME" type="checkbox" checked/>&nbsp;Remember password</dt>
+          <dt></dt>
+          <dd style="text-align:center; width:200px; padding-top:7px;">
+            <input type="image" src="/$info.getContextPrefix()/images-pwc/bt-login.png" />
+          </dd>
+        </dl>
+        </fieldset>
+      </div>
+    </div>
+    <div id="news_box">
+      <div class="content">
+	  	<ul id="news">
+		#foreach( $news in $news_list )
+			<li>
+			$news.getTitle()<br />
+			$news.getTeaser()<br />
+			<p style="text-align:right;"><a href="$base_url?TX=GETARTICLE&FROM=LOGIN&AID=$news.getArticleId()" target="blank">&raquo; Read More</a></p>
+			</li>
+		#end
+		</ul>
+      </div>
+    </div>
+    <div id="sub_menu">
+      <ul>
+        <li><a href="#" onclick="NewWindow('/ekp/help.html','Help','400','500')">Help</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="#" onclick="NewWindow('/ekp/lostpass.html','LostPassword','400','150')">Lost Password</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="mailto:yourcompany@netdimensions.com" >Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+</form>
+</body>
+</html>

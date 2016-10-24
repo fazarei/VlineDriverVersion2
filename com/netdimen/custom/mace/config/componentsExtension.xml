@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision: 1.170.2.18 $
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+<reports>
+	<report>
+		<report-name>ReportR122M</report-name>
+		<report-class>com.netdimen.custom.mace.newreports.configurators.ConfiguratorR122M</report-class>
+	</report>
+</reports>
+</components>

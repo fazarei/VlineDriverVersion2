@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define database structure for report wizard
+*************************************************************
+-->
+<report-wizard xmlns="http://www.netdimensions.com/xml/ns/report-wizard"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/report-wizard report-wizard.xsd">
+  <report_columns>
+  
+    <report_column>
+      <table>userinfo</table>
+      <column-name>employeestatus</column-name>
+      <bundle-key>label.hr.EmployeeStatus</bundle-key>
+      <reportcriteria-class>com.netdimen.custom.ing.EmployeeStatusCriteria</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+    
+    <report_column>
+      <table>userinfo</table>
+      <column-name>joblocation</column-name>
+      <bundle-key>label.hr.JobLocation</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>personalid</column-name>
+      <bundle-key>label.hr.PersonalId</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>taxid</column-name>
+      <bundle-key>label.hr.TaxId</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>taxlocation</column-name>
+      <bundle-key>label.hr.TaxLocation</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>returndate</column-name>
+      <bundle-key>label.hr.ReturnDate</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericDate</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>regular_temp</column-name>
+      <bundle-key>label.hr.RegularOrTemp</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>full_part_time</column-name>
+      <bundle-key>label.hr.FullOrPartTime</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>contractor</column-name>
+      <bundle-key>label.hr.Contractor</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>language</column-name>
+      <bundle-key>label.hr.Language</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>business_unit_code</column-name>
+      <bundle-key>label.hr.BusinessUnitCode</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+
+    <report_column>
+      <table>userinfo</table>
+      <column-name>business_unit_desc</column-name>
+      <bundle-key>label.hr.BusinessUnitDesc</bundle-key>
+      <reportcriteria-class>com.netdimen.appl.report.wizard.criteria.GenericString</reportcriteria-class>
+      <reportcriteria-field>INSTANCE</reportcriteria-field>
+    </report_column>
+  </report_columns>
+</report-wizard>

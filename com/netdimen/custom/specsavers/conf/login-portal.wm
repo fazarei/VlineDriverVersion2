@@ -1,0 +1,99 @@
+#set ($portalBaseUrl = "http://localhost:8080/specsavers")
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SpecSavers</title>
+<link href="$portalBaseUrl/styles/styles.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" type="text/javascript">
+<!--
+var errormessage=1;
+var erroption=window.location.search;
+i = erroption.indexOf('ERR');
+errormessage = erroption.substring(i+4,i+5);
+var errorbasictext="";
+if (errormessage==3)
+	alert(errorbasictext + 'The password you entered is incorrect. Remember, passwords are case sensitive.');
+else if (errormessage==2)
+	alert(errorbasictext + 'You have exceeded the number of login attempts and your account is suspended or your account is closed.  Please contact your administrator by clicking on the Lost Password button above.');
+else if (errormessage==1)
+	alert(errorbasictext + 'The User ID you have entered is invalid.');
+function submitForm(enter_button) {
+	window.status='Logging in, please wait...';
+	document.form.submit();
+	enter_button.disabled=true;
+}
+var win= null;
+function NewWindow(mypage,myname,w,h,scroll){
+  var winl = (screen.width-w)/2;
+  var wint = (screen.height-h)/2;
+  var settings  ='height='+h+',';
+      settings +='width='+w+',';
+      settings +='top='+wint+',';
+      settings +='left='+winl+',';
+      settings +='scrollbars='+scroll+',';
+      settings +='resizable=yes';
+  win=window.open(mypage,myname,settings);
+  if(parseInt(navigator.appVersion) >= 4){win.window.focus();}
+}
+//-->
+</script>
+
+</head>
+<body>
+<div id="wrap">
+<div id="header">
+    <div id="headerleft"><img src="$portalBaseUrl/images/logo.jpg" /></div>
+	<div id="headerright">You are not signed In</div>
+  </div>
+  <hr size="1" />
+  <div id="content">
+  <div id="contentleft">
+      <ul>
+        <li><a href="$portalBaseUrl/index.jsp">Home</a></li>
+        <li><a href="$portalBaseUrl/pages/my-course-page.jsp">My Courses</a></li>
+        <li><a href="$portalBaseUrl/pages/my-progress-page.jsp">My Progress</a></li>
+        <li><a href="$portalBaseUrl/pages/training-options.jsp">Training options</a></li>
+        <li><a href="$portalBaseUrl/pages/news.jsp">News</a></li>
+        <li><a href="$portalBaseUrl/pages/faqs.jsp">FAQs</a></li>
+        <li><a href="$portalBaseUrl/pages/contact-us.jsp">Contact Us</a></li>
+      </ul>
+    </div>
+    <div id="contentright">
+  <p class="greenhead">User Login</p>
+    <form id="authentication" name="form" method="post" action="/$info.getContextPrefix()/servlet/ekp/verify">
+      User ID<br />
+      <label>
+        <input type="text" name="UID"/>
+        </label>
+      <br />
+      Password<br />
+		<input type="password" name="PWD"/>
+      <br />
+      <br />
+      <label>
+        <input type="reset" name="button2" id="button2" value="Clear" />
+        <input type="submit" name="button" id="button" value="Login" onclick="Javascript:document.form.button.disabled=true; submit();" />
+#if ($target && $target != "")
+	<input type="hidden" name="target" value="$target" />
+#else
+	<input type="hidden" name="target" value="$portalBaseUrl/pages/signin.jsp"> 
+#end	  	
+		<input type="hidden" name="TX" value="VERIFY">
+		<input type="hidden" name="TEMPLATE" value="login-portal.wm">
+        </label>
+    </form>
+    <p class="greenhead">&nbsp;</p>
+	</div>
+    <br style="clear:both" />
+    <br />
+    <hr size="1" />
+    <div id="footer">
+      <div class="footerleft"><b>Our Vision</b> To passionately provide best value eyecare to everyone, simply, clearly and consistently, 
+        exceeding customer expectations every time</div>
+      <div class="footerright">&copy; Specsavers Optical Group 2010</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

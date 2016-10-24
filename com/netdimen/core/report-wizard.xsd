@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 1999-2009 NetDimensions Ltd.
+  
+  All rights reserved.
+  
+  This document is the confidential and proprietary information of NetDimensions
+  Ltd. ("Confidential Information").  You shall not disclose such Confidential
+  Information and shall use it only in accordance with the terms of the license
+  agreement you entered into with NetDimensions.
+-->
+<!-- This is the XML Schema for the EKP report wizard configuration file. -->
+<xs:schema xmlns="http://www.netdimensions.com/xml/ns/report-wizard"
+           targetNamespace="http://www.netdimensions.com/xml/ns/report-wizard"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+           
+  <!-- The report-wizard element is the root element of the deployment descriptor. -->
+  <xs:element name="report-wizard">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="report_tables"/>
+        <xs:element ref="report_columns"/>
+        <xs:element ref="report_types"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--    Describe the structure of report table element  -->
+  <xs:element name="report_table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="table-name"/>
+        <xs:element ref="identifier" minOccurs="0" />
+        <xs:element ref="bundle-key"/>
+        <xs:element ref="foreign-keys"/>
+      </xs:sequence>
+      <xs:attribute name="optional" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <!--    The name of the table  -->
+  <xs:element name="table-name" type="xs:string"/>
+  <!--
+   The optional identifier element contains identifier for enabling same table appear time in same query
+   if we include this, instead of generating SQL like 
+   		[select table.column1 from table where table.column2 = ?]
+   it will generate something like
+   		[select identifier.column1 from table identifier where identifier.column2 = ?]
+   thus the identifier needed to be something unique across database.
+  -->
+  <xs:element name="identifier" type="xs:string"/>
+  <!--    The bundle-key element contains the bundle-key exist in standard.properties  -->
+  <xs:element name="bundle-key" type="xs:string"/>
+  <!--    The report_tables element contains a list of report_table.  -->
+  <xs:element name="report_tables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="report_table"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--    The foreign-keys element contains a list of foreign-key.  -->
+  <xs:element name="foreign-keys">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="foreign-key"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--    Describe the structure of foreign-key element  -->
+  <xs:element name="foreign-key">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="type" />
+        <xs:element ref="value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--    Specify the type of the foreign key, same type can join togather  -->
+  
+  <xs:element name="type" type="foreign-key-type" />
+
+	<xs:simpleType name="foreign-key-type">
+ 	  <xs:restriction base="xs:string">
+ 	    <xs:enumeration value="SID" />
+ 	    <xs:enumeration value="USERID" />
+ 	    <xs:enumeration value="ORGID" />
+ 	    <xs:enumeration value="LID" />
+ 	    <xs:enumeration value="PROGRAM_LID" />
+ 	    <xs:enumeration value="PROGRAM_EVENTID" />
+ 	    <xs:enumeration value="MODULE_EVENTID" />
+ 	    <xs:enumeration value="TID" />
+ 	    <xs:enumeration value="CMI_SESSION_ID" />
+ 	    <xs:enumeration value="LEAF_ORGID" />
+ 	    <xs:enumeration value="ORG_USERID" />
+ 	    <xs:enumeration value="INSTANCEID" />
+ 	    <xs:enumeration value="TESTID" />
+ 	    <xs:enumeration value="QUESTIONNUM" />
+ 	    <xs:enumeration value="SECTIONNUM" />
+ 	    <xs:enumeration value="NODEID" />
+ 	    <xs:enumeration value="CONTENTORGID" />
+ 	    <xs:enumeration value="LESSON_CMI_SESSION_ID" />
+ 	    <xs:enumeration value="PROGRAM_TID" />
+  	    <xs:enumeration value="PAYMENTID" />
+   	    <xs:enumeration value="GEO_CODE" />
+   	    <xs:enumeration value="CURR_LID" />
+   	    <xs:enumeration value="TID_TRANS_T_INST" />
+   	    <xs:enumeration value="TUTORID" />
+   	    <xs:enumeration value="JOBPROFILEID" />
+   	    <xs:enumeration value="JP_CATEGORYID" />
+   	    <xs:enumeration value="JP_POOLID" />
+   	    <xs:enumeration value="COMPETENCYID" />
+   	    <xs:enumeration value="COMP_POOLID" />
+   	    <xs:enumeration value="GROUPID" />
+   	    <xs:enumeration value="GROUPMEMBERID" />
+   	    <xs:enumeration value="PROGRAM_CURR_EVENTID" />
+   	    <xs:enumeration value="ORG_USERID" />  
+ 	  </xs:restriction>
+	</xs:simpleType>
+
+  <!--    The name of the foreign key  -->
+  <xs:element name="value" type="xs:string"/>
+  
+  <!--    Describe the structure of report column element  -->
+  <xs:element name="report_column">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="table"/>
+        <xs:element ref="column-name"/>
+        <xs:element ref="bundle-key"/>
+        <xs:element ref="section-key"  minOccurs="0"/>
+        <xs:element ref="reportcriteria-class"/>
+        <xs:element ref="reportcriteria-field"/>
+      </xs:sequence>
+      <xs:attribute name="no-groupby" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <!--    The name of the table or the identifier of the table   -->
+  <xs:element name="table" type="xs:string"/>
+  <!--
+   The optional section-key element contains the bundle-key exist in standard.properties,
+   if not provide mean using table's bundle-key  
+  -->
+  <xs:element name="section-key" type="xs:string" />
+  <!--    The name of the column  -->
+  <xs:element name="column-name" type="xs:string"/>
+  <!--    The class name of the ReportCriteria for this column -->
+  <xs:element name="reportcriteria-class" type="xs:string"/>
+  <!--    The static field name of the ReportCriteria for this column -->
+  <xs:element name="reportcriteria-field" type="xs:string"/>
+  <!--    The report_tables element contains a list of report_table.  -->
+  <xs:element name="report_columns">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="report_column"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!--    Describe the structure of report type element  -->
+  <xs:element name="report_type">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="type-name"/>
+        <xs:element ref="type-desc"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="table-used"/>
+        <xs:element ref="bundle-key"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="joining-hint"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--    The name and description of that type  -->
+  <xs:element name="type-name" type="xs:string"/>
+  <xs:element name="type-desc" type="xs:string"/>
+  <xs:element name="table-used" type="xs:string"/>
+  <!--    The report_types element contains a list of report_type.  -->
+  <xs:element name="report_types">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="report_type"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--    
+  	The joining-hint element service for a hint to report wizard's SQL-Builder to choose 
+  	correct table when constructing joining statement, even without this information SQL-Builder 
+  	can construct executable SQL but may get wrong result.
+  	For example if the report contain columns from 'users' and 'learningObject' in report type 
+  	'training record', these column should join with table 'transcript' rather 'account'. In order 
+  	to give this hint to SQL-Builder, we need have the following 
+  	
+      <joining-hint table="transcript">
+        <related-table>users</related-table>
+        <related-table>learningObject</related-table>
+      </joining-hint>      
+  -->
+  <xs:element name="related-table" type="xs:string"/>
+  <xs:element name="joining-hint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="related-table"/>
+      </xs:sequence>
+      <xs:attribute name="table" type="xs:string"/>
+      <xs:attribute name="deepjoin" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML><HEAD>
+	<TITLE>Emerson Climate Technologies</TITLE>
+	<link media='screen' rel='stylesheet' href='/$info.getContextPrefix()/nd/fresco/styles/base.css' type='text/css'></HEAD>
+	<link media='screen' rel='stylesheet' href='$csspath' type='text/css'></HEAD>
+<BODY id="footer">
+	<TABLE>
+		<TR>
+		<TD ALIGN=LEFT>Copyright 2006, Emerson Electric Co. All rights reserved.</TD>
+		<TD>
+			<A HREF='http://www.google.com' TARGET='fresco_main'>Terms and Conditions of Use</A>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<A HREF='http://www.yahoo.com' TARGET='fresco_main'>Privacy Policy</A>
+		</TD>
+		</TR>
+	</TABLE>
+	<BR><BR>
+</BODY></HTML>

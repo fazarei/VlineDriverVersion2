@@ -1,0 +1,171 @@
+#set ($portalBaseUrl = "http://localhost:8080/specsavers")
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Login</title>
+<style type="text/css">
+
+body {
+		margin:0px;
+		padding:0px;
+		background-color: #FFFFFF;
+}
+html {
+		overflow:hidden;
+}
+body,td,th {
+		color: #000000;
+}
+a {
+		color:#37748d;
+		text-decoration:none;
+}
+a:hover {
+		color:#ef911b;
+}
+#wrapper {
+		width:100%;
+		height:100%;
+		padding:0px;
+		position:relative;
+}
+td {
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:11px;
+		font-weight:normal;
+		color:#333333;
+}
+.style1 {
+		font-family: Verdana, Arial, Helvetica, sans-serif
+}
+#login {
+		position: relative;
+		height: 128px;
+		width: 210px;
+		background-color: #FFFFFF;
+		border: 1px solid #FF6600;
+		margin-left:auto;
+		margin-right:auto;
+		margin-top: 90px;
+		padding:0px;
+}
+.navigationText {
+		text-align:right;
+		color:#009833;
+		font-weight:bold;
+		padding-right:3px;
+}
+#header {
+		width: 100%;
+		height: 165px;
+		background-image: url(/$info.getContextPrefix()/images/header.gif);
+		background-repeat:no-repeat;
+		background-position: left bottom;
+}
+#footer {
+		position: absolute;
+		height: 600px;
+		width: 100%;
+		left: 0px;
+		top: 530px;
+		background-color: #D5FCA5;
+		background-image:url(/$info.getContextPrefix()/images/footer.gif);
+		background-repeat: no-repeat;
+		background-position: left top;
+}
+#greenText {
+		position: relative;
+		height: 20px;
+		width: 300px;
+		background-color: #FFFFFF;
+		margin-left:auto;
+		margin-right:auto;
+		margin-top: 5px;
+		padding:0px;
+}
+</style>
+<script language="JavaScript" type="text/javascript">
+<!--
+var errormessage=1;
+var erroption=window.location.search;
+i = erroption.indexOf('ERR');
+errormessage = erroption.substring(i+4,i+5);
+var errorbasictext="";
+if (errormessage==3)
+	alert(errorbasictext + 'The password you entered is incorrect. Remember, passwords are case sensitive.');
+else if (errormessage==2)
+	alert(errorbasictext + 'You have exceeded the number of login attempts and your account is suspended or your account is closed.  Please contact your administrator by clicking on the Lost Password button above.');
+else if (errormessage==1)
+	alert(errorbasictext + 'The User ID you have entered is invalid.');
+function submitForm(enter_button) {
+	window.status='Logging in, please wait...';
+	document.form.submit();
+	enter_button.disabled=true;
+}
+var win= null;
+function NewWindow(mypage,myname,w,h,scroll){
+  var winl = (screen.width-w)/2;
+  var wint = (screen.height-h)/2;
+  var settings  ='height='+h+',';
+      settings +='width='+w+',';
+      settings +='top='+wint+',';
+      settings +='left='+winl+',';
+      settings +='scrollbars='+scroll+',';
+      settings +='resizable=yes';
+  win=window.open(mypage,myname,settings);
+  if(parseInt(navigator.appVersion) >= 4){win.window.focus();}
+}
+//-->
+</script>
+</head>
+
+<body>
+<div id="wrapper">
+         
+         <div id="header"></div>
+         
+         <div id="login" align="center">
+         <form method="post" action="/$info.getContextPrefix()/servlet/ekp/verify" name="form">
+#if ($target && $target != "")
+	<input type="hidden" name="target" value="$portalBaseUrl/pages/signin-general.jsp?ekp_target_page=$target" />
+#else
+	<input type="hidden" name="target" value="$portalBaseUrl/pages/signin-general.jsp" />
+#end
+         
+          <table width="100" height="50" border="0">
+            <tr>
+              <td><div align="center"><span class="style1">User ID</span><br />
+                  <input name="UID" type="text" size="27" />
+              </div></td>
+            </tr>
+            <tr>
+              <td><div align="center"><span class="style1">Password</span>: <br />
+                  <input name="PWD" type="password" size="28" />
+              </div></td>
+            </tr>
+            <tr>
+              <td height="36"><div align="center">
+                <input type="submit" value="Login" name="LOGIN" onclick="submitForm(this); return true;" />
+              </div></td>
+            </tr>
+    </table>
+    </form>
+  </div> <!-- login -->
+
+  <div id="greenText" align="left">
+  	<table width="100%" height="20" border="0" align="center">
+      <tr>
+        <td height="20" align="center" valign="top" nowrap>
+           <a href="mailto:odp@gg.specsavers.com" class="navigationText">Contact Us</a>
+           <a class="navigationText" href="/$info.getContextPrefix()/servlet/ekp?TX=ResetPassword" class="navigation51">| &nbsp;&nbsp;&nbsp;Lost Password</a>
+	     <a class="navigationText" href="#" onClick="window.open( '/$info.getContextPrefix()/nd/fresco/pcchecker/pcchecker.html', 'pcchecker', 'width=800,height=500' );">| &nbsp;&nbsp;&nbsp;Check your browser</a></td>
+      </tr>
+    </table>
+  </div> <!-- greenText -->
+
+  <div id="footer"></div>
+
+</div> <!-- wrapper -->
+</body>
+</html>

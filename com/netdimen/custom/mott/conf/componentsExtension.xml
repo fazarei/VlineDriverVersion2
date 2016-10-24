@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************
+This file is used to define various types of EKP components,
+including transactions and reports.
+
+$Revision$
+*************************************************************
+-->
+<components xmlns="http://www.netdimensions.com/xml/ns/components"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.netdimensions.com/xml/ns/components components.xsd">
+
+	<reports>
+		<report>
+			<report-name>ReportR109M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR109M</report-class>
+		</report>
+		<report>
+			<report-name>ReportR140M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR140M</report-class>
+		</report>
+		<report>
+			<report-name>ReportR141M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR141M</report-class>
+		</report>
+		<report>
+			<report-name>ReportR142M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR142M</report-class>
+		</report>
+		<report>
+			<report-name>ReportR240M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR240M</report-class>
+		</report>
+		<report>
+			<report-name>ReportR241M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR241M</report-class>
+		</report>
+		<report>
+			<report-name>ReportR243M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR243M</report-class>
+	    </report>
+		<report>
+			<report-name>ReportR244M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR244M</report-class>
+		</report>
+		<report>
+			<report-name>ReportR245M</report-name>
+			<report-class>com.netdimen.custom.mott.newreports.configurator.ConfiguratorR245M</report-class>
+		</report>
+	</reports>
+	<transactions>
+		<transaction>
+			<tx-code>R245M</tx-code>
+			<feature>BSReports</feature>
+			<access-level>ReadAccess</access-level>
+			<class>com.netdimen.custom.mott.newreports.generator.ReportR245M</class>
+			<requires-authentication>true</requires-authentication>
+		</transaction>
+		<transaction>
+			<tx-code>LAUNCHWORKINGMANAGER</tx-code>
+			<tx-type>HOMEPAGE</tx-type>
+			<feature>System</feature>
+			<access-level>WriteAccess</access-level>
+			<class>com.netdimen.custom.mott.tx.LaunchWorkingManager</class>
+			<requires-authentication>true</requires-authentication>
+			<container-transaction>true</container-transaction>
+		</transaction>
+		<transaction>
+			<tx-code>REDIRECTWITHUSERID</tx-code>
+			<tx-type>HOMEPAGE</tx-type>
+			<feature>System</feature>
+			<access-level>WriteAccess</access-level>
+			<class>com.netdimen.custom.mott.tx.RedirectWithUserid</class>
+			<requires-authentication>true</requires-authentication>
+			<container-transaction>true</container-transaction>
+		</transaction>
+	</transactions>
+</components>

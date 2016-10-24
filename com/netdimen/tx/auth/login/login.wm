@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>NetDimensions | Enterprise Knowledge Platform 7.3</title>
+  <link href="/$info.getContextPrefix()/favicon.ico" type="image/vnd.microsoft.icon" rel="shortcut icon">
+  <script src="/$info.getContextPrefix()/nd/fresco/login/scripts/jquery-1.4.2.min.js" type="text/javascript"></script>
+  <script src="/$info.getContextPrefix()/nd/fresco/login/scripts/jquery.innerfade.js" type="text/javascript"></script>
+  <script src="/$info.getContextPrefix()/nd/fresco/login/scripts/popup.js" type="text/javascript"></script>
+  <script src="/$info.getContextPrefix()/nd/fresco/login/scripts/prettyphoto/js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="/$info.getContextPrefix()/nd/fresco/login/scripts/prettyphoto/css/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+  <style type="text/css">
+body {
+ background:#000 url(/$info.getContextPrefix()/nd/fresco/login/images/bg-body.jpg) top center repeat-x;
+	margin:0px;
+	padding:0px;
+	color:#fff;
+}
+h2 {
+	margin:0px 0px 15px 0px;
+	font:bold 17px Arial, Helvetica, sans-serif;
+}
+a {
+	color:#fff;
+	text-decoration:none;
+}
+a:hover {
+	text-decoration:underline;
+	cursor:pointer;
+}
+#container {
+ background:transparent url(/$info.getContextPrefix()/nd/fresco/login/images/bg-container.jpg) top left no-repeat;
+	width:800px;
+	height:427px;
+	margin:0 auto;
+	margin-top:157px;
+	position:relative;
+	font:normal 13px Arial, Helvetica, sans-serif;
+}
+/* LOGIN BOX
+-------------------------------------------------------- */
+#login-box {
+	width:280px;
+	position:absolute;
+	top:175px;
+	left:89px;
+}
+#login-box .content {
+}
+/* NEWS
+-------------------------------------------------------- */
+#news-box {
+	width:290px;
+	position:absolute;
+	top:108px;
+	left:412px;
+}
+#news-box .content {
+}
+#news-box ul, li {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+}
+/* SEC LINKS
+-------------------------------------------------------- */
+#sec-menu {
+	position:absolute;
+	top:345px;
+	left:75px;
+	width:100%;
+}
+#sec-menu ul, #sec-menu li {
+	list-style:none;
+	padding:0px;
+	margin:0px;
+}
+#sec-menu li {
+	display:inline;
+	padding:0px 15px;
+ background:transparent url(/$info.getContextPrefix()/nd/fresco/login/images/nav-divider.png) center right no-repeat;
+}
+#sec-menu li:last-child {
+	margin:0px;
+	background:none;
+}
+#sec-menu li a {
+	color:#fff;
+}
+#sec-menu li a:hover {
+	color:#fff;
+	text-decoration:underline;
+	cursor:pointer;
+}
+/* HELP
+-------------------------------------------------------- */
+div.hide {
+	display:none;
+}
+#help-content {
+	font:normal 13px Arial, Helvetica, sans-serif;
+}
+#help-content h2 {
+	font-size:17px;
+	margin-bottom:15px;
+}
+#help-content h3 {
+	font-size:15px;
+	margin-bottom:10px;
+}
+#help-content p, #help-content li {
+	line-height:18px;
+}
+/* FORM
+-------------------------------------------------------- */
+fieldset {
+	border:0px;
+	margin:0px;
+	padding:0px;
+}
+fieldset ul, fieldset li {
+	border:0;
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+fieldset li {
+	clear:both;
+	list-style:none;
+	margin-bottom:10px;
+	overflow: hidden;
+	width: 100%
+}
+fieldset #UID, #PWD {
+	width:220px;
+	background-color:#fff;
+	font:normal 14px "Courier New", Courier, monospace;
+}
+fieldset label {
+	display:block;
+	clear:both;
+	color:#221e1f;
+	font-weight:bold;
+}
+fieldset input[type="submit"] {
+	border:1px solid rgba(0, 0, 0, 0.1);
+	border-radius:3px;
+	padding:5px 15px;
+	background-color:#e94e1b;
+	box-shadow:0 1px 1px rgba(0, 0, 0, 0.1);
+	font:bold 12px Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+	cursor:pointer;
+	color:#fff;
+}
+input[type="submit"]:hover {
+	background-color:#666;
+	color:#fff;
+}
+</style>
+  <script type="text/javascript" charset="utf-8">
+  var errormessage = 1;
+  var erroption = window.location.search;
+  i = erroption.indexOf('ERR');
+  errormessage = erroption.substring(i + 4, i + 5);
+  var errorbasictext = "";
+  
+  if (errormessage == 3) {
+	  alert(errorbasictext + 'The password you entered is incorrect. Remember, passwords are case sensitive.');
+  } else if (errormessage == 2) {
+	  alert(errorbasictext
+					+ 'You have exceeded the number of login attempts and your account is suspended or your account is closed.  Please contract your administrator by clicking on the Lost Password button above.');
+  }
+  else if (errormessage == 1) {
+	  alert(errorbasictext + 'The User ID you have entered is invalid.');
+  }
+</script>
+  <script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $("a[rel^='prettyPhoto']").prettyPhoto();
+	$('#news').innerfade({ animationtype: 'fade', speed:1500, timeout: 5000, type: 'random', containerheight: '1em' });
+  });
+  function submitForm(enter_button) {
+	window.status = 'Logging in, please wait...';
+	document.form.submit();
+	enter_button.disabled = true;
+  }
+  </script>
+  </head>
+
+  <body>
+<div id="container">
+    <div id="login-box">
+    <div class="content">
+        <form method="post" action="/$info.getContextPrefix()/servlet/ekp/verify" name="form">
+        <input type=HIDDEN name=TX value=VERIFY />
+        #if ($target != "")
+        <input type="hidden" name="target" value="$target" />
+        #end
+        <fieldset>
+            <ul>
+            <li>
+                <label>User Id or Email Address</label>
+                <input type="text" name="UID" id="UID" />
+              </li>
+            <li>
+                <label>Password</label>
+                <input name="PWD" type="password" id="PWD" />
+              </li>
+          </ul>
+            <li>
+            <label></label>
+            <input name="submit" type="submit" value="Login" onclick="submitForm(this);" />
+          </li>
+            </li>
+          </fieldset>
+      </form>
+      </div>
+  </div>
+    <div id="news-box">
+    <div class="content">
+        <h2>NEWS:</h2>
+        <ul id="news">
+        #foreach( $news in $news_list )
+        <li> <strong>$news.getTitle()</strong>
+            <p>$news.getTeaser()</p>
+            <p style="text-align:right; color:#6d81be;"><a href="$base_url?TX=GETARTICLE&FROM=LOGIN&AID=$news.getArticleId()&iframe=true&width=650&height=400" rel="prettyPhoto">&raquo; More Information</a></p>
+          </li>
+        #end
+      </ul>
+      </div>
+  </div>
+    <div id="sec-menu">
+    <ul>
+        <li><a href="#help" rel="prettyPhoto">Help</a></li>
+        <li><a href="/$info.getContextPrefix()/servlet/resetpassword">Reset Password</a></li>
+        <li><a href="mailto:support@netdimensions.com">Contact Us</a></li>
+      </ul>
+  </div>
+  </div>
+<div id="help" class="hide">
+    <div id="help-content">
+    <h2 style="margin-top:0px;">Login Help</h2>
+    <p><strong>To enter EKP, you have to login to the system. To do this, do the following:</strong></p>
+    <ol>
+        <li>Enter your User Name</li>
+        <li>Enter your Password</li>
+        <li>Click the Enter button</li>
+      </ol>
+    <h3>Help</h3>
+    <p> Once you login, this icon wil take you to an Online User Guide and Help Manual</p>
+    <h3> Contact Us</h3>
+    <p>Click on this icon and an e-mail box will open up. You can use this to let us know your comments, concerns, remarks, and questions.</p>
+    <h3> Lost Password</h3>
+    <p>If you can't remember your password, click on this icon, and a new page will open up which will instruct you on how to retrieve your password.</p>
+  </div>
+  </div>
+</div>
+</body>
+</html>

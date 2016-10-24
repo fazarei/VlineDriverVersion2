@@ -1,0 +1,326 @@
+
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+     android:background="@drawable/shape_background">
+
+    <TableLayout 
+         android:layout_width="wrap_content"
+        android:layout_height="fill_parent" >
+        
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/gridtxthedear"
+                android:paddingBottom="1dp"
+                android:layout_marginBottom="1dp"/>
+
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/gridtxthedearsmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checklistdesc"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="1dp"
+            android:background="#520764"
+            android:gravity="center"
+            android:visibility="visible" >
+
+        <TableRow
+                android:id="@+id/tableRow12"
+            	style="@style/tablerowodd" 
+            	android:layout_marginTop="1dp" >
+
+                <TextView
+                    android:id="@+id/textView15"
+                    style="@style/txtviewtablesmall"
+                    android:layout_width="120dp"
+                    android:text="@string/traineedrivername" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    style="@style/txtviewtablesmall" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    style="@style/txtviewtablesmall"
+                    android:text="@string/employeeno" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    style="@style/txtviewtablenormal" />
+
+        </TableRow>
+            
+       	<TableRow
+            android:id="@+id/tableRow6"
+            style="@style/tablerowodd" >
+
+       		     <TextView
+       		         android:id="@+id/textView17"
+       		         style="@style/txtviewtablesmall"
+                    android:text="@string/lessonno" />
+
+       		     <TextView
+       		         android:id="@+id/textView4"
+       		         style="@style/txtviewtablenormal"
+       		         android:layout_width="200dp" />
+
+       		     <TextView
+       		         android:id="@+id/textView5"
+       		         style="@style/txtviewtablesmall"
+                     android:text="@string/lessontitle"/>
+
+       		     <TextView
+       		         android:id="@+id/textView6"
+       		         style="@style/txtviewtablenormal"
+       		         android:layout_span="3" />
+
+
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow10"
+            style="@style/tablerowodd" >
+
+            <TextView
+                android:id="@+id/textView20"
+                style="@style/txtviewtablemedium"
+                android:text="@string/objective" />
+
+            <TextView
+                android:id="@+id/textView23"
+                style="@style/txtviewtablenormal"
+                android:layout_span="12"
+                />
+
+        </TableRow>
+
+		<TableRow
+		    android:id="@+id/tableRow15"
+		    style="@style/tablerowodd"  >
+
+			<TextView
+			    android:id="@+id/textView10"
+			    style="@style/txtviewtablesmall"
+                android:text="@string/locomotivetype" />
+
+			<Spinner
+                android:id="@+id/splocomotive"
+                style="@style/spinner" 
+                android:clickable="false"/>
+
+
+			<TextView
+			    android:id="@+id/textView12"
+			    style="@style/txtviewtablesmall"
+                android:text="@string/corridorup" />
+			<Spinner
+                android:id="@+id/spcorridorup"
+                style="@style/spinner" 
+                android:clickable="false"/>
+			
+			<TextView
+			    android:id="@+id/textView11"
+			    style="@style/txtviewtablesmall"
+                android:text="@string/corridordown" />
+			<Spinner
+                android:id="@+id/spcorridordown"
+                style="@style/spinner" 
+                android:clickable="false"/>
+
+			<TextView
+			    android:id="@+id/textView13"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="TextViewaaaaaaaaaaaaaaaaaaaaaaaa"
+			    android:visibility="invisible" />
+
+		</TableRow>
+
+        </TableLayout>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="1dp" >
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/gridtxthedear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instruction" />
+
+        </TableRow>
+<TableLayout
+            android:id="@+id/tbleunguide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:gravity="center"
+            android:background="#520764"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="1dp" >
+
+            <TableRow
+                android:id="@+id/tableRow3"
+            	style="@style/tablerowodd" 
+            	android:layout_marginTop="5dp"  >
+
+                <TextView
+                    android:id="@+id/textView26"
+                    style="@style/txtviewtablesmall"
+                    android:text="@string/conductedbytrainer" />
+
+                <Spinner
+                    android:id="@+id/sptrainer"
+                    android:layout_width="150dp"
+                    style="@style/spinner" />
+
+                <TextView
+                    android:id="@+id/tvconduct"
+                    style="@style/txtviewtablesmall" />
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                   	android:layout_width="20dp"
+                   	android:enabled="false" />
+
+                <TextView
+                    android:id="@+id/textView37"
+                    style="@style/txtviewtablesmall"
+                    android:text="@string/trainersig" />
+
+            </TableRow>
+            
+       		 <TableRow
+            android:id="@+id/tableRow4"
+            style="@style/tablerowodd" >
+
+       		     <TextView
+       		         android:id="@+id/textView28"
+       		         style="@style/txtviewtablesmall"
+       		         android:text="@string/date" 
+       		         />
+
+       		     <EditText
+       		         android:id="@+id/editText12"
+       		         style="@style/edittextdate"
+                    android:background="@drawable/shape_edittext"/>
+
+       		     <ImageView
+       		         android:id="@+id/imageView2"
+       		         android:layout_width="wrap_content"
+       		         android:layout_height="wrap_content"
+       		         android:layout_marginTop="5dp"
+       		         android:contentDescription="@string/calendar"
+       		         android:focusable="false"
+       		         android:src="@drawable/calendar"
+       		         android:visibility="invisible" />
+
+       		     <TextView
+       		         android:id="@+id/textView29"
+       		         style="@style/txtviewtablesmall"
+       		         android:text="@string/dayornight" />
+
+       		     <Spinner
+       		         android:id="@+id/spday"
+       		         style="@style/spinner"
+       		         android:clickable="false" />
+
+       		     <TextView
+       		         android:id="@+id/textView30"
+       		         style="@style/txtviewtablesmall"
+       		         android:text="@string/weathercondition" />
+
+       		     <Spinner
+       		         android:id="@+id/spweather"
+       		         style="@style/spinner" 
+       		         android:clickable="false" />
+
+        </TableRow>
+                <TableRow
+            android:id="@+id/tableRow11"
+           style="@style/tablerowodd">
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        style="@style/txtviewtablesmall"
+                        android:text="@string/from" />
+
+                    <Spinner
+                        android:id="@+id/spfrom"
+                         style="@style/spinner" 
+                         android:clickable="false"/>
+
+                    <TextView
+                        android:id="@+id/textView32"
+                        style="@style/txtviewtablesmall"
+                        android:text="@string/to" 
+                         android:layout_span="2"/>
+
+                    <Spinner
+                        android:id="@+id/spto"
+                         style="@style/spinner" 
+                         android:clickable="false"/>
+
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow13"
+            style="@style/tablerowodd" >
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/txtviewtablesmall"
+                android:text="@string/motivepowerunit"/>
+            <Spinner
+                android:id="@+id/spmpu"
+                style="@style/spinner" 
+                android:clickable="false" />
+
+            <TextView
+                android:id="@+id/textView35"
+                style="@style/txtviewtablesmall"
+                android:text="@string/noofvehicle"
+                 android:layout_span="2" />
+
+            <Spinner
+                android:id="@+id/spnovehicle"
+                style="@style/spinner" 
+                android:clickable="false" />
+
+        </TableRow>
+
+        </TableLayout>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+            android:id="@+id/button1"
+            style="@style/button"
+            android:layout_width="200dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="900dp"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/sel_button"
+            android:text="@string/save" />
+        </TableRow>
+
+</TableLayout>
+</HorizontalScrollView>

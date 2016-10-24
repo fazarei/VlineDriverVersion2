@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <TableLayout android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/shape_background" xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="30dp" 
+        	android:layout_marginLeft="20dp"
+        	android:layout_marginTop="10dp">
+            <TableRow android:id="@+id/tableRow2" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableRow>
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/txtviewtitlehedear" 
+                android:layout_span="3" />
+
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="30dp" 
+        	android:layout_marginLeft="20dp"
+        	android:layout_marginTop="10dp">
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            style="@style/gridheader" 
+            android:layout_marginRight="40dp" 
+        	android:layout_marginLeft="20dp"
+        	android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/workplace"
+                android:width="220dp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/rpl"
+                android:width="80dp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/taskdesc"
+                android:width="470dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:text="@string/critical"
+                android:width="100dp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="20dp"
+                android:text="@string/d"
+                android:width="80dp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="15dp"
+                android:text="@string/e"
+                android:width="110dp" />
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/gridtxthedear"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="20dp"
+                android:text="@string/nyc"
+                android:width="80dp" />
+
+        </TableRow>
+
+        <GridView
+            android:id="@+id/gridView1"
+            style="@style/gridstyle"
+            android:layout_height="400dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp" >
+
+        </GridView>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            <Button
+            android:id="@+id/button1"
+            style="@style/button"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/sel_button"
+            android:text="@string/save" />
+        </TableRow>
+
+    </TableLayout>
+</HorizontalScrollView>

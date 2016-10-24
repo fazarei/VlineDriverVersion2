@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		elementFormDefault="qualified"
+		targetNamespace="http://www.netdimensions.com/2011/05/widgetPageTemplate" 
+		xmlns:n="http://www.netdimensions.com/2011/05/widgetPageTemplate">
+		
+	<xs:element name="template">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="n:widgetLayout"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required" type="xs:string"/>
+			<xs:attribute name="templateName" use="required" type="xs:string"/>
+			<xs:attribute name="columnType" use="required" type="n:columnType"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="widgetLayout">
+    	<xs:complexType>
+    		<xs:attribute name="columnIndex" use="required" type="xs:integer"/>
+    		<xs:attribute name="widgetId" use="required" type="xs:string"/>
+    		<xs:attribute name="widgetIndex" use="required" type="xs:integer"/>
+    	</xs:complexType>
+    </xs:element>
+
+	<xs:simpleType name="columnType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SINGLE_COLUMN"/>
+            <xs:enumeration value="TWO_COLUMN_50_50"/>
+            <xs:enumeration value="TWO_COLUMN_66_33"/>
+            <xs:enumeration value="TWO_COLUMN_33_66"/>
+            <xs:enumeration value="TWO_COLUMN_75_25"/>
+            <xs:enumeration value="TWO_COLUMN_25_75"/>
+            <xs:enumeration value="THREE_COLUMN_33_33_33"/>
+            <xs:enumeration value="THREE_COLUMN_25_50_25"/>
+            <xs:enumeration value="THREE_COLUMN_25_25_50"/>
+            <xs:enumeration value="THREE_COLUMN_50_25_25"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
