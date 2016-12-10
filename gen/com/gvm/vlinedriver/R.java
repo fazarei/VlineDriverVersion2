@@ -357,9 +357,10 @@ public final class R {
         public static final int about_web=0x7f0400b9;
         public static final int abouttitle=0x7f040080;
         public static final int achieved=0x7f040010;
-        public static final int action_sign_in_register=0x7f0400c4;
-        public static final int action_sign_in_short=0x7f0400c5;
+        public static final int action_sign_in_register=0x7f0400c5;
+        public static final int action_sign_in_short=0x7f0400c6;
         public static final int app_name=0x7f040000;
+        public static final int app_str_test=0x7f0400c1;
         public static final int assessment=0x7f040006;
         public static final int assessmentdetail=0x7f040020;
         public static final int assessmentresult=0x7f04003c;
@@ -396,10 +397,10 @@ public final class R {
         public static final int down=0x7f04008b;
         public static final int e=0x7f04001c;
         public static final int employeeno=0x7f040015;
-        public static final int error_field_required=0x7f0400cb;
-        public static final int error_incorrect_password=0x7f0400ca;
-        public static final int error_invalid_email=0x7f0400c8;
-        public static final int error_invalid_password=0x7f0400c9;
+        public static final int error_field_required=0x7f0400cc;
+        public static final int error_incorrect_password=0x7f0400cb;
+        public static final int error_invalid_email=0x7f0400c9;
+        public static final int error_invalid_password=0x7f0400ca;
         public static final int explain=0x7f04003b;
         public static final int explained=0x7f040096;
         public static final int from=0x7f04004d;
@@ -420,10 +421,10 @@ public final class R {
         public static final int locomotive=0x7f04002d;
         public static final int locomotivetype=0x7f04008d;
         public static final int locotype=0x7f04004c;
-        public static final int login_progress_signing_in=0x7f0400c7;
+        public static final int login_progress_signing_in=0x7f0400c8;
         public static final int menu_aboutus=0x7f040078;
         public static final int menu_exit=0x7f040075;
-        public static final int menu_forgot_password=0x7f0400c6;
+        public static final int menu_forgot_password=0x7f0400c7;
         public static final int menu_logout=0x7f040071;
         public static final int menu_mainpage=0x7f040072;
         public static final int menu_reset=0x7f040074;
@@ -457,8 +458,8 @@ public final class R {
         public static final int proficiencylevel=0x7f0400a0;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f0400c2;
-        public static final int prompt_password=0x7f0400c3;
+        public static final int prompt_email=0x7f0400c3;
+        public static final int prompt_password=0x7f0400c4;
         public static final int prompt_userid=0x7f040069;
         public static final int required=0x7f04000f;
         public static final int role=0x7f040083;
@@ -513,7 +514,7 @@ public final class R {
         public static final int title_activity_competencytask_tab=0x7f0400ab;
         public static final int title_activity_createand_backup_db=0x7f040003;
         public static final int title_activity_date=0x7f04005b;
-        public static final int title_activity_login=0x7f0400c1;
+        public static final int title_activity_login=0x7f0400c2;
         public static final int title_activity_loginact=0x7f04006c;
         public static final int title_activity_loginactivity=0x7f040068;
         public static final int title_activity_resetpopup=0x7f040082;

@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class About extends Activity {
 
@@ -13,6 +15,19 @@ public class About extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.act_about);
+		
+		final TextView txtVersion=(TextView) findViewById(R.id.textView6);
+		String versionNumber="V/Line Driver Training Application V: ";
+		
+		TestAdapter MDBHelper = new TestAdapter(About.this);	
+		MDBHelper.open();
+		Cursor cursorVersion = MDBHelper.getVersionNumber();
+		if(cursorVersion.getCount()>0)
+		{
+			cursorVersion.moveToFirst();
+			versionNumber+=cursorVersion.getString(cursorVersion.getColumnIndex("versionNumber"));
+		}	
+		txtVersion.setText(versionNumber.toString());
 	}
 
 	@Override

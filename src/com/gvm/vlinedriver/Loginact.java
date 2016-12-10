@@ -60,7 +60,7 @@ public class Loginact extends Activity {
 			public void onClick(View v) {
 				
 				TestAdapter MDBHelper = new TestAdapter(Loginact.this);	
-				final String myuserid = etuserid.getText().toString().replace("'", "''"); 
+				final String myuserid = etuserid.getText().toString().replace("'", "''").trim(); 
 				String mypassword=etpassword.getText().toString().replace("'", "''");
 				if(mypassword.equalsIgnoreCase("") || myuserid.equalsIgnoreCase("") || mypassword.length()<2)
 				{
