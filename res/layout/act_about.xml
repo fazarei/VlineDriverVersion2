@@ -56,7 +56,7 @@
                 style="@style/txtviewtitle"
                 android:layout_width="1050dp"
                 android:layout_height="wrap_content"
-                android:text="@string/abouttitle"
+                android:text=""
                 android:textSize="22sp"
                 android:textStyle="normal" />
 

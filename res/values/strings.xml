@@ -129,7 +129,7 @@
     <string name="submenu_backup">Backup</string>
     <string name="signin">Sign in</string>
     <string name="title">V/Line Driver Training Application</string>
-    <string name="abouttitle">V/Line Driver Training Application v1.6</string>
+    <string name="abouttitle">V/Line Driver Training Application V</string>
     <string name="title_gvm">Supervisor Trainee Application</string>
     <string name="title_activity_resetpopup">Resetpopup</string>
     <string name="role">Role : </string>
