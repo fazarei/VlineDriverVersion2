@@ -75,7 +75,10 @@ public class Stagelist extends Activity {
 
 		if(cVerssionNumber.getCount()==0)
 		{
+			Log.d("LEE","Noersion number");
 			getTrainee();
+			/*There is a posibility that we want to upgarde app and trainee  has to install new app but he already has some data 
+			in backend. In this situation we don't get data from core table */
 			dialogLoadAllData();
 		}
 		else
@@ -339,24 +342,79 @@ public class Stagelist extends Activity {
 				    	  
 				    	  //Get all trainer and assessor
 				    	  trainerassessor(Stagelist.this);
-				    	  //TODO Load Data
-				    	  loadStageData(Stagelist.this);
-				    	  loadAssessmentData(Stagelist.this);
-				    	  loadSubjectData(Stagelist.this);
-				    	  loadSubjectChecklistData(Stagelist.this);
-				    	  loadChecklistData(Stagelist.this);
-				    	  loadChecklistIndexData(Stagelist.this);
-				    	  loadCompetencyData(Stagelist.this);
-				    	  loadCompetencyTaskData(Stagelist.this);
-				    	  
-				    	  //Insert a record into update version and update app_trainee_track in server
-				    	  insertVersionNumber(Stagelist.this);
-				    	  
-				    	  //To dismiss the dialog
-				    	  progress.dismiss();
-				    	  
-				    	  //Log out
-				    	  logout(Stagelist.this);
+				    	  //Here to check is there any data before in portal or no
+				    	  Log.d("LEE","Check user already sync");
+				    	  String userAlreadySynchedData = userAlreadySynchedData(Stagelist.this);
+				    	  Log.d("LEE",userAlreadySynchedData);
+				    	  if(userAlreadySynchedData.equalsIgnoreCase("True"))
+				    	  {
+				    		  //Get all data from main table
+				    		  Log.d("LEE","Check user already sync return True");
+				    		  //These five table already sync and we only insert their data
+				    		  loadAssessmentSyncData(Stagelist.this);
+				    		  loadChecklistSync(Stagelist.this);
+				    		  loadCompetencySync(Stagelist.this);			
+				    		  loadSubjectSync(Stagelist.this);
+				    		  
+				    		  //Always same, so we insert it from core table 
+				    		  loadStageData(Stagelist.this);
+				    		  loadChecklistIndexData(Stagelist.this);
+				    		  
+				    		  //Assessment Detail and assessment timelost need to insert 6 row for each assessment in default 
+				    		  //then update them from real data in server
+				    		  //competency task desk is same
+				    		   TestAdapter mdbhelper=new TestAdapter(Stagelist.this);
+							   mdbhelper.open();
+							   mdbhelper.assessmentdetailAndTimeDefault();
+							   mdbhelper.competencyTaskDescDefault();
+							   mdbhelper.close();
+							   
+							   //Delete and Insert
+							   loadAssessmentDetailSync(Stagelist.this);
+							   loadTimeLostSync(Stagelist.this);
+							   loadCompetencyTaskDescSync(Stagelist.this);
+							   
+							   //For these table we have to insert core data. Then, we deleted the synced data and insert them again
+							   //First get the core data
+							   loadSubjectChecklistData(Stagelist.this);
+							   loadSubjectChecklistSync(Stagelist.this);
+						       loadCompetencyTaskData(Stagelist.this);
+							   loadCompetencyTaskSync(Stagelist.this);
+							   
+							   //Checklist task has 6000 record. so, we keep them in database and then we delete and insert the sync data
+							   loadChecklistTaskSync(Stagelist.this);
+				    		  
+							   progress.dismiss();
+							   
+							   getNewVersion(Stagelist.this);
+							   Log.d("LEE","version number:"+newVersion);
+							   if(!newVersion.equalsIgnoreCase(""))
+								{
+									dialogUpgrade();
+								}
+							   //Insert a record into update version and update app_trainee_track in server
+					    	  //insertVersionNumber(Stagelist.this);
+				    	  }
+				    	  else
+				    	  {
+					    	  loadStageData(Stagelist.this);
+					    	  loadAssessmentData(Stagelist.this);
+					    	  loadSubjectData(Stagelist.this);
+					    	  loadSubjectChecklistData(Stagelist.this);
+					    	  loadChecklistData(Stagelist.this);
+					    	  loadChecklistTaskData(Stagelist.this);
+					    	  loadChecklistIndexData(Stagelist.this);
+					    	  loadCompetencyData(Stagelist.this);
+					    	  loadCompetencyTaskData(Stagelist.this);
+					    	  //Insert a record into update version and update app_trainee_track in server
+					    	  insertVersionNumber(Stagelist.this);
+					    	  
+					    	//To dismiss the dialog
+					    	  progress.dismiss();
+					    	  
+					    	  //Log out
+					    	  logout(Stagelist.this);
+				    	  }
 				      }     
 				    });
 				    alertDlg.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -682,6 +740,50 @@ public void loadChecklistData(Context context)
 		{
 			String replaceDataString= dataString.replace("'", "''");
 			MDBHelper.loadCoreChecklist(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadChecklistTaskData(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "loadChecklistTask"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase(""))
+		{
+			Toast.makeText(context, "There is no data to load.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadCoreChecklistTask(replaceDataString);
 		}
 
 		} catch (ClientProtocolException e) {
@@ -1361,6 +1463,530 @@ public void upgradeChecklistTask(Context context)
 public boolean isNetworkAvailable(final Context context) {
     final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
     return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+}
+
+//To understand is there any data already in server
+public String userAlreadySynchedData(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "userAlreadySynchedData"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		return dataString;	
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+	return "";
+}
+	
+public void loadAssessmentSyncData(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "loadAssessmentSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase(""))
+		{
+			Toast.makeText(context, "There is no data to load.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			Log.d("LEE",replaceDataString);
+			MDBHelper.loadAssessmentSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadSubjectSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "loadSubjectSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase(""))
+		{
+			Toast.makeText(context, "There is no data to load.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadSubjectSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadChecklistSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "loadChecklistSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase(""))
+		{
+			Toast.makeText(context, "There is no data to load.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadChecklistSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadCompetencySync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "loadCompetencySync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "There is no data to load.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadCompetencySync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void insertVersionNumberSyncBefore(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "updateTraineeVersionSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Version Number"))
+		{
+			Toast.makeText(context, "There is no version number.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			MDBHelper.insertVersionNumberSyncBefore(response);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadAssessmentDetailSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "updateAssessmentDetailSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "There is no new data for assessment Detai.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadAssessmentDetailSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadTimeLostSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "updateTimeLostSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "There is no data to load for assessment time lost.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadTimeLostSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadSubjectChecklistSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "updateSubjectChecklistSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		Log.d("LEE","dataString:" + dataString);
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "There is no data to load for subject checklist.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			Log.d("LEE",replaceDataString);
+			MDBHelper.loadSubjectChecklistSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadChecklistTaskSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "updateChecklistTaskSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "There is no data to load for checklist task.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadChecklistTaskSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadCompetencyTaskSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "updateCompetencyTaskSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "There is no data to load for competency task.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadCompetencyTaskSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
+}
+
+public void loadCompetencyTaskDescSync(Context context)
+{
+	String Serverurl="";
+	TestAdapter MDBHelper = new TestAdapter(context);	
+	MDBHelper.open();
+
+    Cursor cconfig = MDBHelper.getconfig();
+    if(cconfig.getCount()>0)
+    {
+    	cconfig.moveToFirst();
+    	Serverurl=cconfig.getString(cconfig.getColumnIndex("serverurl"));
+    }
+	final HttpClient httpclient = new DefaultHttpClient();
+	final HttpPost httppost = new HttpPost(Serverurl+"/vlineappadmin/getinfo.php");
+	try {
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+		nameValuePairs.add(new BasicNameValuePair("mode", "updateCompetencyTaskDescSync"));
+		nameValuePairs.add(new BasicNameValuePair("trainee", traineeUserId));
+
+		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String response = httpclient.execute(httppost, responseHandler);
+		
+		String dataString = response;
+		if(dataString.equalsIgnoreCase("") || dataString.equalsIgnoreCase("No Record Found"))
+		{
+			Toast.makeText(context, "There is no data to load.", Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String replaceDataString= dataString.replace("'", "''");
+			MDBHelper.loadCompetencyTaskDescSync(replaceDataString);
+		}
+
+		} catch (ClientProtocolException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		} catch (IOException e) {
+		Toast.makeText(context, R.string.cantconnect, Toast.LENGTH_LONG).show();
+		// TODO Auto-generated catch block
+		}
 }
 }
 

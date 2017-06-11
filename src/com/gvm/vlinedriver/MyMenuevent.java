@@ -94,7 +94,7 @@ public class MyMenuevent {
 		if(item.equalsIgnoreCase("Backup"))
 		{
 			backup();
-			sync(context);
+			//sync(context);
 		}	
 		
 		if(item.equalsIgnoreCase("Server Setting"))
