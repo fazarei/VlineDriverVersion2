@@ -888,7 +888,7 @@ public class TestAdapter {
     {
     	try
     	{
-    		String sql="SELECT * FROM checklisttask where checknum='"+checknum+"'";
+    		String sql="SELECT * FROM checklisttask where checknum='"+checknum+"' order by CAST (Id AS INT)";
     		mDb = mDbHelper.getWritableDatabase();
     		Cursor mCur=mDb.rawQuery(sql, null);
     		if(mCur!=null)
@@ -1219,7 +1219,7 @@ public class TestAdapter {
     {
     	try
     	{
-    		String sql="SELECT * FROM competencytask where competencyId='"+competencyid+"'";
+    		String sql="SELECT * FROM competencytask where competencyId='"+competencyid+"'  order by CAST (Id AS INT)";
     		 mDb = mDbHelper.getWritableDatabase();
     		Cursor mCur=mDb.rawQuery(sql, null);
     		if(mCur!=null)
@@ -1925,6 +1925,43 @@ public TestAdapter loadCoreChecklist(String dataString) throws SQLException
         return this; 
     }
 
+public TestAdapter loadCoreChecklistTask(String dataString) throws SQLException  
+{ 
+	String[] dataRow = dataString.split("\\!");
+
+	int n=dataRow.length;
+	int a ;
+	if(n/100==0)	{a=n/10;}
+	else	{a=(n/100)+1;}
+	
+	mDb = mDbHelper.getWritableDatabase();
+    	for(int i=0; i<a; i++)
+    	{
+    		String ChecklistValue="";
+    	    if((i+1)*100>n)
+    	    {
+    	        for (int j = i * 100; j < n; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	ChecklistValue = ChecklistValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"'),";
+    	        }
+    	    }
+    	    else
+    	    {
+    	        for (int j = i * 100; j < (i + 1) * 100; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	ChecklistValue = ChecklistValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"'),";
+    	        }
+    	    }
+    	    if(ChecklistValue!="")
+    	    {
+    	    	String valueQuery=ChecklistValue.substring(0, ChecklistValue.length() - 1) + ';';
+        		String sql="insert into checklisttask (Id,checknum,name,taskgroup) values" + valueQuery ;
+        		mDb.execSQL(sql);
+    	    }
+    	}
+    return this; 
+}
+
 public TestAdapter loadCoreChecklistIndex(String dataString) throws SQLException  
 { 
 	String[] dataRow = dataString.split("\\!");
@@ -2064,8 +2101,17 @@ public TestAdapter insertVersionNumber(String dataString) throws SQLException
 public TestAdapter updateVersionNumber(String versionNumber) throws SQLException  
 { 
 	mDb = mDbHelper.getWritableDatabase();
-	String sql="update updateversion set versionNumber='"+versionNumber+"', LoadDate=DATETIME('now')";
-	mDb.execSQL(sql);
+	String sqlRowNumber="SELECT * FROM updateversion";
+	Cursor mCur=mDb.rawQuery(sqlRowNumber, null);
+	if(mCur.getCount()==0)
+	{
+		insertVersionNumber(versionNumber);
+	}
+	else
+	{
+		String sql="update updateversion set versionNumber='"+versionNumber+"', LoadDate=DATETIME('now')";
+		mDb.execSQL(sql);
+	}
     return this; 
 }
 
@@ -2352,4 +2398,552 @@ public TestAdapter updateCheckedVersionAlready(String dataString) throws SQLExce
 	mDb.execSQL(sqlupdate);
     return this; 
 }
+
+public TestAdapter loadStageSync(String dataString) throws SQLException  
+{ 
+	String stageValue="";
+	String[] stageDataRow = dataString.split("\\!");
+	 for (int i = 0, n = stageDataRow.length; i < n; i++)
+	 {
+		 String[] stageDataFeild=stageDataRow[i].split("\\^",-1);
+		 stageValue = stageValue + "('"+stageDataFeild[0]+"','"+stageDataFeild[1]+"','"+stageDataFeild[2]+"'),";
+	 }
+	mDb = mDbHelper.getWritableDatabase();
+	String sqlStageRowNumber="SELECT * FROM stage";
+	Cursor mCur=mDb.rawQuery(sqlStageRowNumber, null);
+	if(mCur.getCount()==0)
+	{
+		String stageValueQuery=stageValue.substring(0, stageValue.length() - 1) + ';';
+		String sql="insert into stage (Id,name,desc) values" + stageValueQuery ;
+		mDb.execSQL(sql);
+	}
+    return this; 
+}
+
+public TestAdapter loadAssessmentSync(String dataString) throws SQLException  
+{ 
+	String assessmentValue="";
+	String[] dataRow = dataString.split("\\!");
+	 for (int i = 0, n = dataRow.length; i < n; i++)
+	 {
+		 String[] dataFeild=dataRow[i].split("\\^",-1);
+		 assessmentValue = assessmentValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"','"+dataFeild[13]+"','"+dataFeild[14]+"','"+dataFeild[15]+"','"+dataFeild[16]+"','"+dataFeild[17]+"'),";
+	 }
+	mDb = mDbHelper.getWritableDatabase();
+	String sqlRowNumber="SELECT * FROM assessment";
+	Cursor mCur=mDb.rawQuery(sqlRowNumber, null);
+	if(mCur.getCount()==0)
+	{
+		String valueQuery=assessmentValue.substring(0, assessmentValue.length() - 1) + ';';
+		String sql="insert into assessment (timevisible,trainee,assessor,trainer,Id,stageId,name,location," +
+				"date,result,assessorsig,assessordate,traineesig,traineedate,comment,timeoverschedule,timelost,objective) values" + valueQuery ;
+		mDb.execSQL(sql);
+	}
+    return this; 
+}
+
+public TestAdapter loadSubjectSync(String dataString) throws SQLException  
+{ 
+	String subjectValue="";
+	String[] dataRow = dataString.split("\\!");
+	 for (int i = 0, n = dataRow.length; i < n; i++)
+	 {
+		 String[] dataFeild=dataRow[i].split("\\^",-1);
+		 subjectValue = subjectValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"'),";
+	 }
+	mDb = mDbHelper.getWritableDatabase();
+	String sqlRowNumber="SELECT * FROM subject";
+	Cursor mCur=mDb.rawQuery(sqlRowNumber, null);
+	if(mCur.getCount()==0)
+	{	
+		String valueQuery=subjectValue.substring(0, subjectValue.length() - 1) + ';';
+		String sql="insert into subject (assessor,trainer,trainee,Id,assessmentId,name,objective,achieved,comment,requirednum) values" + valueQuery ;
+		mDb.execSQL(sql);
+	}
+    return this; 
+}
+
+
+public TestAdapter loadChecklistSync(String dataString) throws SQLException  
+{ 
+	String[] dataRow = dataString.split("\\!");
+
+	int n=dataRow.length;
+	int a ;
+	if(n/100==0)	{a=n/10;}
+	else	{a=(n/100)+1;}
+	
+	mDb = mDbHelper.getWritableDatabase();
+	String sqlRowNumber="SELECT * FROM checklist";
+	Cursor mCur=mDb.rawQuery(sqlRowNumber, null);
+	if(mCur.getCount()==0)
+	{
+    	for(int i=0; i<a; i++)
+    	{
+    		String ChecklistValue="";
+    	    if((i+1)*100>n)
+    	    {
+    	        for (int j = i * 100; j < n; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	ChecklistValue = ChecklistValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"','"+dataFeild[13]+"','"+dataFeild[14]+"','"+dataFeild[15]+"','"+dataFeild[16]+"','"+dataFeild[17]+"','"+dataFeild[18]+"','"+dataFeild[19]+"','"+dataFeild[20]+"','"+dataFeild[21]+"','"+dataFeild[22]+"','"+dataFeild[23]+"','"+dataFeild[24]+"','"+dataFeild[25]+"','"+dataFeild[26]+"','"+dataFeild[27]+"','"+dataFeild[28]+"','"+dataFeild[29]+"','"+dataFeild[30]+"','"+dataFeild[31]+"','"+dataFeild[32]+"','"+dataFeild[33]+"','"+dataFeild[34]+"','"+dataFeild[35]+"','"+dataFeild[36]+"','"+dataFeild[37]+"','"+dataFeild[38]+"','"+dataFeild[39]+"','"+dataFeild[40]+"','"+dataFeild[41]+"','"+dataFeild[42]+"','"+dataFeild[43]+"','"+dataFeild[44]+"','"+dataFeild[45]+"','"+dataFeild[46]+"','"+dataFeild[47]+"'),";
+    	        }
+    	    }
+    	    else
+    	    {
+    	        for (int j = i * 100; j < (i + 1) * 100; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	ChecklistValue = ChecklistValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"','"+dataFeild[13]+"','"+dataFeild[14]+"','"+dataFeild[15]+"','"+dataFeild[16]+"','"+dataFeild[17]+"','"+dataFeild[18]+"','"+dataFeild[19]+"','"+dataFeild[20]+"','"+dataFeild[21]+"','"+dataFeild[22]+"','"+dataFeild[23]+"','"+dataFeild[24]+"','"+dataFeild[25]+"','"+dataFeild[26]+"','"+dataFeild[27]+"','"+dataFeild[28]+"','"+dataFeild[29]+"','"+dataFeild[30]+"','"+dataFeild[31]+"','"+dataFeild[32]+"','"+dataFeild[33]+"','"+dataFeild[34]+"','"+dataFeild[35]+"','"+dataFeild[36]+"','"+dataFeild[37]+"','"+dataFeild[38]+"','"+dataFeild[39]+"','"+dataFeild[40]+"','"+dataFeild[41]+"','"+dataFeild[42]+"','"+dataFeild[43]+"','"+dataFeild[44]+"','"+dataFeild[45]+"','"+dataFeild[46]+"','"+dataFeild[47]+"'),";
+    	        }
+    	    }
+    	    if(ChecklistValue!="")
+    	    {
+    	    	String valueQuery=ChecklistValue.substring(0, ChecklistValue.length() - 1) + ';';
+        		String sql="insert into checklist (ungperform,ungmpu,gmpu,insmpu,corridorup,corridordown,trainerinstruction," +
+        				"trainerguide,trainerunguide,rpl,locomotivetype,desc,trainee,assessor,trainer,Id,checknum,name,objective," +
+        				"critical,explained,demonstrated,nyc,tasktraineesig,tasktraineedate,tasktrainersig,tasktrainerdate," +
+        				"instrainersig,insdate,insdayornight,insweather,insfrom,insto,insnovehicle,gtrainersig,gdate,gdayornight," +
+        				"gweather,gfrom,gto,gnovehicle,ungtrainersig,ungdate,ungdayornight,ungweather,ungfrom,ungto,ungnovehicle) values" + valueQuery ;
+        		mDb.execSQL(sql);
+    	    }
+    	}
+	}
+    return this; 
+}
+
+public TestAdapter loadCompetencySync(String dataString) throws SQLException  
+{ 
+	String competencyValue="";
+	String[] dataRow = dataString.split("\\!");
+	 for (int i = 0, n = dataRow.length; i < n; i++)
+	 {
+		 String[] dataFeild=dataRow[i].split("\\^",-1);
+		 competencyValue = competencyValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"'," +
+		 		"'"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"'," +
+		 				"'"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"','"+dataFeild[13]+"'),";
+	 }
+	mDb = mDbHelper.getWritableDatabase();
+	String sqlRowNumber="SELECT * FROM competency";
+	Cursor mCur=mDb.rawQuery(sqlRowNumber, null);
+	if(mCur.getCount()==0)
+	{
+		String valueQuery=competencyValue.substring(0, competencyValue.length() - 1) + ';';
+		String sql="insert into competency (result,trainee,assessor,trainer,Id,assessmentId,taskactivity,corridor," +
+				"objective,c,nyc,comment,assessorsig,traineesig) values" + valueQuery ;
+		mDb.execSQL(sql);
+	}
+    return this; 
+}
+
+public TestAdapter insertVersionNumberSyncBefore(String dataString) throws SQLException  
+{ 
+	mDb = mDbHelper.getWritableDatabase();
+	String sqlRowNumber="SELECT * FROM updateversion";
+	Cursor mCur=mDb.rawQuery(sqlRowNumber, null);
+	if(mCur.getCount()==0)
+	{
+		String sql="insert into updateversion (LoadDate,versionNumber) values (DATETIME('now'),'"+dataString+"')";
+		mDb.execSQL(sql);
+	}
+    return this; 
+}
+
+public TestAdapter assessmentdetailAndTimeDefault() throws SQLException  
+{ 
+	mDb = mDbHelper.getWritableDatabase();
+	
+	String getAllassessment="SELECT * FROM assessment";
+	Cursor cursorGetAllAssessment=mDb.rawQuery(getAllassessment, null);
+	cursorGetAllAssessment.moveToFirst();
+	do
+	{
+		if(cursorGetAllAssessment.getString(cursorGetAllAssessment.getColumnIndex("Id"))!=null )
+		{
+			String Id = cursorGetAllAssessment.getString(cursorGetAllAssessment.getColumnIndex("Id"));
+			assessmentdetailinsert(Id, "1");
+			assessmentdetailinsert(Id, "2");
+			assessmentdetailinsert(Id, "3");
+			assessmentdetailinsert(Id, "4");
+			assessmentdetailinsert(Id, "5");
+			assessmentdetailinsert(Id, "6");
+			
+			assessmenttimelostinsert(Id, "1");			
+			assessmenttimelostinsert(Id, "2");
+			assessmenttimelostinsert(Id, "3");
+			assessmenttimelostinsert(Id, "4");
+			assessmenttimelostinsert(Id, "5");
+			assessmenttimelostinsert(Id, "6");
+		}
+	}while(cursorGetAllAssessment.moveToNext());	
+	
+	 return this; 
+} 
+
+public TestAdapter loadAssessmentDetailSync(String dataString) throws SQLException  
+{ 
+	String insertAssessmentDetaiValue="";
+	String deleteAssessmentDetaiValue="";
+	String[] dataRow = dataString.split("\\!");
+	 for (int i = 0, n = dataRow.length; i < n; i++)
+	 {
+		 String[] dataFeild=dataRow[i].split("\\^",-1);
+		 insertAssessmentDetaiValue = insertAssessmentDetaiValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"'," +
+		 		"'"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"'," +
+		 				"'"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"'),";
+		 
+		 deleteAssessmentDetaiValue = deleteAssessmentDetaiValue + " (assessmentId='" + dataFeild[4] + "' and tripno='"+ dataFeild[5] +"') OR";
+	 }
+
+	//Delete
+	 if(deleteAssessmentDetaiValue!="") {
+			String deleteValueQuery=deleteAssessmentDetaiValue.substring(0, deleteAssessmentDetaiValue.length() - 2) + ';';
+			String sqlDelete="delete from assessmentdetail where" + deleteValueQuery;
+			mDb.execSQL(sqlDelete);
+	 }
+			
+	 //Insert
+	 if(insertAssessmentDetaiValue!="") {
+		String insertValueQuery=insertAssessmentDetaiValue.substring(0, insertAssessmentDetaiValue.length() - 1) + ';';
+		String sqlInsert="insert into assessmentdetail values" + insertValueQuery;
+		mDb.execSQL(sqlInsert);
+	 }
+    return this; 
+}
+
+public TestAdapter loadTimeLostSync(String dataString) throws SQLException  
+{ 
+	String insertTimeLostValue="";
+	String deleteTimeLostValue="";
+	String[] dataRow = dataString.split("\\!");
+	 for (int i = 0, n = dataRow.length; i < n; i++)
+	 {
+		 String[] dataFeild=dataRow[i].split("\\^",-1);
+		 insertTimeLostValue = insertTimeLostValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"'," +
+		 		"'"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"'," +
+		 				"'"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"','"+dataFeild[13]+"'),";
+		 
+		 deleteTimeLostValue = deleteTimeLostValue + " (assessmentId='" + dataFeild[4] + "' and tripno='"+ dataFeild[5] +"') OR";
+	 }
+
+	//Delete
+	 if(deleteTimeLostValue!="")
+	 {
+			String deleteValueQuery=deleteTimeLostValue.substring(0, deleteTimeLostValue.length() - 2) + ';';
+			String sqlDelete="delete from timelost where" + deleteValueQuery;
+			mDb.execSQL(sqlDelete);
+	 }
+			
+	 //Insert
+	 if(insertTimeLostValue !="") {
+		String insertValueQuery=insertTimeLostValue.substring(0, insertTimeLostValue.length() - 1) + ';';
+		String sqlInsert="insert into timelost values" + insertValueQuery;
+		mDb.execSQL(sqlInsert);
+	 }
+		
+    return this; 
+}
+
+public TestAdapter loadSubjectChecklistSync(String dataString) throws SQLException  
+{ 
+	String insertSubjectChecklistValue="";
+	String deleteSubjectChecklistValue="";
+	
+	String[] dataRow = dataString.split("\\!");
+	int n=dataRow.length;
+	int a ;
+	if(n/100==0)	{a=n/100;}
+	else	{a=(n/100)+1;}
+	mDb = mDbHelper.getWritableDatabase();
+	
+	if(n>100)
+	{
+    	for(int i=0; i<a; i++)
+    	{
+    		insertSubjectChecklistValue="";
+    		deleteSubjectChecklistValue="";
+    	    if((i+1)*100>n)
+    	    {
+    	        for (int j = i * 100; j < n; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	deleteSubjectChecklistValue = deleteSubjectChecklistValue + " (Id='" + dataFeild[8] + "' and subjectId='"+ dataFeild[9] +"') OR";
+    	        	insertSubjectChecklistValue = insertSubjectChecklistValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"'),";
+    	        }
+    	    }
+    	    else
+    	    {
+    	        for (int j = i * 100; j < (i + 1) * 100; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	deleteSubjectChecklistValue = deleteSubjectChecklistValue + " (Id='" + dataFeild[8] + "' and subjectId='"+ dataFeild[9] +"') OR";
+    	        	insertSubjectChecklistValue = insertSubjectChecklistValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"'),";
+    	        }
+    	    }
+    	    
+    	    if(deleteSubjectChecklistValue!="")
+    	    {
+    	    	String deleteValueQuery=deleteSubjectChecklistValue.substring(0, deleteSubjectChecklistValue.length() - 2) + ';';
+    			String sqlDelete="delete from subjectchecklist where" + deleteValueQuery;
+    			mDb.execSQL(sqlDelete);
+    	    }
+    	    
+    	    if(insertSubjectChecklistValue!="")
+    	    {
+    	    	String insertValueQuery=insertSubjectChecklistValue.substring(0, insertSubjectChecklistValue.length() - 1) + ';';
+        		String sqlInser="insert into subjectchecklist values" + insertValueQuery ;
+        		mDb.execSQL(sqlInser);
+    	    }
+    	}
+	}
+	else
+	{
+		insertSubjectChecklistValue="";
+		deleteSubjectChecklistValue="";
+		 for (int i = 0, j = dataRow.length; i < j; i++)
+		 {
+			 String[] dataFeild=dataRow[i].split("\\^",-1);
+
+			deleteSubjectChecklistValue = deleteSubjectChecklistValue + " (Id='" + dataFeild[8] + "' and subjectId='"+ dataFeild[9] +"') OR";
+	        insertSubjectChecklistValue = insertSubjectChecklistValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"'),";
+		 }
+		 
+		 if(deleteSubjectChecklistValue!="")
+ 	    {
+ 	    	String deleteValueQuery=deleteSubjectChecklistValue.substring(0, deleteSubjectChecklistValue.length() - 2) + ';';
+ 			String sqlDelete="delete from subjectchecklist where" + deleteValueQuery;
+ 			mDb.execSQL(sqlDelete);
+ 	    }
+ 	    
+ 	    if(insertSubjectChecklistValue!="")
+ 	    {
+ 	    	String insertValueQuery=insertSubjectChecklistValue.substring(0, insertSubjectChecklistValue.length() - 1) + ';';
+     		String sqlInser="insert into subjectchecklist values" + insertValueQuery ;
+     		mDb.execSQL(sqlInser);
+ 	    }
+	}
+		
+    return this; 
+}
+
+public TestAdapter loadChecklistTaskSync(String dataString) throws SQLException  
+{ 
+	String insertChecklistTaskValue="";
+	String deleteChecklistTaskValue="";
+	
+	String[] dataRow = dataString.split("\\!");
+	int n=dataRow.length;
+	int a ;
+	if(n/100==0)	{a=n/100;}
+	else	{a=(n/100)+1;}
+	mDb = mDbHelper.getWritableDatabase();
+	
+	if(n>100)
+	{
+    	for(int i=0; i<a; i++)
+    	{
+    		insertChecklistTaskValue="";
+    		deleteChecklistTaskValue="";
+    	    if((i+1)*100>n)
+    	    {
+    	        for (int j = i * 100; j < n; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	deleteChecklistTaskValue = deleteChecklistTaskValue + " (Id='" + dataFeild[2] + "' and checknum='"+ dataFeild[3] +"') OR";
+    	        	insertChecklistTaskValue = insertChecklistTaskValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"'),";
+    	        }
+    	    }
+    	    else
+    	    {
+    	        for (int j = i * 100; j < (i + 1) * 100; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	deleteChecklistTaskValue = deleteChecklistTaskValue + " (Id='" + dataFeild[2] + "' and checknum='"+ dataFeild[3] +"') OR";
+    	        	insertChecklistTaskValue = insertChecklistTaskValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"'),";
+    	        }
+    	    }
+    	    
+    	    if(deleteChecklistTaskValue!="")
+    	    {
+    	    	String deleteValueQuery=deleteChecklistTaskValue.substring(0, deleteChecklistTaskValue.length() - 2) + ';';
+    			String sqlDelete="delete from checklisttask where" + deleteValueQuery;
+    			mDb.execSQL(sqlDelete);
+    	    }
+    	    
+    	    if(insertChecklistTaskValue!="")
+    	    {
+    	    	String insertValueQuery=insertChecklistTaskValue.substring(0, insertChecklistTaskValue.length() - 1) + ';';
+        		String sqlInser="insert into checklisttask values" + insertValueQuery ;
+        		mDb.execSQL(sqlInser);
+    	    }
+    	}
+	}
+	else
+	{
+		insertChecklistTaskValue="";
+		deleteChecklistTaskValue="";
+		 for (int i = 0, j = dataRow.length; i < j; i++)
+		 {
+			 String[] dataFeild=dataRow[i].split("\\^",-1);
+
+	        	deleteChecklistTaskValue = deleteChecklistTaskValue + " (Id='" + dataFeild[2] + "' and checknum='"+ dataFeild[3] +"') OR";
+	        	insertChecklistTaskValue = insertChecklistTaskValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"'),";
+		 }
+		 
+		 if(deleteChecklistTaskValue!="")
+ 	    {
+ 	    	String deleteValueQuery=deleteChecklistTaskValue.substring(0, deleteChecklistTaskValue.length() - 2) + ';';
+ 			String sqlDelete="delete from checklisttask where" + deleteValueQuery;
+ 			mDb.execSQL(sqlDelete);
+ 	    }
+ 	    
+ 	    if(insertChecklistTaskValue!="")
+ 	    {
+ 	    	String insertValueQuery=insertChecklistTaskValue.substring(0, insertChecklistTaskValue.length() - 1) + ';';
+     		String sqlInser="insert into checklisttask values" + insertValueQuery ;
+     		mDb.execSQL(sqlInser);
+ 	    }
+	}
+		
+    return this;
+}
+
+public TestAdapter loadCompetencyTaskSync(String dataString) throws SQLException  
+{ 
+	String insertCompetencyTaskkValue="";
+	String deleteCompetencyTaskValue="";
+	
+	String[] dataRow = dataString.split("\\!");
+	int n=dataRow.length;
+	int a ;
+	if(n/100==0)	{a=n/100;}
+	else	{a=(n/100)+1;}
+	mDb = mDbHelper.getWritableDatabase();
+	
+	if(n>100)
+	{
+    	for(int i=0; i<a; i++)
+    	{
+    		insertCompetencyTaskkValue="";
+    		deleteCompetencyTaskValue="";
+    	    if((i+1)*100>n)
+    	    {
+    	        for (int j = i * 100; j < n; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	deleteCompetencyTaskValue = deleteCompetencyTaskValue + " (Id='" + dataFeild[3] + "' and competencyId='"+ dataFeild[4] +"') OR";
+    	        	insertCompetencyTaskkValue = insertCompetencyTaskkValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"'),";
+    	        }
+    	    }
+    	    else
+    	    {
+    	        for (int j = i * 100; j < (i + 1) * 100; j++) {
+    	        	String[] dataFeild=dataRow[j].split("\\^",-1);
+    	        	deleteCompetencyTaskValue = deleteCompetencyTaskValue + " (Id='" + dataFeild[3] + "' and competencyId='"+ dataFeild[4] +"') OR";
+    	        	insertCompetencyTaskkValue = insertCompetencyTaskkValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"'),";
+    	        }
+    	    }
+    	    
+    	    if(deleteCompetencyTaskValue!="")
+    	    {
+    	    	String deleteValueQuery=deleteCompetencyTaskValue.substring(0, deleteCompetencyTaskValue.length() - 2) + ';';
+    			String sqlDelete="delete from competencytask where" + deleteValueQuery;
+    			mDb.execSQL(sqlDelete);
+    	    }
+    	    
+    	    if(insertCompetencyTaskkValue!="")
+    	    {
+    	    	String insertValueQuery=insertCompetencyTaskkValue.substring(0, insertCompetencyTaskkValue.length() - 1) + ';';
+        		String sqlInser="insert into competencytask values" + insertValueQuery ;
+        		mDb.execSQL(sqlInser);
+    	    }
+    	}
+	}
+	else
+	{
+		insertCompetencyTaskkValue="";
+		deleteCompetencyTaskValue="";
+		 for (int i = 0, j = dataRow.length; i < j; i++)
+		 {
+			 String[] dataFeild=dataRow[i].split("\\^",-1);
+
+	        	deleteCompetencyTaskValue = deleteCompetencyTaskValue + " (Id='" + dataFeild[3] + "' and competencyId='"+ dataFeild[4] +"') OR";
+	        	insertCompetencyTaskkValue = insertCompetencyTaskkValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"','"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"'),";
+		 }
+		 
+		 if(deleteCompetencyTaskValue!="")
+ 	    {
+ 	    	String deleteValueQuery=deleteCompetencyTaskValue.substring(0, deleteCompetencyTaskValue.length() - 2) + ';';
+ 			String sqlDelete="delete from competencytask where" + deleteValueQuery;
+ 			mDb.execSQL(sqlDelete);
+ 	    }
+ 	    
+ 	    if(insertCompetencyTaskkValue!="")
+ 	    {
+ 	    	String insertValueQuery=insertCompetencyTaskkValue.substring(0, insertCompetencyTaskkValue.length() - 1) + ';';
+     		String sqlInser="insert into competencytask values" + insertValueQuery ;
+     		mDb.execSQL(sqlInser);
+ 	    }
+	}
+		
+    return this;
+}
+
+
+public TestAdapter loadCompetencyTaskDescSync(String dataString) throws SQLException  
+{ 
+	String insertCompetencyTaskDescValue="";
+	String deleteCompetencyTaskDescValue="";
+	String[] dataRow = dataString.split("\\!");
+	 for (int i = 0, n = dataRow.length; i < n; i++)
+	 {
+		 String[] dataFeild=dataRow[i].split("\\^",-1);
+		 insertCompetencyTaskDescValue = insertCompetencyTaskDescValue + "('"+dataFeild[0]+"','"+dataFeild[1]+"','"+dataFeild[2]+"','"+dataFeild[3]+"','"+dataFeild[4]+"'," +
+		 		"'"+dataFeild[5]+"','"+dataFeild[6]+"','"+dataFeild[7]+"','"+dataFeild[8]+"','"+dataFeild[9]+"','"+dataFeild[10]+"','"+dataFeild[11]+"','"+dataFeild[12]+"','"+dataFeild[13]+"'),";
+		 
+		 deleteCompetencyTaskDescValue = deleteCompetencyTaskDescValue + " (tablenumber='" + dataFeild[0] + "' and competencyId='"+ dataFeild[7] +"') OR";
+	 }
+
+	//Delete
+	 if(deleteCompetencyTaskDescValue!="")
+	 {
+			String deleteValueQuery=deleteCompetencyTaskDescValue.substring(0, deleteCompetencyTaskDescValue.length() - 2) + ';';
+			String sqlDelete="delete from competencytaskdesc where" + deleteValueQuery;
+			mDb.execSQL(sqlDelete);
+	 }
+			
+	 //Insert
+	 if(insertCompetencyTaskDescValue !="") {
+		String insertValueQuery=insertCompetencyTaskDescValue.substring(0, insertCompetencyTaskDescValue.length() - 1) + ';';
+		String sqlInsert="insert into competencytaskdesc values" + insertValueQuery;
+		mDb.execSQL(sqlInsert);
+	 }
+		
+    return this; 
+}
+public TestAdapter competencyTaskDescDefault() throws SQLException  
+{ 
+	mDb = mDbHelper.getWritableDatabase();
+	
+	String getAllCompetency="SELECT * FROM competency";
+	Cursor cursorGetAllCompetency=mDb.rawQuery(getAllCompetency, null);
+	cursorGetAllCompetency.moveToFirst();
+	do
+	{
+		if(cursorGetAllCompetency.getString(cursorGetAllCompetency.getColumnIndex("Id"))!=null )
+		{
+			String Id = cursorGetAllCompetency.getString(cursorGetAllCompetency.getColumnIndex("Id"));
+			String corridor=cursorGetAllCompetency.getString(cursorGetAllCompetency.getColumnIndex("corridor"));			
+			//Doesn't Include Corridor
+			if(corridor.isEmpty())
+			{
+				insertcompetencytaskdesc(Id, "1");
+				insertcompetencytaskdesc(Id, "2");
+				insertcompetencytaskdesc(Id, "3");
+				insertcompetencytaskdesc(Id, "4");
+				insertcompetencytaskdesc(Id, "5");
+			}
+			else
+			{
+				insertcompetencytaskdesc(Id, "1");
+				insertcompetencytaskdesc(Id, "2");
+			}
+		}
+	} while(cursorGetAllCompetency.moveToNext());	
+	
+	 return this; 
+} 
 }
